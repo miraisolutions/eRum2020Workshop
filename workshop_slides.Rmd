@@ -1,0 +1,130 @@
+---
+title: "Bring your R Application Safely to Production."
+subtitle: "Collaborate, Deploy, Automate."
+author: "Francesca Vitalini"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["default", "styles.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+layout: true
+
+<div class="my-footer"><span>Copyright (c) 2020</span></div> 
+
+---
+
+## Mirai Solutions
+
+---
+
+## Workshop Overview
+
+---
+
+class: inverse center middle
+## At the beginning there was a shiny app
+
+---
+
+## Shiny app
+
+Starting point is an existing simple production ready package available on github they can fork. Package includes functions and unit test, documentation but incomplete (they need to fix it), and a shiny app. Productive object → shiny app
+Motivation: packaged shiny app to use RMD check; explain “production ready” → summary of Vanlog’s workshop main points
+
+---
+
+## Version Control
+
+Version control → code versioned and not just local. Starting point for collaborative work
+
+---
+
+## Automating Controls
+
+Benefits of automating controls → travis → make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
+
+---
+
+class: inverse center middle
+# Break
+
+---
+
+## Gitflow
+
+Collaboration, gitflow. → branches (develop / feature), control development process, work in parallel. 
+
+---
+
+## Agile
+
+Mention Agile. Project board. Issues.
+
+---
+
+## Pull Requests and branches control
+
+Pull requests control branches → gitflow in action. Necessity of controls on pull requests to ensure robustness and stability of the code. → get a collaborator to approve pull request
+
+---
+
+## Shinyapps.io
+
+Setup shinyapp.io → is our productive environment
+Manual deployment → check all works
+
+---
+
+class: inverse center middle
+# Break
+
+---
+
+## GitHub Actions
+
+How to set up CI in GitHub Actions
+
+---
+
+## Automatic Deployment
+
+Automatic deployment / continuous deployment via github actions → streamline deployment process (DevOps). Exercise: Automatic deployment / continuous deployment via travis → streamline deployment process (DevOps) → link tech guides
+
+---
+
+## Release
+
+Release concept → you plan a release with a specific chunk of development. Release branch. Tags. Versions.
+
+---
+
+## Conclusions
+
+Final product and release
+
+---
+
+class: inverse center middle
+# What's Next
+
+---
+
+## Next Steps
+
+Next Steps, technical info → close workshop
+
+---
+
+class: inverse center middle
+# Thank you!

@@ -1,0 +1,99 @@
+/*#008cc3 mirai blue*/
+/* bg img https://github.com/miraisolutions/miraisolutions.github.io/blob/master/assets/images/illu-header-data.png */
+
+/*Mirai Font*/
+body, h1, h2, h3 {
+  font-family: "Frutiger LT W01_45 Ligh1475730",Helvetica,Arial,sans-serif !important;
+}
+h1, h2, h3 {
+  color: #008cc3 !important;
+}
+
+/*links*/
+a {
+  color: #008cc3 !important;
+}
+
+/* Footer */
+div.my-footer {
+    background-color: #F8F8F8; /* light gray */
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 30px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-image: url("./img/mirai-solutions-logo-flyer.png");
+    background-size: 80px; /*fixed width proportional heigth */
+    background-position: 98%;
+}
+div.my-footer span {
+    font-size: 10pt;
+    color: #808080; /* gray */
+    position: absolute;
+    left: 15px;
+    bottom: 7px;
+}
+
+.remark-slide-number {
+  font-size: 10pt;
+  bottom: 7px;
+  right: 50%;
+  color: #808080; /* gray */
+  opacity: 1; /* default: 0.5 */
+}
+
+/*Mirai styled inverse slide*/
+.inverse {
+  background-color: #008cc3;
+}
+
+/*Mirai styled first slide*/
+.title-slide {
+  background-image: url('./img/illu-header-data.png');
+  background-size: cover;
+}
+
+.title-slide h1, .title-slide h2, .title-slide h3 {
+  color: #f3f3f3 !important; /*xaringan default*/
+}
+
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #f3f3f3 !important; /*xaringan default*/
+}
+
+.inverse .remark-slide-number {
+  display: none;
+}
+
+.inverse div.my-footer span {display:none;}
+.inverse div.my-footer {display:none;}
+
+/*Mirai styled slide with logo top-right - new class */
+.logo-slide {
+    background-image: url('./img/mirai-solutions-logo-flyer.png');
+    background-size: 300px; /*fixed width proportional heigth */
+    background-position: 85% 5%
+}
+
+
+/*Mirai styled slide with smaller logo top-right - new class */
+.logo-slide-small {
+    background-image: url('./img/mirai-solutions-logo-flyer.png');
+    background-size: 150px; /*fixed width proportional heigth */
+    background-position: 90% 5%
+}
+
+/*big bullets */
+ul {
+  list-style-type: disc;
+  margin-left:70px;
+}
+/*More spaces between bullets */
+ol li, ul li {
+margin-bottom: 0.5em !important;
+}
