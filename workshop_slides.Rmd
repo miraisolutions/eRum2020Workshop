@@ -24,11 +24,34 @@ layout: true
 
 ---
 
-## Mirai Solutions
+![devCycle](./img/MiraiApr19_full.jpg)
+
+<br>
+
+### Bring ideas to life.
+### Smart. Agile. Personal.
+
+```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
+knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
+```
 
 ---
 
 ## Workshop Overview
+
+- Fork the starting point package and shiny app
+- Version control
+- Automating controls on TravisCI
+- **Break**
+- Gitflow
+- Agile development
+- Pull requests and branches control
+- Deploymnet on shinyapps.io
+- **Break**
+- GitHub Actions
+- Automatic Deployment
+- Release
+- Conclusions
 
 ---
 
@@ -39,8 +62,45 @@ class: inverse center middle
 
 ## Shiny app
 
-Starting point is an existing simple production ready package available on github they can fork. Package includes functions and unit test, documentation but incomplete (they need to fix it), and a shiny app. Productive object → shiny app
+Describe Starting point Productive object → shiny app 
+Is an existing simple production ready package available on github they can fork.
+
+---
+
+## How to Fork
+
+Instructions to make a fork on GitHub
+
+---
+
+## Project structure
+
+Show package includes functions and unit test, documentation, and a shiny app.
 Motivation: packaged shiny app to use RMD check; explain “production ready” → summary of Vanlog’s workshop main points
+
+---
+
+## Production Ready
+
+Running RMD Check discover documentation is incomplete (they need to fix it).
+
+---
+
+# What does Production mean?
+
+The product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
+
+By automating building and testing processes, the pipeline to production ensures:
+
+  - Security  
+  - Quality  
+  - Stability  
+  
+Production is not a fixed object, but a continuous improvement cycle.
+
+```{r eval = TRUE, echo = FALSE, out.width = "35%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+knitr::include_graphics("./img/devCycle.001.png")
+```
 
 ---
 
@@ -67,7 +127,7 @@ Collaboration, gitflow. → branches (develop / feature), control development pr
 
 ---
 
-## Agile
+## Agile Development
 
 Mention Agile. Project board. Issues.
 
@@ -79,7 +139,7 @@ Pull requests control branches → gitflow in action. Necessity of controls on p
 
 ---
 
-## Shinyapps.io
+## Deploymnet shinyapps.io
 
 Setup shinyapp.io → is our productive environment
 Manual deployment → check all works
@@ -106,6 +166,23 @@ Automatic deployment / continuous deployment via github actions → streamline d
 ## Release
 
 Release concept → you plan a release with a specific chunk of development. Release branch. Tags. Versions.
+
+On the release branch:
+- Consolidate and re-organize the changes in `NEWS.md`
+
+Example
+```
+1.0.0 release preps
+* Closes #XYZ Updated report.
+```
+
+- update version number in the `DESCRIPTION`
+- create and merge a pull request to master where the `closes XXX` are in the pull request comment
+- once merged to master, create a new release on GitHub [(Code > releases > Draft new release)](https://github.com/miraisolutions/SmaRP/releases/new) 
+    - Tag version: v1.0.1
+    - Release title: packagename 1.0.1
+    - Body: Paste as comment the list of changes in `NEWS.md`
+    - Click on "Publish release"
 
 ---
 
