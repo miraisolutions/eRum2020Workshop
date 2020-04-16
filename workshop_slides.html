@@ -4,7 +4,7 @@
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
     <meta name="author" content="Francesca Vitalini" />
-    <meta name="date" content="2020-04-15" />
+    <meta name="date" content="2020-04-16" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
 ### Francesca Vitalini
-### 2020-04-15
+### 2020-04-16
 
 ---
 
@@ -82,6 +82,14 @@ Motivation: packaged shiny app to use RMD check; explain “production ready” 
 
 ---
 
+### Package
+
+*"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
+
+&lt;img src="./img/package_structure.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
 ## Production Ready
 
 Running RMD Check discover documentation is incomplete (they need to fix it).
@@ -104,15 +112,57 @@ Production is not a fixed object, but a continuous improvement cycle.
 
 ---
 
+## Best Practices
+
+Modularize your code. (functions and package structure in R)
+
+Have your building blocks general and flexible.
+
+Make your code robust with automated testing.
+
+Trace your work with a version control system
+
+---
+
 ## Version Control
 
 Version control → code versioned and not just local. Starting point for collaborative work
+
+&lt;img src="./img/git.png" width="80%" style="position:absolute;top:200px;left:50px;" /&gt;
+
+`R CMD check`
+
+&lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 
 ---
 
 ## Automating Controls
 
 Benefits of automating controls → travis → make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
+
+Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
+
+---
+
+## Travis CI
+
+Travis CI is an open-source continuous integration service that can be used to build and test software projects hosted on GitHub.
+
+`usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
+
+
+```yaml
+language: r
+cache: packages
+```
+
+To enable Travis CI go to [Travis-ci.com](https://travis-ci.com/) and Sign up with GitHub.
+
+On Travis CI the user needs to select the repositories on which to activate the continuous integration.
+
+Then GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
+
+A badge indicating the CI status can be integrated in the `README.md`.
 
 ---
 
@@ -125,24 +175,88 @@ class: inverse center middle
 
 Collaboration, gitflow. → branches (develop / feature), control development process, work in parallel. 
 
+.pull-left[
+[Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) is a standard setup that allows a collaborative development, while assuring the safety of the released product.
+
+According to the Gitflow approach, the central repo holds two main branches with an infinite lifetime:
+master: branch where source code of HEAD always reflects a production-ready state.
+develop: branch where source code of HEAD always reflects a state with the latest delivered developments for the next release. 
+Each feature branch provides an additional incremental value to the product, potentially ready for deployment. ]
+
+.pull-right[
+&lt;img src="./img/gitflow.png" width="40%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+https://nvie.com/posts/a-successful-git-branching-model/
+]
+
 ---
 
-## Agile Development
+## Collaboration
 
-Mention Agile. Project board. Issues.
+Gitflow is an Agile framework by nature.
+
+&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
+## New Issues
+
+screenshot on how to make one.
+show how to create a branch.
+Live: fix issue on the branch --&gt; make a pull request to merge this into the main branch
 
 ---
 
 ## Pull Requests and branches control
 
-Pull requests control branches → gitflow in action. Necessity of controls on pull requests to ensure robustness and stability of the code. → get a collaborator to approve pull request
+Pull requests control branches. Necessity of controls on pull requests to ensure robustness and stability of the code.
+
+Set restrictions on branches: require review and status check (travis-ci) before merging to master or develop. 
+Screenshot on where to set branches controls?
+
+Screenshots to see the checks passibg before merging?
 
 ---
 
-## Deploymnet shinyapps.io
+## Deployment shinyapps.io
 
 Setup shinyapp.io → is our productive environment
 Manual deployment → check all works
+
+---
+
+## Agile Development
+
+#### Why DevOps?
+
+**Goals**
+Achieve faster time to production
+Enable more frequent deployments
+Lower failure rate of new releases
+Shorten lead time between fixes
+Enhance collaboration between groups
+
+
+**Challenges**
+Mindset and Culture
+Security
+Responsibility
+
+
+**Benefits**
+Development via small work items increases the speed of development and improves its quality.
+Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
+Version controlled development ensures traceability and repeatability of the development.
+Collaboration and an agile approach are keys to a functional production pipeline.
+Building, testing and deploying discrete development components improve confidence in the final product.
+
+
+Note:
+Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
+
+**DevOps is a culture. Tools can enable it.**
+
+
+&lt;img src="./img/devops.001.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
@@ -161,28 +275,48 @@ How to set up CI in GitHub Actions
 
 Automatic deployment / continuous deployment via github actions → streamline deployment process (DevOps). Exercise: Automatic deployment / continuous deployment via travis → streamline deployment process (DevOps) → link tech guides
 
+SCRENSHOT OF THE CHECKS PASSING?
+
+---
+
+## Tockens
+
+---
+
+## Secrets
+
 ---
 
 ## Release
 
 Release concept → you plan a release with a specific chunk of development. Release branch. Tags. Versions.
 
-On the release branch:
-- Consolidate and re-organize the changes in `NEWS.md`
+According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
 
+Create a release branch (e.g. `release/v2.0.0`) from `develop`.
+
+Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
 Example
 ```
 1.0.0 release preps
 * Closes #XYZ Updated report.
 ```
 
-- update version number in the `DESCRIPTION`
-- create and merge a pull request to master where the `closes XXX` are in the pull request comment
-- once merged to master, create a new release on GitHub [(Code &gt; releases &gt; Draft new release)](https://github.com/miraisolutions/SmaRP/releases/new) 
-    - Tag version: v1.0.1
-    - Release title: packagename 1.0.1
-    - Body: Paste as comment the list of changes in `NEWS.md`
-    - Click on "Publish release"
+Update package version (NEWS.md and DESCRIPTION files in R).
+
+Create and merge a new pull request release/v2.0.0 →  master,  where the `closes XXX` are in the pull request comment.
+
+Create a new release tag on master (on [GitHub Code &gt; releases &gt; Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
+  - Tag version: v1.0.1
+  - Release title: packagename 1.0.1
+  - Body: Paste as comment the list of changes in `NEWS.md`
+  - Click on "Publish release"
+
+Create a new pull request and merge release/v2.0.0  →  develop
+
+Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
+
+SCREENSHOT OF RELEASE TAG?
 
 ---
 
