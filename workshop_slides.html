@@ -43,7 +43,7 @@ layout: true
 
 - Fork the starting point package and shiny app
 - Version control
-- Automating controls on TravisCI
+- Automating controls on Travis CI
 - **Break**
 - Gitflow
 - Agile development
@@ -73,18 +73,28 @@ Is an existing simple production ready package available on github they can fork
 
 Instructions to make a fork on GitHub
 
+A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
+
+link to the fork button in the correct repo
+
+SCREENSHOT OF FORK BUTTON ON GITHUB
+
 ---
 
 ## Project structure
 
-Show package includes functions and unit test, documentation, and a shiny app.
-Motivation: packaged shiny app to use RMD check; explain “production ready” → summary of Vanlog’s workshop main points
+The project is a shiny app structured as a package. 
+
+Summary of Vanlog’s workshop main points
 
 ---
 
-### Package
+## Package Structure
 
 *"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
+
+Such a structure gives us some useful functionalities, such as unit testing and documentation.
+Moreover we can rely on  built-in features to automatically check the code (R CMD Check)
 
 &lt;img src="./img/package_structure.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
@@ -92,13 +102,7 @@ Motivation: packaged shiny app to use RMD check; explain “production ready” 
 
 ## Production Ready
 
-Running RMD Check discover documentation is incomplete (they need to fix it).
-
----
-
-# What does Production mean?
-
-The product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
+Being Production Ready means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
 
 By automating building and testing processes, the pipeline to production ensures:
 
@@ -109,6 +113,8 @@ By automating building and testing processes, the pipeline to production ensures
 Production is not a fixed object, but a continuous improvement cycle.
 
 &lt;img src="./img/devCycle.001.png" width="35%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+
+Practical example: Running R CMD Check discover documentation is incomplete (they need to fix it).
 
 ---
 
@@ -126,21 +132,37 @@ Trace your work with a version control system
 
 ## Version Control
 
-Version control → code versioned and not just local. Starting point for collaborative work
+A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
 
-&lt;img src="./img/git.png" width="80%" style="position:absolute;top:200px;left:50px;" /&gt;
+Usually changes are not tracked only locally but on a server to ensure against local failures and to integrate the track changes of multiple developers.
 
-`R CMD check`
+A version control system is the starting point for collaborative work.
 
-&lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+&lt;img src="./img/git.png" width="80%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+---
+
+## Git
+
+Git Commit
+
+Git Push
+
+Git Pull
 
 ---
 
 ## Automating Controls
 
-Benefits of automating controls → travis → make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
-
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
+
+Automating the checks means not having to realy on people applying best practices.
+
+Make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
+
+`R CMD check`
+
+&lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 
 ---
 
@@ -179,22 +201,16 @@ Collaboration, gitflow. → branches (develop / feature), control development pr
 [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) is a standard setup that allows a collaborative development, while assuring the safety of the released product.
 
 According to the Gitflow approach, the central repo holds two main branches with an infinite lifetime:
-master: branch where source code of HEAD always reflects a production-ready state.
-develop: branch where source code of HEAD always reflects a state with the latest delivered developments for the next release. 
+
+- `master`: branch where source code of HEAD always reflects a production-ready state.
+- `develop`: branch where source code of HEAD always reflects a state with the latest delivered developments for the next release.
+
 Each feature branch provides an additional incremental value to the product, potentially ready for deployment. ]
 
 .pull-right[
 &lt;img src="./img/gitflow.png" width="40%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 https://nvie.com/posts/a-successful-git-branching-model/
 ]
-
----
-
-## Collaboration
-
-Gitflow is an Agile framework by nature.
-
-&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
@@ -217,6 +233,14 @@ Screenshots to see the checks passibg before merging?
 
 ---
 
+## Agile Development
+
+Gitflow is an Agile framework by nature.
+
+&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
 ## Deployment shinyapps.io
 
 Setup shinyapp.io → is our productive environment
@@ -224,9 +248,18 @@ Manual deployment → check all works
 
 ---
 
-## Agile Development
+class: inverse center middle
+# Break
 
-#### Why DevOps?
+---
+
+## GitHub Actions
+
+How to set up CI in GitHub Actions. Link to tech guides.
+
+---
+
+## DevOps
 
 **Goals**
 Achieve faster time to production
@@ -260,26 +293,17 @@ Infrastructure can also follow a continuous delivery philosophy (Infrastructure 
 
 ---
 
-class: inverse center middle
-# Break
-
----
-
-## GitHub Actions
-
-How to set up CI in GitHub Actions
-
----
-
 ## Automatic Deployment
 
-Automatic deployment / continuous deployment via github actions → streamline deployment process (DevOps). Exercise: Automatic deployment / continuous deployment via travis → streamline deployment process (DevOps) → link tech guides
+Part of DevOps is to streamline the deployment process. This can be done as automatic / continuous deployment via GitHub Actions.
+
+Link tech guides
 
 SCRENSHOT OF THE CHECKS PASSING?
 
 ---
 
-## Tockens
+## Tokens
 
 ---
 
@@ -287,19 +311,29 @@ SCRENSHOT OF THE CHECKS PASSING?
 
 ---
 
+## Automatic Deployment with Travis CI
+
+Exercise: Automatic deployment / continuous deployment via travis
+
+---
+
 ## Release
 
-Release concept → you plan a release with a specific chunk of development. Release branch. Tags. Versions.
+A Release is the deployment to production of a specific chunck of development. Each  new release determines a new version (minor or major) of the software.
 
 According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
+
+**How to do a release**
 
 Create a release branch (e.g. `release/v2.0.0`) from `develop`.
 
 Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
+
 Example
+
 ```
 1.0.0 release preps
-* Closes #XYZ Updated report.
+- Closes #XYZ Updated report.
 ```
 
 Update package version (NEWS.md and DESCRIPTION files in R).
