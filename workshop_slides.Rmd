@@ -322,7 +322,7 @@ SCRENSHOT OF THE CHECKS PASSING?
 
 ---
 
-## Automatic Deployment with Travis CI
+## Automatic Deployment with GitHub Actions
 
 Exercise: Automatic deployment / continuous deployment via travis
 
