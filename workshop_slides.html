@@ -3,8 +3,8 @@
   <head>
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Francesca Vitalini" />
-    <meta name="date" content="2020-04-16" />
+    <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
+    <meta name="date" content="2020-04-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -14,8 +14,8 @@ class: center, middle, inverse, title-slide
 
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
-### Francesca Vitalini
-### 2020-04-16
+### Francesca Vitalini, Riccardo Porreca
+### 2020-04-23
 
 ---
 
@@ -41,7 +41,7 @@ layout: true
 
 ## Workshop Overview
 
-- Fork the starting point package and shiny app
+- Fork the starting point package and Shiny app
 - Version control
 - Automating controls on Travis CI
 - **Break**
@@ -58,34 +58,45 @@ layout: true
 ---
 
 class: inverse center middle
-## At the beginning there was a shiny app
+## At the beginning there was a Shiny app
 
 ---
 
 ## Shiny app
 
-Describe Starting point Productive object → shiny app 
-Is an existing simple production ready package available on github they can fork.
+Describe Starting point Productive object → Shiny app 
+Is an existing simple production ready package available on GitHub they can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo).
+
+Packaged Shiny app XXX that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
+
+Summary of Vanlog’s workshop app
 
 ---
 
 ## How to Fork
 
-Instructions to make a fork on GitHub
+Instructions to make a [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) on GitHub
 
 A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
 
-link to the fork button in the correct repo
-
-SCREENSHOT OF FORK BUTTON ON GITHUB
+LINK TO THE FORK BUTTON IN THE CORRECT REPO
 
 ---
 
 ## Project structure
 
-The project is a shiny app structured as a package. 
+The project is a Shiny app structured as a package. 
 
-Summary of Vanlog’s workshop main points
+Summary of Vanlog’s workshop main points.
+
+It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD checks`, etc.).
+
+A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
+
+A packaged Shiny app can also take advantage of:
+
+- Continuous Integration (CI) pipelines to automate checks and ensure higher code quality and robustness;
+- Continuous Deployment (CD) pipelines to automate the process of deployment to a productive environment.
 
 ---
 
@@ -138,17 +149,21 @@ Usually changes are not tracked only locally but on a server to ensure against l
 
 A version control system is the starting point for collaborative work.
 
-&lt;img src="./img/git.png" width="80%" style="position:absolute;bottom:50px;right:50px;" /&gt;
-
 ---
 
 ## Git
 
-Git Commit
+Git is a very common, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows.
 
-Git Push
+[git documentation](https://git-scm.com/doc)
 
-Git Pull
+- [`git commit`](https://git-scm.com/docs/git-commit): Records changes to the repository
+
+- [`git push`](https://git-scm.com/docs/git-push): Updates remote refs using local refs.
+
+- [`git pull`](https://git-scm.com/docs/git-pull): Incorporates changes from a remote repository into the current branch. 
+
+&lt;img src="./img/git.png" width="80%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 
 ---
 
@@ -156,11 +171,9 @@ Git Pull
 
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
 
-Automating the checks means not having to realy on people applying best practices.
+Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check` before committing.
 
-Make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
-
-`R CMD check`
+LIVE: Make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
 
 &lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 
@@ -168,7 +181,7 @@ Make an example that looks innocuous but fails. One does not want to rely on peo
 
 ## Travis CI
 
-Travis CI is an open-source continuous integration service that can be used to build and test software projects hosted on GitHub.
+Travis CI is an open-source hosted continuous integration service that can be used to build and test software projects hosted on GitHub.
 
 `usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
 
@@ -214,37 +227,55 @@ https://nvie.com/posts/a-successful-git-branching-model/
 
 ---
 
-## New Issues
+## Issues, Projects and Pull Requests
 
-screenshot on how to make one.
-show how to create a branch.
-Live: fix issue on the branch --&gt; make a pull request to merge this into the main branch
+New development items are usually recorded on GitHub as Issues.
 
----
+[How to create a new Issue](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue)
 
-## Pull Requests and branches control
+Issues can be managed via visual boards by creating a [project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) on GitHub.
 
-Pull requests control branches. Necessity of controls on pull requests to ensure robustness and stability of the code.
+The deveopment associated with each issue should, in principle, occurr in a separate `feature` branch, for the separation of concerns between different developments. 
 
-Set restrictions on branches: require review and status check (travis-ci) before merging to master or develop. 
-Screenshot on where to set branches controls?
+[How to create a new branch](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository)
 
-Screenshots to see the checks passibg before merging?
+Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+
+LIVE: fix issue on the branch --&gt; make a pull request to merge this into the main branch
 
 ---
 
 ## Agile Development
 
-Gitflow is an Agile framework by nature.
+Gitflow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
 
 &lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
+## Pull Requests and branches control
+
+It is important that the code is checked before it is merged back into the main development to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
+
+- [request a reviewer on each pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+- [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging to `master` or `develop`.
+
+LIVE show how to set branches controls
+LIVE show checks passing before merging
+
+---
+
 ## Deployment shinyapps.io
 
-Setup shinyapp.io → is our productive environment
-Manual deployment → check all works
+Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/)), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
+
+[Setup a shinyapp.io account](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)
+
+[Deployment of an application from RStudio](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-a-sample-application)
+
+LIVE: Manual deployment → check all works
+
+&lt;img src="./img/shinyappsio.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
@@ -255,33 +286,136 @@ class: inverse center middle
 
 ## GitHub Actions
 
-How to set up CI in GitHub Actions. Link to tech guides.
+[GitHub Actions](https://help.github.com/en/actions) is a service for completely customizable, GitHub integrated workflow, including CI and CD executions.
+[Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
+Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
+
+Compared to Travis CI, in GitHub Actions each step here needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
+
+---
+
+## Generic CI Pipeline
+
+Generally speaking, a CI pipleline for an R package is comprised of the following steps:
+
+- define system environment
+- install R
+- chaching system environment
+- check out the package
+- install package dependencies
+- chaching dependencies
+- install package
+- run checks
+- caching build
+- deploy
+
+---
+
+## CI Workflow in GitHub Actions - check out the package
+
+The workflow runs upon push commands and pull requests on the `master` branch, which is the default. It uses the predefined and built in action `checkout@v2` to check out the R package.
+
+
+```yaml
+# Check on push and pull requests to master
+on: [push, pull_request]
+
+# Name of the workflow
+name: CI
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+```
+
+---
+
+## CI Workflow in GitHub Actions - manage dependencies
+
+To install an R package we should first take care of its dependencies. This means checking them out and making sure they are cached for future builds.
+
+
+```yaml
+# Query and cache R package dependencies
+      - name: Query dependencies
+        run: |
+          install.packages("remotes")
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+        shell: Rscript {0}
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-
+```
+
+---
+
+## CI Workflow in GitHub Actions - install the package
+
+Then the package can be installed
+
+
+```yaml
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+```
+
+---
+
+## CI Workflow in GitHub Actions - run automatic checks
+
+To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
+
+
+```yaml
+      - name: Install rcmdcheck
+        run: |
+          remotes::install_cran(c("rcmdcheck"))
+        shell: Rscript {0}
+
+      - name: Check package
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+```
+
+
+LIVE: Link to tech guides.
 
 ---
 
 ## DevOps
 
+.pull-left[
 **Goals**
-Achieve faster time to production
-Enable more frequent deployments
-Lower failure rate of new releases
-Shorten lead time between fixes
-Enhance collaboration between groups
-
+- Achieve faster time to production
+- Enable more frequent deployments
+- Lower failure rate of new releases
+- Shorten lead time between fixes
+- Enhance collaboration between groups
 
 **Challenges**
-Mindset and Culture
-Security
-Responsibility
+- Mindset and Culture
+- Security
+- Responsibility
+]
 
-
+.pull-right[
 **Benefits**
-Development via small work items increases the speed of development and improves its quality.
-Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
-Version controlled development ensures traceability and repeatability of the development.
-Collaboration and an agile approach are keys to a functional production pipeline.
-Building, testing and deploying discrete development components improve confidence in the final product.
-
+- Development via small work items increases the speed of development and improves its quality.
+- Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
+- Version controlled development ensures traceability and repeatability of the development.
+- Collaboration and an agile approach are keys to a functional production pipeline.
+- Building, testing and deploying discrete development components improve confidence in the final product.
+]
 
 Note:
 Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
@@ -295,31 +429,51 @@ Infrastructure can also follow a continuous delivery philosophy (Infrastructure 
 
 ## Automatic Deployment
 
-Part of DevOps is to streamline the deployment process. This can be done as automatic / continuous deployment via GitHub Actions.
+Part of DevOps is to streamline the deployment process. This can be done as automatic / continuous deployment. We are going to integrate this step in the GitHub Actions workflow.
 
-Link tech guides
+Adding the deployment is another step in a `CI-CD` job. 
+Notice that deployment to [shinyapps.io](https://www.shinyapps.io/)) requires the package `rsconnect`, so it is necessary to install it explicitely.
 
-SCRENSHOT OF THE CHECKS PASSING?
+
+```yaml
+# Install rsconnect necessary for deployment
+      - name: Install dependencies
+        run: |
+          remotes::install_cran(c("rsconnect"))
+        shell: Rscript {0}
+        
+      - name: Deploy to shinyapps.io
+        if: github.ref == 'refs/heads/master'
+        env:
+          SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: |
+          account_info &lt;- lapply(paste0("SHINYAPPS_", c("ACCOUNT", "TOKEN", "SECRET")), Sys.getenv)
+          do.call(rsconnect::setAccountInfo, account_info)
+          rsconnect::deployApp(appName = "ShinyCICD")
+        shell: Rscript {0}
+```
 
 ---
 
-## Tokens
+## Tokens &amp; Secrets
 
----
-
-## Secrets
+The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
 
 ---
 
 ## Automatic Deployment with Travis CI
 
-Exercise: Automatic deployment / continuous deployment via travis
+Equivalently, automated deployment can be integrated on Travis CI. We leave this to you as an exercise.
+
+You can have a look at out techguides for support.
 
 ---
 
 ## Release
 
-A Release is the deployment to production of a specific chunck of development. Each  new release determines a new version (minor or major) of the software.
+A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a specific chunck of development. Each new release determines a new version (minor or major) of the software.
 
 According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
 
@@ -350,24 +504,37 @@ Create a new pull request and merge release/v2.0.0  →  develop
 
 Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
 
-SCREENSHOT OF RELEASE TAG?
-
 ---
 
 ## Conclusions
 
 Final product and release
 
----
-
-class: inverse center middle
-# What's Next
+Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
 
 ---
 
 ## Next Steps
 
 Next Steps, technical info → close workshop
+
+---
+
+## Get in Touch
+
+
+Other Services by Mirai solutions:
+
+- Training customized to your business case - technical and agile topics
+- Data Analytics &amp; Software development: from your needs to a functional implementation
+- Infrastructure design, managment and maintenace
+
+Get in touch:
+- LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
+- email info@mirai-solutions.com
+- website www.mirai-solutions.com
+
+&lt;img src="./img/mirai-solutions-logo-flyer.png" width="50%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
