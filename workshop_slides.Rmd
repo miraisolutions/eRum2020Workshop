@@ -213,23 +213,20 @@ class: inverse center middle
 
 ## Gitflow
 
-Collaboration, gitflow. → branches (develop / feature), control development process, work in parallel. 
-
 .pull-left[
 [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) is a standard setup that allows a collaborative development, while assuring the safety of the released product.
 
 According to the Gitflow approach, the central repo holds two main branches with an infinite lifetime:
 
-- `master`: branch where source code of HEAD always reflects a production-ready state.
-- `develop`: branch where source code of HEAD always reflects a state with the latest delivered developments for the next release.
+- `master`: reflects a production-ready state.
+- `develop`: reflects a state with the latest delivered developments for the next release.
 
 Each feature branch provides an additional incremental value to the product, potentially ready for deployment. ]
 
 .pull-right[
-```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
+```{r eval = TRUE, echo = FALSE, out.width = "90%", fig.cap='https://nvie.com/posts/a-successful-git-branching-model/'}
 knitr::include_graphics("./img/gitflow.png")
 ```
-https://nvie.com/posts/a-successful-git-branching-model/
 ]
 
 ---
@@ -354,7 +351,8 @@ To install an R package we should first take care of its dependencies. This mean
       - name: Query dependencies
         run: |
           install.packages("remotes")
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
+                  "depends.Rds", version = 2)
         shell: Rscript {0}
       - name: Cache R packages
         uses: actions/cache@v1
@@ -390,7 +388,8 @@ To run automatic checks it is necessary to explicitely request to run `rcmdcheck
         shell: Rscript {0}
 
       - name: Check package
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", 
+                                  error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 ```
 
@@ -408,43 +407,53 @@ LIVE: Link to tech guides.
 - Lower failure rate of new releases
 - Shorten lead time between fixes
 - Enhance collaboration between groups
+]
 
+.pull-right[
 **Challenges**
 - Mindset and Culture
 - Security
 - Responsibility
 ]
 
-.pull-right[
-**Benefits**
-- Development via small work items increases the speed of development and improves its quality.
-- Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
-- Version controlled development ensures traceability and repeatability of the development.
-- Collaboration and an agile approach are keys to a functional production pipeline.
-- Building, testing and deploying discrete development components improve confidence in the final product.
-]
 
-Note:
-Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
-
-**DevOps is a culture. Tools can enable it.**
-
-
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
+```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
 knitr::include_graphics("./img/devops.001.png")
 ```
 
 ---
 
+## DevOps - Benefits
+
+- Development via small work items increases the speed of development and improves its quality.
+- Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
+- Version controlled development ensures traceability and repeatability of the development.
+- Collaboration and an agile approach are keys to a functional production pipeline.
+- Building, testing and deploying discrete development components improve confidence in the final product.
+
+<br>
+
+.pull-middle[
+**DevOps is a culture. Tools can enable it.**
+
+<br>
+
+.fontsize08[
+Note:
+Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
+]
+
+]
+
+---
+
 ## Automatic Deployment
 
-Part of DevOps is to streamline the deployment process. This can be done as automatic / continuous deployment. We are going to integrate this step in the GitHub Actions workflow.
-
+Part of DevOps is to streamline the deployment process. 
 Adding the deployment is another step in a `CI-CD` job. 
-Notice that deployment to [shinyapps.io](https://www.shinyapps.io/)) requires the package `rsconnect`, so it is necessary to install it explicitely.
+Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the package `rsconnect`, so it is necessary to install it explicitely.
 
 ```{yaml, eval = F}
-# Install rsconnect necessary for deployment
       - name: Install dependencies
         run: |
           remotes::install_cran(c("rsconnect"))
@@ -457,7 +466,9 @@ Notice that deployment to [shinyapps.io](https://www.shinyapps.io/)) requires th
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
         run: |
-          account_info <- lapply(paste0("SHINYAPPS_", c("ACCOUNT", "TOKEN", "SECRET")), Sys.getenv)
+          account_info <- lapply(paste0("SHINYAPPS_", 
+                                c("ACCOUNT", "TOKEN", "SECRET")), 
+                                Sys.getenv)
           do.call(rsconnect::setAccountInfo, account_info)
           rsconnect::deployApp(appName = "ShinyCICD")
         shell: Rscript {0}
@@ -485,32 +496,38 @@ A [Release](https://help.github.com/en/github/administering-a-repository/releasi
 
 According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
 
-**How to do a release**
+---
 
-Create a release branch (e.g. `release/v2.0.0`) from `develop`.
+## How to do a release 1
 
-Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
+- Create a release branch (e.g. `release/v2.0.0`) from `develop`.
+
+- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
 
 Example
 
-```
+```{r, eval=FALSE}
 1.0.0 release preps
 - Closes #XYZ Updated report.
 ```
 
-Update package version (NEWS.md and DESCRIPTION files in R).
+- Update package version (NEWS.md and DESCRIPTION files in R).
 
-Create and merge a new pull request release/v2.0.0 →  master,  where the `closes XXX` are in the pull request comment.
+- Create and merge a new pull request release/v2.0.0 →  master,  where the `closes XXX` are in the pull request comment.
 
-Create a new release tag on master (on [GitHub Code > releases > Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
+---
+
+## How to do a release 2
+
+- Create a new release tag on master (on [GitHub Code > releases > Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
   - Tag version: v1.0.1
   - Release title: packagename 1.0.1
   - Body: Paste as comment the list of changes in `NEWS.md`
   - Click on "Publish release"
 
-Create a new pull request and merge release/v2.0.0  →  develop
+- Create a new pull request and merge release/v2.0.0  →  develop
 
-Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
+- Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
 
 ---
 
@@ -531,18 +548,18 @@ Next Steps, technical info → close workshop
 ## Get in Touch
 
 
-Other Services by Mirai solutions:
+**Other Services by Mirai solutions:**
 
 - Training customized to your business case - technical and agile topics
 - Data Analytics & Software development: from your needs to a functional implementation
 - Infrastructure design, managment and maintenace
 
-Get in touch:
+**Get in touch:**
 - LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
 - email info@mirai-solutions.com
 - website www.mirai-solutions.com
 
-```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
+```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:80px;right:50px;"'}
 knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 ```
 

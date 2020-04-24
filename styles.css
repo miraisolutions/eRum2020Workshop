@@ -91,9 +91,26 @@ div.my-footer span {
 /*big bullets */
 ul {
   list-style-type: disc;
-  margin-left:70px;
+  margin-left:30px !important;
+  padding: 0px !important;
 }
 /*More spaces between bullets */
 ol li, ul li {
 margin-bottom: 0.5em !important;
+}
+
+
+/* Reduce fig caption size */
+p.caption {
+  font-size: 0.5em;
+}
+
+/*Center text */
+.pull-middle {
+  text-align: center;
+}
+
+/*reduce font size*/
+.fontsize08 {
+  font-size: 0.8em;
 }
