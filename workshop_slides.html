@@ -163,9 +163,11 @@ PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.
 
 A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
 
-Usually changes are not tracked only locally but on a server to ensure against local failures and to integrate the track changes of multiple developers.
+Usually changes are not tracked just locally, but on a server to ensure against local failures and to integrate the track changes of multiple developers.
 
 A version control system is the starting point for collaborative work.
+
+&lt;img src="./img/version-control.001.png" width="40%" style="position:absolute;bottom:60px;right:50px;" /&gt;
 
 ---
 
@@ -199,7 +201,15 @@ LIVE: Make an example that looks innocuous but fails. One does not want to rely 
 
 ## Travis CI
 
-Travis CI is an open-source hosted continuous integration service that can be used to build and test software projects hosted on GitHub.
+.inverse-left-column[
+[Travis CI](https://travis-ci.com/) is an open-source hosted continuous integration service that can be used to build and test software projects hosted on GitHub.
+]
+
+.inverse-right-column[
+.pull-middle[
+&lt;img src="./img/TravisCI.png" width="50%" /&gt;
+]
+]
 
 `usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
 
@@ -209,13 +219,9 @@ language: r
 cache: packages
 ```
 
-To enable Travis CI go to [Travis-ci.com](https://travis-ci.com/) and Sign up with GitHub.
+GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
 
-On Travis CI the user needs to select the repositories on which to activate the continuous integration.
-
-Then GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
-
-A badge indicating the CI status can be integrated in the `README.md`.
+A badge indicating the CI status can be integrated in the `README.md`. INCLUDE HTML OF THE SHINY APP BADGE
 
 ---
 
@@ -247,15 +253,11 @@ Each feature branch provides an additional incremental value to the product, pot
 
 ## Issues, Projects and Pull Requests
 
-New development items are usually recorded on GitHub as Issues.
-
-[How to create a new Issue](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue)
+New development items are usually recorded on GitHub as [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue).
 
 Issues can be managed via visual boards by creating a [project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) on GitHub.
 
-The deveopment associated with each issue should, in principle, occurr in a separate `feature` branch, for the separation of concerns between different developments. 
-
-[How to create a new branch](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository)
+The deveopment associated with each issue should, in principle, occurr in a separate `feature` [branch](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository), for the separation of concerns between different developments. 
 
 Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
