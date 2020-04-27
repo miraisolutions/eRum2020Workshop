@@ -114,3 +114,15 @@ p.caption {
 .fontsize08 {
   font-size: 0.8em;
 }
+
+
+/* Inverse Two-column layout */
+.inverse-left-column {
+  width: 80%;
+  float: left;
+}
+
+.inverse-right-column {
+  width: 20%;
+  float: right;
+}

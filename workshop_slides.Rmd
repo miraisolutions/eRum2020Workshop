@@ -56,40 +56,56 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 ---
 
 class: inverse center middle
-## At the beginning there was a Shiny app
+## The XXX Shiny app
 
 ---
 
 ## Shiny app
+Our starting point is the XXX Shiny app that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
 
-Describe Starting point Productive object → Shiny app 
-Is an existing simple production ready package available on GitHub they can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo).
+SUMMARY OF VANLOG's WORKSHOP APP FEATURES
 
-Packaged Shiny app XXX that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
-
-Summary of Vanlog’s workshop app
+It is a simple, production-ready package available on GitHub that you can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo). No need to have attended the other workshop for this.
 
 ---
 
 ## How to Fork
 
-Instructions to make a [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) on GitHub
-
+.pull-left[
 A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
 
 LINK TO THE FORK BUTTON IN THE CORRECT REPO
 
+Instructions to make a [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) on GitHub.
+]
+
+.pull-right[
+```{r eval = TRUE, echo = FALSE, out.width = "30%", out.extra='style="position:absolute;"'}
+knitr::include_graphics("./img/fork.001.png")
+```
+]
+
 ---
 
-## Project structure
+## Project Structure
 
-The project is a Shiny app structured as a package. 
+.inverse-left-column[
+The project is a Shiny app structured as a package. A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
+]
 
-Summary of Vanlog’s workshop main points.
+.inverse-right-column[
+.pull-middle[
+```{r eval = TRUE, echo = FALSE, out.width = "50%"}
+knitr::include_graphics("./img/golem.png")
+```
+]
+]
+
+&nbsp;
+&nbsp;
+&nbsp;
 
 It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD checks`, etc.).
-
-A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
 
 A packaged Shiny app can also take advantage of:
 
@@ -259,7 +275,7 @@ knitr::include_graphics("./img/project-board.png")
 
 ---
 
-## Pull Requests and branches control
+## Pull Requests and Branches Control
 
 It is important that the code is checked before it is merged back into the main development to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
 
@@ -498,7 +514,7 @@ According to the Gitflow approach, no work should be pushed directly to `master`
 
 ---
 
-## How to do a release 1
+## How to Do a Release 1
 
 - Create a release branch (e.g. `release/v2.0.0`) from `develop`.
 
@@ -517,7 +533,7 @@ Example
 
 ---
 
-## How to do a release 2
+## How to Do a Release 2
 
 - Create a new release tag on master (on [GitHub Code > releases > Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
   - Tag version: v1.0.1
