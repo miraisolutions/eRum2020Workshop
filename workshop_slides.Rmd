@@ -114,12 +114,12 @@ A packaged Shiny app can also take advantage of:
 
 ---
 
-## Package Structure
+## Review: Package Structure
 
 *"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
 
 Such a structure gives us some useful functionalities, such as unit testing and documentation.
-Moreover we can rely on  built-in features to automatically check the code (R CMD Check)
+Moreover we can rely on  built-in features to automatically check the code (`R CMD Check`).
 
 ```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
 knitr::include_graphics("./img/package_structure.png")
@@ -129,33 +129,41 @@ knitr::include_graphics("./img/package_structure.png")
 
 ## Production Ready
 
-Being Production Ready means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
+Being **Production Ready** means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
 
 By automating building and testing processes, the pipeline to production ensures:
 
-  - Security  
-  - Quality  
-  - Stability  
-  
-Production is not a fixed object, but a continuous improvement cycle.
+.pull-left[
 
+- Security  
+- Quality  
+- Stability  
+
+&nbsp;
+
+**Production is not a fixed object, but a continuous improvement cycle.**
+
+PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.g. INCOMPLETE DOCUMENTATION) AND THEY NEED TO FIX THIS.
+]
+
+.pull-right[
 ```{r eval = TRUE, echo = FALSE, out.width = "35%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
 knitr::include_graphics("./img/devCycle.001.png")
 ```
-
-Practical example: Running R CMD Check discover documentation is incomplete (they need to fix it).
+]
 
 ---
 
 ## Best Practices
 
-Modularize your code. (functions and package structure in R)
+- Modularize your code. (functions and package structure in R)
+- Have your building blocks general and flexible.
+- Make your code robust with automated testing.
+- Trace your work with a version control system
 
-Have your building blocks general and flexible.
-
-Make your code robust with automated testing.
-
-Trace your work with a version control system
+```{r eval = TRUE, echo = FALSE, out.width = "55%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+knitr::include_graphics("./img/best_practices.001.png")
+```
 
 ---
 
