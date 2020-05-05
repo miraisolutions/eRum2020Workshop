@@ -360,7 +360,7 @@ knitr::include_graphics("./img/github-actions.png")
 
 Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
 
-Compared to Travis CI, in GitHub Actions each step here needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
+Compared to Travis CI, in GitHub Actions each step needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
 
 ---
 
@@ -543,13 +543,25 @@ Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the
 
 The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
 
+```{r eval = TRUE, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("./img/shinyapps.io.tokens.png")
+```
+
 ---
 
 ## Automatic Deployment with Travis CI
 
 Equivalently, automated deployment can be integrated on Travis CI. We leave this to you as an exercise.
 
-You can have a look at out techguides for support.
+You can have a look at our techguides for support.
+
+ADD LINK TO TECHGUIDES
+
+<!-- ```{r eval = TRUE, echo = FALSE, out.width = "100%"} -->
+<!-- knitr::include_graphics("./img/techguides-travis.png") -->
+<!-- ``` -->
+
+<iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
 
 ---
 
@@ -599,6 +611,10 @@ Example
 Final product and release
 
 Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
+
+ADD LINK TO FINAL PRODUCT
+
+<iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
 
 ---
 

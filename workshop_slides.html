@@ -4,7 +4,7 @@
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
     <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
-    <meta name="date" content="2020-04-28" />
+    <meta name="date" content="2020-05-05" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
 ### Francesca Vitalini, Riccardo Porreca
-### 2020-04-28
+### 2020-05-05
 
 ---
 
@@ -336,11 +336,11 @@ class: inverse center middle
 
 Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
 
-Compared to Travis CI, in GitHub Actions each step here needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
+Compared to Travis CI, in GitHub Actions each step needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
 
 ---
 
-## Generic CI Pipeline
+## Generic CI/CD Pipeline
 
 Generally speaking, a CI pipleline for an R package is comprised of the following steps:
 
@@ -388,18 +388,18 @@ To install an R package we should first take care of its dependencies. This mean
 
 ```yaml
 # Query and cache R package dependencies
-      - name: Query dependencies
-        run: |
-          install.packages("remotes")
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
-                  "depends.Rds", version = 2)
-        shell: Rscript {0}
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-
+- name: Query dependencies
+  run: |
+  install.packages("remotes")
+  saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
+          "depends.Rds", version = 2)
+  shell: Rscript {0}
+- name: Cache R packages
+  uses: actions/cache@v1
+  with:
+    path: ${{ env.R_LIBS_USER }}
+    key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
+    restore-keys: ${{ runner.os }}-r-
 ```
 
 ---
@@ -410,10 +410,11 @@ Then the package can be installed
 
 
 ```yaml
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
+
+- name: Install dependencies
+  run: |
+  remotes::install_deps(dependencies = TRUE)
+  shell: Rscript {0}
 ```
 
 ---
@@ -424,19 +425,19 @@ To run automatic checks it is necessary to explicitely request to run `rcmdcheck
 
 
 ```yaml
-      - name: Install rcmdcheck
-        run: |
-          remotes::install_cran(c("rcmdcheck"))
-        shell: Rscript {0}
+- name: Install rcmdcheck
+  run: |
+    remotes::install_cran(c("rcmdcheck"))
+  shell: Rscript {0}
 
-      - name: Check package
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", 
-                                  error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
+- name: Check package
+  run: rcmdcheck::rcmdcheck(args = "--no-manual", 
+                            error_on = "warning", check_dir = "check")
+  shell: Rscript {0}
 ```
 
 
-LIVE: Link to tech guides.
+LIVE: LINK TO TECHGUIDES
 
 ---
 
@@ -521,13 +522,23 @@ Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the
 
 The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
 
+&lt;img src="./img/shinyapps.io.tokens.png" width="100%" /&gt;
+
 ---
 
 ## Automatic Deployment with Travis CI
 
 Equivalently, automated deployment can be integrated on Travis CI. We leave this to you as an exercise.
 
-You can have a look at out techguides for support.
+You can have a look at our techguides for support.
+
+ADD LINK TO TECHGUIDES
+
+&lt;!-- ```{r eval = TRUE, echo = FALSE, out.width = "100%"} --&gt;
+&lt;!-- knitr::include_graphics("./img/techguides-travis.png") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"&gt;&lt;/iframe&gt;
 
 ---
 
@@ -578,6 +589,10 @@ Example
 Final product and release
 
 Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
+
+ADD LINK TO FINAL PRODUCT
+
+&lt;iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"&gt;&lt;/iframe&gt;
 
 ---
 
