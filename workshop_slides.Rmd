@@ -161,7 +161,7 @@ knitr::include_graphics("./img/devCycle.001.png")
 - Make your code robust with automated testing.
 - Trace your work with a version control system
 
-```{r eval = TRUE, echo = FALSE, out.width = "55%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
 knitr::include_graphics("./img/best_practices.001.png")
 ```
 
@@ -171,13 +171,18 @@ knitr::include_graphics("./img/best_practices.001.png")
 
 A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
 
+.pull-left[
 Usually changes are not tracked just locally, but on a server to ensure against local failures and to integrate the track changes of multiple developers.
 
 A version control system is the starting point for collaborative work.
+]
 
-```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+.pull-right[
+```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:120px;right:70px;"'}
 knitr::include_graphics("./img/version-control.001.png")
 ```
+]
+
 
 ---
 
@@ -203,9 +208,9 @@ knitr::include_graphics("./img/git.png")
 
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
 
-Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check` before committing.
+Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check`, before committing.
 
-LIVE: Make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
+LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT WANT TO RELY ON PEOPLE RUNNING CHECKS MANUALLY BEFORE COMMITTING.
 
 ```{r eval = TRUE, echo = FALSE, out.width = "60%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
 knitr::include_graphics("./img/R-CMD-checks.png")
@@ -237,6 +242,9 @@ cache: packages
 GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
 
 A badge indicating the CI status can be integrated in the `README.md`. INCLUDE HTML OF THE SHINY APP BADGE
+
+[![Travis build
+status](https://travis-ci.com/miraisolutions/ShinyCICD.svg?branch=master)](https://travis-ci.com/miraisolutions/ShinyCICD)
 
 ---
 
@@ -275,7 +283,11 @@ The deveopment associated with each issue should, in principle, occurr in a sepa
 
 Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
-LIVE: fix issue on the branch --> make a pull request to merge this into the main branch
+LIVE: FIX ISSUR ON A BRANCH --> MAKE PULL REQUEST TO MERGE THIS INTO THE MAIN BRANCH
+
+```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+knitr::include_graphics("./img/project-board.png")
+```
 
 ---
 
@@ -283,8 +295,8 @@ LIVE: fix issue on the branch --> make a pull request to merge this into the mai
 
 Gitflow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
 
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
-knitr::include_graphics("./img/project-board.png")
+```{r eval = TRUE, echo = FALSE, out.width = "65%", out.extra='style="position:absolute;bottom:40px;right:50px;"'}
+knitr::include_graphics("./img/agile_dev.001.png")
 ```
 
 ---
@@ -296,20 +308,24 @@ It is important that the code is checked before it is merged back into the main 
 - [request a reviewer on each pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
 - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging to `master` or `develop`.
 
-LIVE show how to set branches controls
-LIVE show checks passing before merging
+LIVE SHOW HOW TO SET BRENCHES CONTROLS
+LIVE SHOW CHECKS PASSING BEFORE MERGING.
+
+```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+knitr::include_graphics("./img/branches-control.001.png")
+```
 
 ---
 
 ## Deployment shinyapps.io
 
-Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/)), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
+Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
 
 [Setup a shinyapp.io account](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)
 
 [Deployment of an application from RStudio](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-a-sample-application)
 
-LIVE: Manual deployment → check all works
+LIVE: MANUAL DEPLOYMENT → CHECK ALL WORKS
 
 ```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
 knitr::include_graphics("./img/shinyappsio.png")
@@ -324,15 +340,31 @@ class: inverse center middle
 
 ## GitHub Actions
 
+.inverse-left-column[
 [GitHub Actions](https://help.github.com/en/actions) is a service for completely customizable, GitHub integrated workflow, including CI and CD executions.
+
 [Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
+]
+
+.inverse-right-column[
+.pull-middle[
+```{r eval = TRUE, echo = FALSE, out.width = "60%"}
+knitr::include_graphics("./img/github-actions.png")
+```
+]
+]
+
+&nbsp;
+&nbsp;
+&nbsp;
+
 Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
 
 Compared to Travis CI, in GitHub Actions each step here needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
 
 ---
 
-## Generic CI Pipeline
+## Generic CI/CD Pipeline
 
 Generally speaking, a CI pipleline for an R package is comprised of the following steps:
 
@@ -378,18 +410,18 @@ To install an R package we should first take care of its dependencies. This mean
 
 ```{yaml, eval = F}
 # Query and cache R package dependencies
-      - name: Query dependencies
-        run: |
-          install.packages("remotes")
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
-                  "depends.Rds", version = 2)
-        shell: Rscript {0}
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-
+- name: Query dependencies
+  run: |
+  install.packages("remotes")
+  saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
+          "depends.Rds", version = 2)
+  shell: Rscript {0}
+- name: Cache R packages
+  uses: actions/cache@v1
+  with:
+    path: ${{ env.R_LIBS_USER }}
+    key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
+    restore-keys: ${{ runner.os }}-r-
 ```
 
 ---
@@ -399,10 +431,11 @@ To install an R package we should first take care of its dependencies. This mean
 Then the package can be installed
 
 ```{yaml, eval = F}
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
+
+- name: Install dependencies
+  run: |
+  remotes::install_deps(dependencies = TRUE)
+  shell: Rscript {0}
 ```
 
 ---
@@ -412,19 +445,19 @@ Then the package can be installed
 To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
 
 ```{yaml, eval = F}
-      - name: Install rcmdcheck
-        run: |
-          remotes::install_cran(c("rcmdcheck"))
-        shell: Rscript {0}
+- name: Install rcmdcheck
+  run: |
+    remotes::install_cran(c("rcmdcheck"))
+  shell: Rscript {0}
 
-      - name: Check package
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", 
-                                  error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
+- name: Check package
+  run: rcmdcheck::rcmdcheck(args = "--no-manual", 
+                            error_on = "warning", check_dir = "check")
+  shell: Rscript {0}
 ```
 
 
-LIVE: Link to tech guides.
+LIVE: LINK TO TECHGUIDES
 
 ---
 

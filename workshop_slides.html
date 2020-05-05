@@ -4,7 +4,7 @@
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
     <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
-    <meta name="date" content="2020-04-27" />
+    <meta name="date" content="2020-04-28" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
 ### Francesca Vitalini, Riccardo Porreca
-### 2020-04-27
+### 2020-04-28
 
 ---
 
@@ -155,7 +155,7 @@ PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.
 - Make your code robust with automated testing.
 - Trace your work with a version control system
 
-&lt;img src="./img/best_practices.001.png" width="55%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+&lt;img src="./img/best_practices.001.png" width="50%" style="position:absolute;bottom:60px;right:50px;" /&gt;
 
 ---
 
@@ -163,11 +163,16 @@ PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.
 
 A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
 
+.pull-left[
 Usually changes are not tracked just locally, but on a server to ensure against local failures and to integrate the track changes of multiple developers.
 
 A version control system is the starting point for collaborative work.
+]
 
-&lt;img src="./img/version-control.001.png" width="40%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+.pull-right[
+&lt;img src="./img/version-control.001.png" width="40%" style="position:absolute;bottom:120px;right:70px;" /&gt;
+]
+
 
 ---
 
@@ -191,9 +196,9 @@ Git is a very common, free and open source version control system, designed to b
 
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
 
-Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check` before committing.
+Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check`, before committing.
 
-LIVE: Make an example that looks innocuous but fails. One does not want to rely on people manually running checks before committing.
+LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT WANT TO RELY ON PEOPLE RUNNING CHECKS MANUALLY BEFORE COMMITTING.
 
 &lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
 
@@ -222,6 +227,9 @@ cache: packages
 GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
 
 A badge indicating the CI status can be integrated in the `README.md`. INCLUDE HTML OF THE SHINY APP BADGE
+
+[![Travis build
+status](https://travis-ci.com/miraisolutions/ShinyCICD.svg?branch=master)](https://travis-ci.com/miraisolutions/ShinyCICD)
 
 ---
 
@@ -261,7 +269,9 @@ The deveopment associated with each issue should, in principle, occurr in a sepa
 
 Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
-LIVE: fix issue on the branch --&gt; make a pull request to merge this into the main branch
+LIVE: FIX ISSUR ON A BRANCH --&gt; MAKE PULL REQUEST TO MERGE THIS INTO THE MAIN BRANCH
+
+&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:60px;right:50px;" /&gt;
 
 ---
 
@@ -269,7 +279,7 @@ LIVE: fix issue on the branch --&gt; make a pull request to merge this into the 
 
 Gitflow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
 
-&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+&lt;img src="./img/agile_dev.001.png" width="65%" style="position:absolute;bottom:40px;right:50px;" /&gt;
 
 ---
 
@@ -280,20 +290,22 @@ It is important that the code is checked before it is merged back into the main 
 - [request a reviewer on each pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
 - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging to `master` or `develop`.
 
-LIVE show how to set branches controls
-LIVE show checks passing before merging
+LIVE SHOW HOW TO SET BRENCHES CONTROLS
+LIVE SHOW CHECKS PASSING BEFORE MERGING.
+
+&lt;img src="./img/branches-control.001.png" width="50%" style="position:absolute;bottom:60px;right:50px;" /&gt;
 
 ---
 
 ## Deployment shinyapps.io
 
-Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/)), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
+Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
 
 [Setup a shinyapp.io account](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)
 
 [Deployment of an application from RStudio](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-a-sample-application)
 
-LIVE: Manual deployment → check all works
+LIVE: MANUAL DEPLOYMENT → CHECK ALL WORKS
 
 &lt;img src="./img/shinyappsio.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
@@ -306,8 +318,22 @@ class: inverse center middle
 
 ## GitHub Actions
 
+.inverse-left-column[
 [GitHub Actions](https://help.github.com/en/actions) is a service for completely customizable, GitHub integrated workflow, including CI and CD executions.
+
 [Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
+]
+
+.inverse-right-column[
+.pull-middle[
+&lt;img src="./img/github-actions.png" width="60%" /&gt;
+]
+]
+
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;
+
 Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
 
 Compared to Travis CI, in GitHub Actions each step here needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
