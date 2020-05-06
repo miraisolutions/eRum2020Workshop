@@ -555,12 +555,6 @@ Equivalently, automated deployment can be integrated on Travis CI. We leave this
 
 You can have a look at our techguides for support.
 
-ADD LINK TO TECHGUIDES
-
-<!-- ```{r eval = TRUE, echo = FALSE, out.width = "100%"} -->
-<!-- knitr::include_graphics("./img/techguides-travis.png") -->
-<!-- ``` -->
-
 <iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
 
 ---
@@ -570,6 +564,10 @@ ADD LINK TO TECHGUIDES
 A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a specific chunck of development. Each new release determines a new version (minor or major) of the software.
 
 According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
+
+```{r eval = TRUE, echo = FALSE, out.width = "20%", out.extra='style="position:absolute;bottom:100px;right:70px;"'}
+knitr::include_graphics("./img/release.001.png")
+```
 
 ---
 
@@ -608,11 +606,9 @@ Example
 
 ## Conclusions
 
-Final product and release
-
 Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
 
-ADD LINK TO FINAL PRODUCT
+REPLACE LINK TO FINAL PRODUCT
 
 <iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
 
