@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Bring your R Application Safely to Production.</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
+    <meta name="date" content="2020-05-06" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Bring your R Application Safely to Production.
+## Collaborate, Deploy, Automate.
+### Francesca Vitalini, Riccardo Porreca
+### 2020-05-06
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;&lt;span&gt;Copyright (c) 2020&lt;/span&gt;&lt;/div&gt; 
+
+---
+
+![devCycle](./img/MiraiApr19_full.jpg)
+
+&lt;br&gt;
+
+### Bring ideas to life.
+### Smart. Agile. Personal.
+
+&lt;img src="./img/mirai-solutions-logo-flyer.png" width="50%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
+## Workshop Overview
+
+- Fork the starting point package and Shiny app
+- Version control
+- Automating controls on Travis CI
+- **Break**
+- Gitflow
+- Agile development
+- Pull requests and branches control
+- Deploymnet on shinyapps.io
+- **Break**
+- GitHub Actions
+- Automatic Deployment
+- Release
+- Conclusions
+
+---
+
+class: inverse center middle
+## The XXX Shiny app
+
+---
+
+## Shiny app
+Our starting point is the XXX Shiny app that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
+
+SUMMARY OF VANLOG's WORKSHOP APP FEATURES
+
+It is a simple, production-ready package available on GitHub that you can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo). No need to have attended the other workshop for this.
+
+---
+
+## How to Fork
+
+.pull-left[
+A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
+
+LINK TO THE FORK BUTTON IN THE CORRECT REPO
+
+Instructions to make a [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) on GitHub.
+]
+
+.pull-right[
+&lt;img src="./img/fork.001.png" width="30%" style="position:absolute;" /&gt;
+]
+
+---
+
+## Project Structure
+
+.inverse-left-column[
+The project is a Shiny app structured as a package. A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
+]
+
+.inverse-right-column[
+.pull-middle[
+&lt;img src="./img/golem.png" width="50%" /&gt;
+]
+]
+
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;
+
+It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD checks`, etc.).
+
+A packaged Shiny app can also take advantage of:
+
+- Continuous Integration (CI) pipelines to automate checks and ensure higher code quality and robustness;
+- Continuous Deployment (CD) pipelines to automate the process of deployment to a productive environment.
+
+---
+
+## Review: Package Structure
+
+*"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
+
+Such a structure gives us some useful functionalities, such as unit testing and documentation.
+Moreover we can rely on  built-in features to automatically check the code (`R CMD Check`).
+
+&lt;img src="./img/package_structure.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
+## Production Ready
+
+Being **Production Ready** means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
+
+By automating building and testing processes, the pipeline to production ensures:
+
+.pull-left[
+
+- Security  
+- Quality  
+- Stability  
+
+&amp;nbsp;
+
+**Production is not a fixed object, but a continuous improvement cycle.**
+
+PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.g. INCOMPLETE DOCUMENTATION) AND THEY NEED TO FIX THIS.
+]
+
+.pull-right[
+&lt;img src="./img/devCycle.001.png" width="35%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+]
+
+---
+
+## Best Practices
+
+- Modularize your code. (functions and package structure in R)
+- Have your building blocks general and flexible.
+- Make your code robust with automated testing.
+- Trace your work with a version control system
+
+&lt;img src="./img/best_practices.001.png" width="50%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+
+---
+
+## Version Control
+
+A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
+
+.pull-left[
+Usually changes are not tracked just locally, but on a server to ensure against local failures and to integrate the track changes of multiple developers.
+
+A version control system is the starting point for collaborative work.
+]
+
+.pull-right[
+&lt;img src="./img/version-control.001.png" width="40%" style="position:absolute;bottom:120px;right:70px;" /&gt;
+]
+
+
+---
+
+## Git
+
+Git is a very common, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows.
+
+[git documentation](https://git-scm.com/doc)
+
+- [`git commit`](https://git-scm.com/docs/git-commit): Records changes to the repository
+
+- [`git push`](https://git-scm.com/docs/git-push): Updates remote refs using local refs.
+
+- [`git pull`](https://git-scm.com/docs/git-pull): Incorporates changes from a remote repository into the current branch. 
+
+&lt;img src="./img/git.png" width="80%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+---
+
+## Automating Controls
+
+Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
+
+Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check`, before committing.
+
+LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT WANT TO RELY ON PEOPLE RUNNING CHECKS MANUALLY BEFORE COMMITTING.
+
+&lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+---
+
+## Travis CI
+
+.inverse-left-column[
+[Travis CI](https://travis-ci.com/) is an open-source hosted continuous integration service that can be used to build and test software projects hosted on GitHub.
+]
+
+.inverse-right-column[
+.pull-middle[
+&lt;img src="./img/TravisCI.png" width="50%" /&gt;
+]
+]
+
+`usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
+
+
+```yaml
+language: r
+cache: packages
+```
+
+GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
+
+A badge indicating the CI status can be integrated in the `README.md`. INCLUDE HTML OF THE SHINY APP BADGE
+
+[![Travis build
+status](https://travis-ci.com/miraisolutions/ShinyCICD.svg?branch=master)](https://travis-ci.com/miraisolutions/ShinyCICD)
+
+---
+
+class: inverse center middle
+# Break
+
+---
+
+## Gitflow
+
+.pull-left[
+[Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) is a standard setup that allows a collaborative development, while assuring the safety of the released product.
+
+According to the Gitflow approach, the central repo holds two main branches with an infinite lifetime:
+
+- `master`: reflects a production-ready state.
+- `develop`: reflects a state with the latest delivered developments for the next release.
+
+Each feature branch provides an additional incremental value to the product, potentially ready for deployment. ]
+
+.pull-right[
+&lt;div class="figure"&gt;
+&lt;img src="./img/gitflow.png" alt="https://nvie.com/posts/a-successful-git-branching-model/" width="90%" /&gt;
+&lt;p class="caption"&gt;https://nvie.com/posts/a-successful-git-branching-model/&lt;/p&gt;
+&lt;/div&gt;
+]
+
+---
+
+## Issues, Projects and Pull Requests
+
+New development items are usually recorded on GitHub as [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue).
+
+Issues can be managed via visual boards by creating a [project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) on GitHub.
+
+The deveopment associated with each issue should, in principle, occurr in a separate `feature` [branch](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository), for the separation of concerns between different developments. 
+
+Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+
+LIVE: FIX ISSUR ON A BRANCH --&gt; MAKE PULL REQUEST TO MERGE THIS INTO THE MAIN BRANCH
+
+&lt;img src="./img/project-board.png" width="80%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+
+---
+
+## Agile Development
+
+Gitflow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
+
+&lt;img src="./img/agile_dev.001.png" width="65%" style="position:absolute;bottom:40px;right:50px;" /&gt;
+
+---
+
+## Pull Requests and Branches Control
+
+It is important that the code is checked before it is merged back into the main development to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
+
+- [request a reviewer on each pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+- [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging to `master` or `develop`.
+
+LIVE SHOW HOW TO SET BRENCHES CONTROLS
+LIVE SHOW CHECKS PASSING BEFORE MERGING.
+
+&lt;img src="./img/branches-control.001.png" width="50%" style="position:absolute;bottom:60px;right:50px;" /&gt;
+
+---
+
+## Deployment shinyapps.io
+
+Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
+
+[Setup a shinyapp.io account](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)
+
+[Deployment of an application from RStudio](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-a-sample-application)
+
+LIVE: MANUAL DEPLOYMENT → CHECK ALL WORKS
+
+&lt;img src="./img/shinyappsio.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
+class: inverse center middle
+# Break
+
+---
+
+## GitHub Actions
+
+.inverse-left-column[
+[GitHub Actions](https://help.github.com/en/actions) is a service for completely customizable, GitHub integrated workflow, including CI and CD executions.
+
+[Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
+]
+
+.inverse-right-column[
+.pull-middle[
+&lt;img src="./img/github-actions.png" width="60%" /&gt;
+]
+]
+
+&amp;nbsp;
+&amp;nbsp;
+&amp;nbsp;
+
+Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
+
+Compared to Travis CI, in GitHub Actions each step needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
+
+---
+
+## Generic CI/CD Pipeline
+
+Generally speaking, a CI pipleline for an R package is comprised of the following steps:
+
+- define system environment
+- install R
+- chaching system environment
+- check out the package
+- install package dependencies
+- chaching dependencies
+- install package
+- run checks
+- caching build
+- deploy
+
+---
+
+## CI Workflow in GitHub Actions - check out the package
+
+The workflow runs upon push commands and pull requests on the `master` branch, which is the default. It uses the predefined and built in action `checkout@v2` to check out the R package.
+
+
+```yaml
+# Check on push and pull requests to master
+on: [push, pull_request]
+
+# Name of the workflow
+name: CI
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+```
+
+---
+
+## CI Workflow in GitHub Actions - manage dependencies
+
+To install an R package we should first take care of its dependencies. This means checking them out and making sure they are cached for future builds.
+
+
+```yaml
+# Query and cache R package dependencies
+- name: Query dependencies
+  run: |
+  install.packages("remotes")
+  saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
+          "depends.Rds", version = 2)
+  shell: Rscript {0}
+- name: Cache R packages
+  uses: actions/cache@v1
+  with:
+    path: ${{ env.R_LIBS_USER }}
+    key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
+    restore-keys: ${{ runner.os }}-r-
+```
+
+---
+
+## CI Workflow in GitHub Actions - install the package
+
+Then the package can be installed
+
+
+```yaml
+
+- name: Install dependencies
+  run: |
+  remotes::install_deps(dependencies = TRUE)
+  shell: Rscript {0}
+```
+
+---
+
+## CI Workflow in GitHub Actions - run automatic checks
+
+To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
+
+
+```yaml
+- name: Install rcmdcheck
+  run: |
+    remotes::install_cran(c("rcmdcheck"))
+  shell: Rscript {0}
+
+- name: Check package
+  run: rcmdcheck::rcmdcheck(args = "--no-manual", 
+                            error_on = "warning", check_dir = "check")
+  shell: Rscript {0}
+```
+
+
+LIVE: LINK TO TECHGUIDES
+
+---
+
+## DevOps
+
+.pull-left[
+**Goals**
+- Achieve faster time to production
+- Enable more frequent deployments
+- Lower failure rate of new releases
+- Shorten lead time between fixes
+- Enhance collaboration between groups
+]
+
+.pull-right[
+**Challenges**
+- Mindset and Culture
+- Security
+- Responsibility
+]
+
+
+&lt;img src="./img/devops.001.png" width="50%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+---
+
+## DevOps - Benefits
+
+- Development via small work items increases the speed of development and improves its quality.
+- Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
+- Version controlled development ensures traceability and repeatability of the development.
+- Collaboration and an agile approach are keys to a functional production pipeline.
+- Building, testing and deploying discrete development components improve confidence in the final product.
+
+&lt;br&gt;
+
+.pull-middle[
+**DevOps is a culture. Tools can enable it.**
+
+&lt;br&gt;
+
+.fontsize08[
+Note:
+Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
+]
+
+]
+
+---
+
+## Automatic Deployment
+
+Part of DevOps is to streamline the deployment process. 
+Adding the deployment is another step in a `CI-CD` job. 
+Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the package `rsconnect`, so it is necessary to install it explicitely.
+
+
+```yaml
+      - name: Install dependencies
+        run: |
+          remotes::install_cran(c("rsconnect"))
+        shell: Rscript {0}
+        
+      - name: Deploy to shinyapps.io
+        if: github.ref == 'refs/heads/master'
+        env:
+          SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: |
+          account_info &lt;- lapply(paste0("SHINYAPPS_", 
+                                c("ACCOUNT", "TOKEN", "SECRET")), 
+                                Sys.getenv)
+          do.call(rsconnect::setAccountInfo, account_info)
+          rsconnect::deployApp(appName = "ShinyCICD")
+        shell: Rscript {0}
+```
+
+---
+
+## Tokens &amp; Secrets
+
+The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
+
+&lt;img src="./img/shinyapps.io.tokens.png" width="100%" /&gt;
+
+---
+
+## Automatic Deployment with Travis CI
+
+Equivalently, automated deployment can be integrated on Travis CI. We leave this to you as an exercise.
+
+You can have a look at our techguides for support.
+
+&lt;iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"&gt;&lt;/iframe&gt;
+
+---
+
+## Release
+
+A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a specific chunck of development. Each new release determines a new version (minor or major) of the software.
+
+According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
+
+&lt;img src="./img/release.001.png" width="20%" style="position:absolute;bottom:100px;right:70px;" /&gt;
+
+---
+
+## How to Do a Release 1
+
+- Create a release branch (e.g. `release/v2.0.0`) from `develop`.
+
+- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
+
+Example
+
+
+```r
+1.0.0 release preps
+- Closes #XYZ Updated report.
+```
+
+- Update package version (NEWS.md and DESCRIPTION files in R).
+
+- Create and merge a new pull request release/v2.0.0 →  master,  where the `closes XXX` are in the pull request comment.
+
+---
+
+## How to Do a Release 2
+
+- Create a new release tag on master (on [GitHub Code &gt; releases &gt; Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
+  - Tag version: v1.0.1
+  - Release title: packagename 1.0.1
+  - Body: Paste as comment the list of changes in `NEWS.md`
+  - Click on "Publish release"
+
+- Create a new pull request and merge release/v2.0.0  →  develop
+
+- Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
+
+---
+
+## Conclusions
+
+Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
+
+REPLACE LINK TO FINAL PRODUCT
+
+&lt;iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"&gt;&lt;/iframe&gt;
+
+---
+
+## Next Steps
+
+Next Steps, technical info → close workshop
+
+---
+
+## Get in Touch
+
+
+**Other Services by Mirai solutions:**
+
+- Training customized to your business case - technical and agile topics
+- Data Analytics &amp; Software development: from your needs to a functional implementation
+- Infrastructure design, managment and maintenace
+
+**Get in touch:**
+- LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
+- email info@mirai-solutions.com
+- website www.mirai-solutions.com
+
+&lt;img src="./img/mirai-solutions-logo-flyer.png" width="40%" style="position:absolute;bottom:80px;right:50px;" /&gt;
+
+---
+
+class: inverse center middle
+# Thank you!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%/%total%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
