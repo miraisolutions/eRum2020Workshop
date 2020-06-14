@@ -11,7 +11,7 @@ In this hands-on 3-hours session we will:
 - highlight the benefits of versioning your R code with Git and GitHub;
 - show how to set up automated controls of your development on Travis CI, leveraging unit tests and R’s built-in package checks for Continuous Integration (CI);
 - discuss effective branching models, pull requests and branch protection on GitHub, an approach especially important in a collaborative environment;
-- demonstrate how to set up Continuous Deployment (CD) of packaged applications via Travis CI/GitHub Actions.
+- demonstrate how to set up Continuous Deployment (CD) of packaged applications via Travis CI / GitHub Actions.
 
 A simple R package with a Shiny app will be used as a running example to lay out a full workflow for stable, secure, reproducible deployments and releases.
 
