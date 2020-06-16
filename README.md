@@ -23,18 +23,25 @@ This workshop is the natural continuation of "Is R ready for Production? Let’s
 
 ### Prerequisites
 
-- A GitHub account is necessary for the workshop, also make sure you have its password ad hand.
-- A local installation of R >= 3.6.x, ideally R 4.0.x
+It is important that you **go through the following prerequisites before the workshop**, and feel free to contact us using the workshop's dedicated e-Rum2020 Slack channel if you have questions or issues.
+
+- A GitHub account is necessary for the workshop: also make sure you have its password ad hand
+- Git must be installed on your computer
 - A recent version of RStudio (>= 1.2) is recommended
-- Package pre-installation via renv (**not yet available**):
-    - Create a new RStudio project from https://github.com/miraisolutions/eRum2020Workshop-setup
+- R installation: R >= 3.6.x, ideally R 4.0.x
+- Packages pre-installation:
+    - Create a new RStudio project from the repo (https://github.com/miraisolutions/eRum2020Workshop-prereqs)
       ```
       File > New Project... > Version Control > Git
       ```
     - Once in the new project, run at the R console
-      ```r
-      renv::restore()
+      ``` r
+      install.packages(c("remotes", "renv"))
+      remotes::install_deps()
+      renv::activate()
+      renv::restore() # you can ignore warnings about a different R version
       ```
 - To make working with Git easier, you can optionally install additional tools we will mention in the workshop
     - [compareWith](https://github.com/miraisolutions/compareWith#readme) R package
     - [Sublime Merge](https://www.sublimemerge.com)
+    
