@@ -1,8 +1,8 @@
 ---
 title: "Bring your R Application Safely to Production."
 subtitle: "Collaborate, Deploy, Automate."
-author: "Francesca Vitalini, Riccardo Porreca"
-date: "`r Sys.Date()`"
+author: "Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)"
+date: "e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -16,6 +16,8 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(eval = FALSE)
+with_excluded <- FALSE
 ```
 
 layout: true
@@ -28,6 +30,8 @@ layout: true
 
 <br>
 
+TODO: add something more, at least the stickers like in MiraiLabs1 (incl. compareWith)
+
 ### Bring ideas to life.
 ### Smart. Agile. Personal.
 
@@ -37,21 +41,61 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 ---
 
+## Your Miraiers for the day
+
+.pull-left[
+
+### Riccardo
+
+- Senior Solutions Consultant
+- Compute Science / Automatic Control Engineer by education
+- Academia :: Matlab<br/>
+  => Mirai :: R (and more)
+- R enthusiast since then
+- Analytics in enterprise environment
+- Open source projects
+
+]
+
+.pull-right[
+### Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+
+]
+
+<br/>
+.center[
+#### With VanLog's support: Andrea Melloncelli
+]
+---
+
 ## Workshop Overview
 
-- Fork the starting point package and Shiny app
-- Version control
-- Automating controls on Travis CI
+- Introduction
+- Working example: packaged Shiny app on GitHub
+- Automated checks on Travis CI
 - **Break**
-- Gitflow
-- Agile development
-- Pull requests and branches control
-- Deploymnet on shinyapps.io
+- GitFlow, Branch control and pull requests
+- Agile approach and release
+- Setup shinyapps.io + manual deployment
 - **Break**
-- GitHub Actions
-- Automatic Deployment
-- Release
-- Conclusions
+- GitHub Actions workflows
+- Continuous Deployment
+- More full-cycle playground 
+- Wrap-up
+
+(Meant to be) **loosely-coupled**
+
+Concepts and principles not tailored to Shiny apps and specific tools / services
+
+
+## Workshop Pre-Requisites
+
+# Take from finalized README
 
 ---
 
@@ -60,17 +104,110 @@ class: inverse center middle
 
 ---
 
-## Shiny app
-Our starting point is the XXX Shiny app that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
+## Shiny app development
 
-SUMMARY OF VANLOG's WORKSHOP APP FEATURES
+Shiny web apps target: deployed and made accessible
 
-It is a simple, production-ready package available on GitHub that you can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo). No need to have attended the other workshop for this.
+- Development (app code)
+- ...
+- Deployed app (today: shinyapps.io)
+
+Fill the dots:
+- Safety checks and controls
+- Collaboration and planning
+- Automate!
+
+Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
 
 ---
 
-## How to Fork
+## Head start: Packaged Shiny app on GitHub
 
+Shiny app developed as **R package**
+
+- Best place for R functions to live in => modularization
+- Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
+- Package ([`golem`](https://thinkr-open.github.io/golem) providing development framework<br/>
+  golem : Shiny = devtools : R package
+- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Run the app: install the package and call a function!
+
+**Production readiness**
+
+- How to ensure it is maintained, regularly checked and ensured?
+- How to control what is deployed to "production" (the live app)?
+
+Version-control
+
+- GitHub is the _de facto_ standard for open source (R) projects.
+
+---
+
+## Running example
+
+- (The app developed during the morning workshop)
+- A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
+
+   - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD/fork) it to your GitHub user account.
+
+**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-workshop) as a **new RStudio project**.
+
+```
+File > New Project... > Version Control > Git
+```
+
+---
+
+## `renv` dependencies
+
+The project is based on [renv](https://rstudio.github.io/renv)
+
+- Project-specific dependencies are tracked via an `renv.lock` file (+ `.Rprofile` and `renv/`)
+- Ensure the set of dependencies is collaboratively shared an maintained (and can be used to align production deployments)
+- When you open the project (and a new R session starts), `renv` detects the project dependencies are out of sync
+  ```{r}
+  renv::status()
+  renv::restore()
+  ```
+
+--
+
+**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+```r
+renv::snapshot()
+```
+What changes (check the Git pane)? Should you commit the modifications?
+
+---
+
+## Install the package, run the app!
+
+RStudio's Build Pane
+
+- Install and Restart (Ctrl+Shift+B)
+
+Then, launching the app is just about calling a function from the package:
+
+```{r}
+shinyCICD::run_app()
+```
+
+Easy, isn't it?
+
+- Dependencies under control (esp. with distributed users)
+- No need to source the app code (one the package is installed, the source package code does not even matter!)
+
+Speed up in a development workflow
+
+- `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
+    - might require `renv::install("devtools")`
+- `golem::document_and_reload()` includes a few extras (`help()`)
+
+---
+exclude: `r with_excluded`
+
+## (How to Fork)
 .pull-left[
 A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
 
