@@ -32,7 +32,7 @@ layout: true
 - Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
 - 100 years of cumulative professional experience in financial services / insurance, software engineering, and professional training
 
-### Bring ideas to life.
+### Bringing ideas to life.
 ### Smart. Agile. Personal.
 
 ```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
@@ -60,7 +60,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - Academia :: Matlab<br/>
   => Mirai :: R (and more)
 - R enthusiast since then
-- Analytics in enterprise environment
+- Analytics in enterprise environments
 - Open source projects
 ]
 
@@ -70,7 +70,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - Ecologist by education
 - Using R since many years,<br/>
   first for statistics, now lots more
-- Analytics in enterprise environment
+- Analytics in enterprise environments
 - Interest in machine and deep learning
 ]
 
