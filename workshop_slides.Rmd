@@ -48,7 +48,7 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 ### Riccardo
 
 - Senior Solutions Consultant
-- Compute Science / Automatic Control Engineer by education
+- Computer Science / Automatic Control Engineer by education
 - Academia :: Matlab<br/>
   => Mirai :: R (and more)
 - R enthusiast since then
@@ -59,11 +59,12 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 .pull-right[
 ### Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
+- Solutions Consultant
+- Ecologist by education
+- Using R since many years,<br/>
+  first for statistics, now lots more
+- Analytics in enterprise environment
+- Interest in machine an deep learning
 
 ]
 
