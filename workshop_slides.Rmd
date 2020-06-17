@@ -71,7 +71,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - Using R since many years,<br/>
   first for statistics, now lots more
 - Analytics in enterprise environment
-- Interest in machine an deep learning
+- Interest in machine and deep learning
 ]
 
 <br/>
