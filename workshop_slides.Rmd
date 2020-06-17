@@ -69,8 +69,12 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 <br/>
 .center[
+
 #### With VanLog's support: Andrea Melloncelli
+
 ]
+
+
 ---
 
 ## Workshop Overview
@@ -121,7 +125,7 @@ Head start: Morning workshop "_Is R ready for Production? Let’s develop a Prof
 
 ---
 
-## Head start: Packaged Shiny app on GitHub
+### Head start: Packaged Shiny app on GitHub
 
 Shiny app developed as **R package**
 
@@ -151,7 +155,7 @@ Version-control
    - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
    - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD/fork) it to your GitHub user account.
 
-**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-workshop) as a **new RStudio project**.
+**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-min) as a **new RStudio project**.
 
 ```
 File > New Project... > Version Control > Git
@@ -201,7 +205,7 @@ Easy, isn't it?
 Speed up in a development workflow
 
 - `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
-    - might require `renv::install("devtools")`
+    - might require `install.packages("devtools")`
 - `golem::document_and_reload()` includes a few extras (`help()`)
 
 ---
@@ -223,8 +227,9 @@ knitr::include_graphics("./img/fork.001.png")
 ]
 
 ---
+exclude: `r with_excluded`
 
-## Project Structure
+## (Project Structure)
 
 .inverse-left-column[
 The project is a Shiny app structured as a package. A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
@@ -242,7 +247,7 @@ knitr::include_graphics("./img/golem.png")
 &nbsp;
 &nbsp;
 
-It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD checks`, etc.).
+It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD check`, etc.).
 
 A packaged Shiny app can also take advantage of:
 
@@ -250,21 +255,23 @@ A packaged Shiny app can also take advantage of:
 - Continuous Deployment (CD) pipelines to automate the process of deployment to a productive environment.
 
 ---
+exclude: `r with_excluded`
 
-## Review: Package Structure
+## (Review: Package Structure)
 
 *"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
 
 Such a structure gives us some useful functionalities, such as unit testing and documentation.
-Moreover we can rely on  built-in features to automatically check the code (`R CMD Check`).
+Moreover we can rely on  built-in features to automatically check the code (`R CMD check`).
 
 ```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
 knitr::include_graphics("./img/package_structure.png")
 ```
 
 ---
+exclude: `r with_excluded`
 
-## Production Ready
+## (Production Ready)
 
 Being **Production Ready** means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
 
@@ -290,6 +297,7 @@ knitr::include_graphics("./img/devCycle.001.png")
 ]
 
 ---
+exclude: `r with_excluded`
 
 ## Best Practices
 
@@ -303,6 +311,7 @@ knitr::include_graphics("./img/best_practices.001.png")
 ```
 
 ---
+exclude: `r with_excluded`
 
 ## Version Control
 
@@ -325,23 +334,39 @@ knitr::include_graphics("./img/version-control.001.png")
 
 ## Git
 
-Git is a very common, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows.
+Git is a popular, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows. With GitHub hosting, it is the _de facto_ standard for open source (R) projects
 
-[git documentation](https://git-scm.com/doc)
+- Stage ([`git add`](https://git-scm.com/docs/git-commit)) changes: Prepare the content for the next commit
+- Commit [`git commit`](https://git-scm.com/docs/git-commit): Record staged changes to the current branch
+- Push [`git push`](https://git-scm.com/docs/git-push): Update remote repository using the local branch
+- Pull [`git pull`](https://git-scm.com/docs/git-pull): Incorporate changes from a remote repository into the current local branch
 
-- [`git commit`](https://git-scm.com/docs/git-commit): Records changes to the repository
+Resources
+- [Git documentation](https://git-scm.com/doc)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/), Jenny Bryan, Jim Hester
+- [Git and GitHub](http://r-pkgs.had.co.nz/git.html), R packages, Hadley Wickham
 
-- [`git push`](https://git-scm.com/docs/git-push): Updates remote refs using local refs.
 
-- [`git pull`](https://git-scm.com/docs/git-pull): Incorporates changes from a remote repository into the current branch. 
 
 ```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
-knitr::include_graphics("./img/git.png")
+# knitr::include_graphics("./img/git.png")
 ```
+
 
 ---
 
-## Automating Controls
+## R's package check suite
+
+- `R CMD check` built into R (and conveniently accessed via `devtools::check()`, `rcmdcheck::rcmdcheck()`)
+- RStudio: `Build Pane` > `Check`
+
+Everything should be fine. If the check get stuck, it might be due to issues with renv on Windows. Possible to fall-back on renv-free setup and still follow the rest of the workshop: `renv::deactivate()`, then delete `renv.lock` and the `renv` folder.
+
+
+
+---
+
+## (Automating Controls)
 
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
 
@@ -352,6 +377,66 @@ LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT W
 ```{r eval = TRUE, echo = FALSE, out.width = "60%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
 knitr::include_graphics("./img/R-CMD-checks.png")
 ```
+
+---
+
+### Automated checks on Travis (1)
+
+Setup Travis CI to automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
+
+- Login at https://travis-ci.com/ (using your GitHub account)
+- Activate authorization via GitHub Apps integration.
+
+---
+
+### Automated checks on Travis (2)
+
+- Setup Travis for your project 
+  ```{r}
+  usethis::use_travis() # ext = "com" for usethis < 1.6.0
+  ```
+- This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
+- Look at the R console and the Git diffs: what files were changed by `usethis::use_travis()`? (don't commit changes yet)
+
+--
+
+Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r).
+
+Align R _major_._minor_ version to the project setup (spaces matter!)
+```yaml
+r:
+  - 4.0 # or 3.6
+```
+Use `renv` to restore dependencies:
+- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette.
+
+---
+
+### Automated check on Travis (3)
+
+```yml
+language: R
+r:
+  - 4.0 # or 3.6
+cache:
+  directories:
+  - $HOME/.local/share/renv
+  - $TRAVIS_BUILD_DIR/renv/library
+install:
+  - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
+  - Rscript -e "renv::restore()"
+
+```
+
+**Commit & push** all changes
+
+- Go to the GitHub repo
+  - You can use `usethis::browse_github()`
+  - Do you find any indication of the CI status for the commit?
+- This will trigger the first run on Travis, which can take >~10 minutes
+- Future runs will be much faster thanks to caching caching. 
+- The run should be successful.
+
 
 ---
 
@@ -371,7 +456,7 @@ knitr::include_graphics("./img/TravisCI.png")
 
 `usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
 
-```{yaml, eval = FALSE}
+```yaml
 language: r
 cache: packages
 ```
@@ -522,7 +607,7 @@ Generally speaking, a CI pipleline for an R package is comprised of the followin
 
 The workflow runs upon push commands and pull requests on the `master` branch, which is the default. It uses the predefined and built in action `checkout@v2` to check out the R package.
 
-```{yaml, eval = F}
+```yaml
 # Check on push and pull requests to master
 on: [push, pull_request]
 
@@ -545,7 +630,7 @@ jobs:
 
 To install an R package we should first take care of its dependencies. This means checking them out and making sure they are cached for future builds.
 
-```{yaml, eval = F}
+```yaml
 # Query and cache R package dependencies
 - name: Query dependencies
   run: |
@@ -567,7 +652,7 @@ To install an R package we should first take care of its dependencies. This mean
 
 Then the package can be installed
 
-```{yaml, eval = F}
+```yaml
 
 - name: Install dependencies
   run: |
@@ -581,7 +666,7 @@ Then the package can be installed
 
 To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
 
-```{yaml, eval = F}
+```yaml
 - name: Install rcmdcheck
   run: |
     remotes::install_cran(c("rcmdcheck"))
@@ -653,7 +738,7 @@ Part of DevOps is to streamline the deployment process.
 Adding the deployment is another step in a `CI-CD` job. 
 Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the package `rsconnect`, so it is necessary to install it explicitely.
 
-```{yaml, eval = F}
+```yaml
       - name: Install dependencies
         run: |
           remotes::install_cran(c("rsconnect"))
@@ -769,7 +854,7 @@ Next Steps, technical info → close workshop
 **Get in touch:**
 - LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
 - email info@mirai-solutions.com
-- website www.mirai-solutions.com
+- website https://mirai-solutions.ch
 
 ```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:80px;right:50px;"'}
 knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")

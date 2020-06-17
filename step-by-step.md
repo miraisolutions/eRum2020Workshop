@@ -2,33 +2,73 @@
 
 ## Detailed workshop steps
 
-### Fork from GitHub
+### Initial setup
 
-### Version Control
+#### Fork from GitHub
 
-Changes on README
+Fork the starting-point repository https://github.com/miraisolutions/ShinyCICD-workshop/fork to your 
+GitHub user account.
 
-Commit
 
-Push
+#### RStudio project setup
 
-### Check package
-
-```r
-R CMD check
+Clone the forked repo (https://github.com/&lt;user&gt;/ShinyCICD-workshop) as a new RStudio project
+```
+File > New Project... > Version Control > Git
 ```
 
-Fix documentation, rerun checks, see that passes
+#### Restore renv package dependencies
+
+```r
+renv::status()
+renv::restore()
+```
+
+If you see a warning about
+```
+Project requested R version '4.0.z' but '3.6.x' is currently being used
+```
+this is not a big deal: align the R version in the lockfile via
+```r
+renv::snapshot()
+```
+
+#### Adapt the README to your forked repo
+
+Diff: RStudio, compareWith, Sublime Merge
+
+```r
+renv::install("miraisolutions/comparewith")
+```
+
+Stage > Commit > Push
+
+#### Package check suite
+
+Build Pane: Check
+
+Everything should be fine. If the check get stuck, it might be due to issues with renv on Windows. Possible to fall-back on renv-free setup and still follow the rest of the workshop: `renv::deactivate()`, then delete `renv.lock` and the `renv` folder.
+
+
+#### Trigger a failure
+
+TBD
 
 ### Automated checks on Travis
 
-Setup Travis CI to automate testing (and package-level checks in general) for continuous integration, triggered upon any push event on the GitHub repo. You need to first login at https://travis-ci.com/ (using your GitHub account)
+Setup Travis CI to automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
 
-- Setup Travis via `usethis::use_travis(ext = "com")`
-- This will open your browser to allow you enabling access to the repo
-- Commit & push the generated `.travis.yaml` file.
+- Login at https://travis-ci.com/ (using your GitHub account)
+- Activate authorization via GitHub Apps integration (see [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial)).
+- Setup Travis for your project 
+  ```r
+  usethis::use_travis() # ext = "com" for usethis < 1.6.0
+  ```
+- This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
+- Setup package dependencies `cache` and `install` for `renv`, and fix the R _major_._minor_ version
+- Commit & push the generated `.travis.yaml` along with the `.Rbuildignore` file, as well as the updated README with the Travis badge.
 
-This will trigger the first run on Travis, which might take > 5 minutes (future runs will be much faster for caching). The run should be successful.
+This will trigger the first run on Travis, which can take ~10 minutes (future runs will be much faster thanks to caching caching). The run should be successful.
 
 
 ### New functionality
@@ -40,6 +80,11 @@ Commit.
 Push.
 
 Failing Checks.
+
+``` r
+#' @param varaible The name of the [Old Faithful geyser][faithful] variable to
+#'   use.
+```
 
 ### GitFlow setup
 

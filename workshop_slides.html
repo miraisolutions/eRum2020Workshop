@@ -3,8 +3,7 @@
   <head>
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
-    <meta name="date" content="2020-05-06" />
+    <meta name="author" content="Riccardo Porreca, Peter Schmid  (Francesca Vitalini)" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -14,8 +13,8 @@ class: center, middle, inverse, title-slide
 
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
-### Francesca Vitalini, Riccardo Porreca
-### 2020-05-06
+### Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)
+### e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST
 
 ---
 
@@ -32,6 +31,8 @@ layout: true
 
 &lt;br&gt;
 
+TODO: add something more, at least the stickers like in MiraiLabs1 (incl. compareWith)
+
 ### Bring ideas to life.
 ### Smart. Agile. Personal.
 
@@ -39,21 +40,65 @@ layout: true
 
 ---
 
+## Your Miraiers for the day
+
+.pull-left[
+
+### Riccardo
+
+- Senior Solutions Consultant
+- Compute Science / Automatic Control Engineer by education
+- Academia :: Matlab&lt;br/&gt;
+  =&gt; Mirai :: R (and more)
+- R enthusiast since then
+- Analytics in enterprise environment
+- Open source projects
+
+]
+
+.pull-right[
+### Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+- few bullets about Peter
+
+]
+
+&lt;br/&gt;
+.center[
+
+#### With VanLog's support: Andrea Melloncelli
+
+]
+
+
+---
+
 ## Workshop Overview
 
-- Fork the starting point package and Shiny app
-- Version control
-- Automating controls on Travis CI
+- Introduction
+- Working example: packaged Shiny app on GitHub
+- Automated checks on Travis CI
 - **Break**
-- Gitflow
-- Agile development
-- Pull requests and branches control
-- Deploymnet on shinyapps.io
+- GitFlow, Branch control and pull requests
+- Agile approach and release
+- Setup shinyapps.io + manual deployment
 - **Break**
-- GitHub Actions
-- Automatic Deployment
-- Release
-- Conclusions
+- GitHub Actions workflows
+- Continuous Deployment
+- More full-cycle playground 
+- Wrap-up
+
+(Meant to be) **loosely-coupled**
+
+Concepts and principles not tailored to Shiny apps and specific tools / services
+
+
+## Workshop Pre-Requisites
+
+# Take from finalized README
 
 ---
 
@@ -62,17 +107,112 @@ class: inverse center middle
 
 ---
 
-## Shiny app
-Our starting point is the XXX Shiny app that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
+## Shiny app development
 
-SUMMARY OF VANLOG's WORKSHOP APP FEATURES
+Shiny web apps target: deployed and made accessible
 
-It is a simple, production-ready package available on GitHub that you can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo). No need to have attended the other workshop for this.
+- Development (app code)
+- ...
+- Deployed app (today: shinyapps.io)
+
+Fill the dots:
+- Safety checks and controls
+- Collaboration and planning
+- Automate!
+
+Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
 
 ---
 
-## How to Fork
+### Head start: Packaged Shiny app on GitHub
 
+Shiny app developed as **R package**
+
+- Best place for R functions to live in =&gt; modularization
+- Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
+- Package ([`golem`](https://thinkr-open.github.io/golem) providing development framework&lt;br/&gt;
+  golem : Shiny = devtools : R package
+- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Run the app: install the package and call a function!
+
+**Production readiness**
+
+- How to ensure it is maintained, regularly checked and ensured?
+- How to control what is deployed to "production" (the live app)?
+
+Version-control
+
+- GitHub is the _de facto_ standard for open source (R) projects.
+
+---
+
+## Running example
+
+- (The app developed during the morning workshop)
+- A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
+
+   - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD/fork) it to your GitHub user account.
+
+**_Clone_** locally your forked repo (https://github.com/&amp;lt;user&amp;gt;/ShinyCICD-min) as a **new RStudio project**.
+
+```
+File &gt; New Project... &gt; Version Control &gt; Git
+```
+
+---
+
+## `renv` dependencies
+
+The project is based on [renv](https://rstudio.github.io/renv)
+
+- Project-specific dependencies are tracked via an `renv.lock` file (+ `.Rprofile` and `renv/`)
+- Ensure the set of dependencies is collaboratively shared an maintained (and can be used to align production deployments)
+- When you open the project (and a new R session starts), `renv` detects the project dependencies are out of sync
+  
+  ```r
+  renv::status()
+  renv::restore()
+  ```
+
+--
+
+**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+```r
+renv::snapshot()
+```
+What changes (check the Git pane)? Should you commit the modifications?
+
+---
+
+## Install the package, run the app!
+
+RStudio's Build Pane
+
+- Install and Restart (Ctrl+Shift+B)
+
+Then, launching the app is just about calling a function from the package:
+
+
+```r
+shinyCICD::run_app()
+```
+
+Easy, isn't it?
+
+- Dependencies under control (esp. with distributed users)
+- No need to source the app code (one the package is installed, the source package code does not even matter!)
+
+Speed up in a development workflow
+
+- `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
+    - might require `renv::install("devtools")`
+- `golem::document_and_reload()` includes a few extras (`help()`)
+
+---
+exclude: FALSE
+
+## (How to Fork)
 .pull-left[
 A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
 
@@ -86,8 +226,9 @@ Instructions to make a [fork](https://help.github.com/en/github/getting-started-
 ]
 
 ---
+exclude: FALSE
 
-## Project Structure
+## (Project Structure)
 
 .inverse-left-column[
 The project is a Shiny app structured as a package. A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
@@ -103,7 +244,7 @@ The project is a Shiny app structured as a package. A simple development workflo
 &amp;nbsp;
 &amp;nbsp;
 
-It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD checks`, etc.).
+It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD check`, etc.).
 
 A packaged Shiny app can also take advantage of:
 
@@ -111,19 +252,21 @@ A packaged Shiny app can also take advantage of:
 - Continuous Deployment (CD) pipelines to automate the process of deployment to a productive environment.
 
 ---
+exclude: FALSE
 
-## Review: Package Structure
+## (Review: Package Structure)
 
 *"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
 
 Such a structure gives us some useful functionalities, such as unit testing and documentation.
-Moreover we can rely on  built-in features to automatically check the code (`R CMD Check`).
+Moreover we can rely on  built-in features to automatically check the code (`R CMD check`).
 
 &lt;img src="./img/package_structure.png" width="80%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
+exclude: FALSE
 
-## Production Ready
+## (Production Ready)
 
 Being **Production Ready** means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
 
@@ -147,6 +290,7 @@ PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.
 ]
 
 ---
+exclude: FALSE
 
 ## Best Practices
 
@@ -158,6 +302,7 @@ PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.
 &lt;img src="./img/best_practices.001.png" width="50%" style="position:absolute;bottom:60px;right:50px;" /&gt;
 
 ---
+exclude: FALSE
 
 ## Version Control
 
@@ -178,21 +323,37 @@ A version control system is the starting point for collaborative work.
 
 ## Git
 
-Git is a very common, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows.
+Git is a popular, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows. With GitHub hosting, it is the _de facto_ standard for open source (R) projects
 
-[git documentation](https://git-scm.com/doc)
+- Stage ([`git add`](https://git-scm.com/docs/git-commit)) changes: Prepare the content for the next commit
+- Commit [`git commit`](https://git-scm.com/docs/git-commit): Record staged changes to the current branch
+- Push [`git push`](https://git-scm.com/docs/git-push): Update remote repository using the local branch
+- Pull [`git pull`](https://git-scm.com/docs/git-pull): Incorporate changes from a remote repository into the current local branch
 
-- [`git commit`](https://git-scm.com/docs/git-commit): Records changes to the repository
+Resources
+- [Git documentation](https://git-scm.com/doc)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/), Jenny Bryan, Jim Hester
+- [Git and GitHub](http://r-pkgs.had.co.nz/git.html), R packages, Hadley Wickham
 
-- [`git push`](https://git-scm.com/docs/git-push): Updates remote refs using local refs.
 
-- [`git pull`](https://git-scm.com/docs/git-pull): Incorporates changes from a remote repository into the current branch. 
 
-&lt;img src="./img/git.png" width="80%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+
 
 ---
 
-## Automating Controls
+## R's package check suite
+
+- `R CMD check` built into R (and conveniently accessed via `devtools::check()`, `rcmdcheck::rcmdcheck()`)
+- RStudio: `Build Pane` &gt; `Check`
+
+Everything should be fine. If the check get stuck, it might be due to issues with renv on Windows. Possible to fall-back on renv-free setup and still follow the rest of the workshop: `renv::deactivate()`, then delete `renv.lock` and the `renv` folder.
+
+
+
+---
+
+## (Automating Controls)
 
 Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
 
@@ -201,6 +362,67 @@ Automating the checks means not having to relay on people applying best practice
 LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT WANT TO RELY ON PEOPLE RUNNING CHECKS MANUALLY BEFORE COMMITTING.
 
 &lt;img src="./img/R-CMD-checks.png" width="60%" style="position:absolute;bottom:50px;right:50px;" /&gt;
+
+---
+
+### Automated checks on Travis (1)
+
+Setup Travis CI to automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
+
+- Login at https://travis-ci.com/ (using your GitHub account)
+- Activate authorization via GitHub Apps integration.
+
+---
+
+### Automated checks on Travis (2)
+
+- Setup Travis for your project 
+  
+  ```r
+  usethis::use_travis() # ext = "com" for usethis &lt; 1.6.0
+  ```
+- This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
+- Look at the R console and the Git diffs: what files were changed by `usethis::use_travis()`? (don't commit changes yet)
+
+--
+
+Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r).
+
+Align R _major_._minor_ version to the project setup (spaces matter!)
+```yaml
+r:
+  - 4.0 # or 3.6
+```
+Use `renv` to restore dependencies:
+- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette.
+
+---
+
+### Automated check on Travis (3)
+
+```yml
+language: R
+r:
+  - 4.0 # or 3.6
+cache:
+  directories:
+  - $HOME/.local/share/renv
+  - $TRAVIS_BUILD_DIR/renv/library
+install:
+  - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
+  - Rscript -e "renv::restore()"
+
+```
+
+**Commit &amp; push** all changes
+
+- Go to the GitHub repo
+  - You can use `usethis::browse_github()`
+  - Do you find any indication of the CI status for the commit?
+- This will trigger the first run on Travis, which can take &gt;~10 minutes
+- Future runs will be much faster thanks to caching caching. 
+- The run should be successful.
+
 
 ---
 
@@ -217,7 +439,6 @@ LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT W
 ]
 
 `usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
-
 
 ```yaml
 language: r
@@ -361,7 +582,6 @@ Generally speaking, a CI pipleline for an R package is comprised of the followin
 
 The workflow runs upon push commands and pull requests on the `master` branch, which is the default. It uses the predefined and built in action `checkout@v2` to check out the R package.
 
-
 ```yaml
 # Check on push and pull requests to master
 on: [push, pull_request]
@@ -385,7 +605,6 @@ jobs:
 
 To install an R package we should first take care of its dependencies. This means checking them out and making sure they are cached for future builds.
 
-
 ```yaml
 # Query and cache R package dependencies
 - name: Query dependencies
@@ -408,7 +627,6 @@ To install an R package we should first take care of its dependencies. This mean
 
 Then the package can be installed
 
-
 ```yaml
 
 - name: Install dependencies
@@ -422,7 +640,6 @@ Then the package can be installed
 ## CI Workflow in GitHub Actions - run automatic checks
 
 To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
-
 
 ```yaml
 - name: Install rcmdcheck
@@ -493,7 +710,6 @@ Infrastructure can also follow a continuous delivery philosophy (Infrastructure 
 Part of DevOps is to streamline the deployment process. 
 Adding the deployment is another step in a `CI-CD` job. 
 Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the package `rsconnect`, so it is necessary to install it explicitely.
-
 
 ```yaml
       - name: Install dependencies
@@ -608,7 +824,7 @@ Next Steps, technical info → close workshop
 **Get in touch:**
 - LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
 - email info@mirai-solutions.com
-- website www.mirai-solutions.com
+- website https://mirai-solutions.ch
 
 &lt;img src="./img/mirai-solutions-logo-flyer.png" width="40%" style="position:absolute;bottom:80px;right:50px;" /&gt;
 
@@ -666,30 +882,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
