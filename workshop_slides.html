@@ -3,8 +3,7 @@
   <head>
     <title>Bring your R Application Safely to Production.</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Francesca Vitalini, Riccardo Porreca" />
-    <meta name="date" content="2020-05-06" />
+    <meta name="author" content="Riccardo Porreca, Peter Schmid  (Francesca Vitalini)" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
@@ -14,8 +13,8 @@ class: center, middle, inverse, title-slide
 
 # Bring your R Application Safely to Production.
 ## Collaborate, Deploy, Automate.
-### Francesca Vitalini, Riccardo Porreca
-### 2020-05-06
+### Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)
+### e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST
 
 ---
 
@@ -30,30 +29,77 @@ layout: true
 
 ![devCycle](./img/MiraiApr19_full.jpg)
 
-&lt;br&gt;
+- Interdisciplinary team of data scientists, software engineers and IT architects
+- Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
+- 100 years of cumulative professional experience in financial services / insurance, software engineering, and professional training
 
-### Bring ideas to life.
+### Bringing ideas to life.
 ### Smart. Agile. Personal.
 
 &lt;img src="./img/mirai-solutions-logo-flyer.png" width="50%" style="position:absolute;bottom:100px;right:50px;" /&gt;
 
 ---
 
+## Mirai Solutions contributions
+- Involved in organizing eRum 2020
+- Eager contributors to open source projects
+
+&lt;img src="./img/sticker-pyramid.png" width="55%" style="position:absolute;bottom:80px;right:50px;" /&gt;
+
+---
+
+## Your Miraiers for the day
+
+.pull-left[
+### Riccardo
+- Senior Solutions Consultant
+- Computer Science / Automatic Control Engineer by education
+- Academia :: Matlab&lt;br/&gt;
+  =&gt; Mirai :: R (and more)
+- R enthusiast since then
+- Analytics in enterprise environments
+- Open source projects
+]
+
+.pull-right[
+### Peter
+- Solutions Consultant
+- Ecologist by education
+- Using R since many years,&lt;br/&gt;
+  first for statistics, now lots more
+- Analytics in enterprise environments
+- Interest in machine and deep learning
+]
+
+&lt;br/&gt;
+.center[
+#### With VanLog's support: Andrea Melloncelli
+]
+---
+
 ## Workshop Overview
 
-- Fork the starting point package and Shiny app
-- Version control
-- Automating controls on Travis CI
+- Introduction
+- Working example: packaged Shiny app on GitHub
+- Automated checks on Travis CI
 - **Break**
-- Gitflow
-- Agile development
-- Pull requests and branches control
-- Deploymnet on shinyapps.io
+- GitFlow, Branch control and pull requests
+- Agile approach and release
+- Setup shinyapps.io + manual deployment
 - **Break**
-- GitHub Actions
-- Automatic Deployment
-- Release
-- Conclusions
+- GitHub Actions workflows
+- Continuous Deployment
+- More full-cycle playground 
+- Wrap-up
+
+(Meant to be) **loosely-coupled**
+
+Concepts and principles not tailored to Shiny apps and specific tools / services
+
+
+## Workshop Pre-Requisites
+
+# Take from finalized README
 
 ---
 
@@ -62,17 +108,112 @@ class: inverse center middle
 
 ---
 
-## Shiny app
-Our starting point is the XXX Shiny app that has been built in the workshop "Is R ready for Production? Let’s develop a Professional Shiny Application!"
+## Shiny app development
 
-SUMMARY OF VANLOG's WORKSHOP APP FEATURES
+Shiny web apps target: deployed and made accessible
 
-It is a simple, production-ready package available on GitHub that you can [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo). No need to have attended the other workshop for this.
+- Development (app code)
+- ...
+- Deployed app (today: shinyapps.io)
+
+Fill the dots:
+- Safety checks and controls
+- Collaboration and planning
+- Automate!
+
+Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
 
 ---
 
-## How to Fork
+## Head start: Packaged Shiny app on GitHub
 
+Shiny app developed as **R package**
+
+- Best place for R functions to live in =&gt; modularization
+- Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
+- Package ([`golem`](https://thinkr-open.github.io/golem) providing development framework&lt;br/&gt;
+  golem : Shiny = devtools : R package
+- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Run the app: install the package and call a function!
+
+**Production readiness**
+
+- How to ensure it is maintained, regularly checked and ensured?
+- How to control what is deployed to "production" (the live app)?
+
+Version-control
+
+- GitHub is the _de facto_ standard for open source (R) projects.
+
+---
+
+## Running example
+
+- (The app developed during the morning workshop)
+- A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
+
+   - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD/fork) it to your GitHub user account.
+
+**_Clone_** locally your forked repo (https://github.com/&amp;lt;user&amp;gt;/ShinyCICD-workshop) as a **new RStudio project**.
+
+```
+File &gt; New Project... &gt; Version Control &gt; Git
+```
+
+---
+
+## `renv` dependencies
+
+The project is based on [renv](https://rstudio.github.io/renv)
+
+- Project-specific dependencies are tracked via an `renv.lock` file (+ `.Rprofile` and `renv/`)
+- Ensure the set of dependencies is collaboratively shared an maintained (and can be used to align production deployments)
+- When you open the project (and a new R session starts), `renv` detects the project dependencies are out of sync
+  
+  ```r
+  renv::status()
+  renv::restore()
+  ```
+
+--
+
+**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+```r
+renv::snapshot()
+```
+What changes (check the Git pane)? Should you commit the modifications?
+
+---
+
+## Install the package, run the app!
+
+RStudio's Build Pane
+
+- Install and Restart (Ctrl+Shift+B)
+
+Then, launching the app is just about calling a function from the package:
+
+
+```r
+shinyCICD::run_app()
+```
+
+Easy, isn't it?
+
+- Dependencies under control (esp. with distributed users)
+- No need to source the app code (one the package is installed, the source package code does not even matter!)
+
+Speed up in a development workflow
+
+- `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
+    - might require `renv::install("devtools")`
+- `golem::document_and_reload()` includes a few extras (`help()`)
+
+---
+exclude: FALSE
+
+## (How to Fork)
 .pull-left[
 A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
 
@@ -666,30 +807,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {
