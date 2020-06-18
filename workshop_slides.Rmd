@@ -28,11 +28,11 @@ layout: true
 
 ![devCycle](./img/MiraiApr19_full.jpg)
 
-<br>
+- Interdisciplinary team of data scientists, software engineers and IT architects
+- Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
+- 100 years of cumulative professional experience in financial services / insurance, software engineering, and professional training
 
-TODO: add something more, at least the stickers like in MiraiLabs1 (incl. compareWith)
-
-### Bring ideas to life.
+### Bringing ideas to life.
 ### Smart. Agile. Personal.
 
 ```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
@@ -41,30 +41,37 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 ---
 
+## Mirai Solutions contributions
+- Involved in organizing eRum 2020
+- Eager contributors to open source projects
+
+```{r eval = TRUE, echo = FALSE, out.width = "55%", out.extra='style="position:absolute;bottom:80px;right:50px;"'}
+knitr::include_graphics("./img/sticker-pyramid.png")
+```
+
+---
+
 ## Your Miraiers for the day
 
 .pull-left[
-
 ### Riccardo
-
 - Senior Solutions Consultant
-- Compute Science / Automatic Control Engineer by education
+- Computer Science / Automatic Control Engineer by education
 - Academia :: Matlab<br/>
   => Mirai :: R (and more)
 - R enthusiast since then
-- Analytics in enterprise environment
+- Analytics in enterprise environments
 - Open source projects
-
 ]
 
 .pull-right[
 ### Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
-- few bullets about Peter
-
+- Solutions Consultant
+- Environmental scientist by education
+- Using R since many years,<br/>
+  first for statistics, now lots more
+- Analytics in enterprise environments
+- Passionate about machine and deep learning
 ]
 
 <br/>
@@ -864,4 +871,3 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 class: inverse center middle
 # Thank you!
-
