@@ -12,6 +12,7 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       slideNumberFormat: "%current%/%total%"
+      ratio: 16:9
 ---
 
 ```{r setup, include=FALSE}
@@ -30,7 +31,7 @@ layout: true
 
 - Interdisciplinary team of data scientists, software engineers and IT architects
 - Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
-- 100 years of cumulative professional experience in financial services / insurance, software engineering, and professional training
+- 100+ years of cumulative professional experience in financial services / insurance, software engineering, and professional training
 
 ### Bringing ideas to life.
 ### Smart. Agile. Personal.
@@ -41,11 +42,12 @@ knitr::include_graphics("./img/mirai-solutions-logo-flyer.png")
 
 ---
 
-## Mirai Solutions contributions
-- Involved in organizing eRum 2020
+## Mirai Solutions
+
+- Involved in organizing e-Rum2020
 - Eager contributors to open source projects
 
-```{r eval = TRUE, echo = FALSE, out.width = "55%", out.extra='style="position:absolute;bottom:80px;right:50px;"'}
+```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:80px;right:100px;"'}
 knitr::include_graphics("./img/sticker-pyramid.png")
 ```
 
@@ -57,8 +59,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 ### Riccardo
 - Senior Solutions Consultant
 - Computer Science / Automatic Control Engineer by education
-- Academia :: Matlab<br/>
-  => Mirai :: R (and more)
+- Academia :: Matlab => Mirai :: R (and more)
 - R enthusiast since then
 - Analytics in enterprise environments
 - Open source projects
@@ -68,56 +69,86 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 ### Peter
 - Solutions Consultant
 - Environmental scientist by education
-- Using R since many years,<br/>
+- Using R since many years,
   first for statistics, now lots more
 - Analytics in enterprise environments
 - Passionate about machine and deep learning
 ]
 
-<br/>
-.center[
+--
 
-#### With VanLog's support: Andrea Melloncelli
+.center[
+#### With VanLog's support: 
+### Andrea Melloncelli
+]
+
+
+---
+
+## Workshop overview
+
+.pull-left[
+- Working example: packaged Shiny app on GitHub
+- Automated checks on Travis CI
+- **Break**
+- GitFlow, branch control and pull requests
+- Agile approach and release
+- Setup shinyapps.io for deployment
+- **Break**
+- GitHub Actions workflows
+- Continuous Deployment
+- More full-cycle playground 
+]
+
+--
+
+.pull-right[
+
+- (Meant to be) **loosely-coupled**
+
+- **Hands-on**
+
+  - First: Observe, learn, understand
+  - Then: Do!
+
+- Concepts and principles not tailored to Shiny apps and specific tools / services
 
 ]
 
 
 ---
 
-## Workshop Overview
+## Workshop prerequisites
 
-- Introduction
-- Working example: packaged Shiny app on GitHub
-- Automated checks on Travis CI
-- **Break**
-- GitFlow, Branch control and pull requests
-- Agile approach and release
-- Setup shinyapps.io + manual deployment
-- **Break**
-- GitHub Actions workflows
-- Continuous Deployment
-- More full-cycle playground 
-- Wrap-up
+- A GitHub account is necessary for the workshop: also make sure you have its password at hand
 
-(Meant to be) **loosely-coupled**
+- Git must be installed on your computer
 
-Concepts and principles not tailored to Shiny apps and specific tools / services
+- A recent version of RStudio (>= 1.2) is recommended
 
+- R installation: R >= 3.6.x, ideally R 4.0.x
 
-## Workshop Pre-Requisites
+- Packages pre-installation: 
+  - https://github.com/miraisolutions/eRum2020Workshop-prereqs#readme
 
-# Take from finalized README
+- Optional Git-related tools
+
+  - [compareWith](https://github.com/miraisolutions/compareWith#readme) R package
+  - [Sublime Merge](https://www.sublimemerge.com)
+
 
 ---
 
-class: inverse center middle
-## The XXX Shiny app
+## (Shiny) App development cycle
 
----
+Target "Production": deployed and made accessible
 
-## Shiny app development
+.pull-right[
+```{r eval = TRUE, echo = FALSE, out.width = "35%", out.extra='style="position:absolute;top:60px;right:50px;"'}
+knitr::include_graphics("./img/devCycle.001.png")
+```
+]
 
-Shiny web apps target: deployed and made accessible
 
 - Development (app code)
 - ...
@@ -128,18 +159,18 @@ Fill the dots:
 - Collaboration and planning
 - Automate!
 
-Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
+### Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
 
 ---
 
-### Head start: Packaged Shiny app on GitHub
+## Head start: Packaged Shiny app on GitHub
 
 Shiny app developed as **R package**
 
 - Best place for R functions to live in => modularization
 - Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
-- Package ([`golem`](https://thinkr-open.github.io/golem) providing development framework<br/>
-  golem : Shiny = devtools : R package
+- Package [`golem`](https://thinkr-open.github.io/golem) providing development framework<br/>
+  `golem` : Shiny app = `devtools` : R package
 - Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
 - Run the app: install the package and call a function!
 
@@ -147,10 +178,36 @@ Shiny app developed as **R package**
 
 - How to ensure it is maintained, regularly checked and ensured?
 - How to control what is deployed to "production" (the live app)?
+- Automated, streamlined pipelines
+   
+   - Security, Quality, Stability  
+   - Optimized for speed of delivery
 
-Version-control
+---
 
-- GitHub is the _de facto_ standard for open source (R) projects.
+## Version control - Git(Hub)
+
+.pull-left[
+
+- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows. 
+- With GitHub remote hosting, it is the _de facto_ standard for open source (R) projects
+- Track changes
+- History
+- Share and Collaborate
+]
+
+.pull-right[
+- Pull ([`git pull`](https://git-scm.com/docs/git-pull)): Incorporate changes from a remote repository into the current local branch
+- Stage ([`git add`](https://git-scm.com/docs/git-commit)) changes: Prepare the content for the next commit
+- Commit ([`git commit`](https://git-scm.com/docs/git-commit)): Record staged changes to the current branch
+- Push ([`git push`](https://git-scm.com/docs/git-push)): Update remote repository using the local branch
+]
+
+Resources
+
+- [Git documentation](https://git-scm.com/doc)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/), Jenny Bryan, Jim Hester
+- [Git and GitHub](http://r-pkgs.had.co.nz/git.html), R packages, Hadley Wickham
 
 ---
 
@@ -172,7 +229,7 @@ File > New Project... > Version Control > Git
 
 ## `renv` dependencies
 
-The project is based on [renv](https://rstudio.github.io/renv)
+The project is based on [`renv`](https://rstudio.github.io/renv)
 
 - Project-specific dependencies are tracked via an `renv.lock` file (+ `.Rprofile` and `renv/`)
 - Ensure the set of dependencies is collaboratively shared an maintained (and can be used to align production deployments)
@@ -207,203 +264,71 @@ shinyCICD::run_app()
 Easy, isn't it?
 
 - Dependencies under control (esp. with distributed users)
-- No need to source the app code (one the package is installed, the source package code does not even matter!)
+- No need to source the app code (once the package is installed, the source package code does not even matter!)
 
 Speed up in a development workflow
 
 - `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
-    - might require `install.packages("devtools")`
+
+    - `install.packages("devtools")`
+
 - `golem::document_and_reload()` includes a few extras (`help()`)
-
----
-exclude: `r with_excluded`
-
-## (How to Fork)
-.pull-left[
-A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
-
-LINK TO THE FORK BUTTON IN THE CORRECT REPO
-
-Instructions to make a [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) on GitHub.
-]
-
-.pull-right[
-```{r eval = TRUE, echo = FALSE, out.width = "30%", out.extra='style="position:absolute;"'}
-knitr::include_graphics("./img/fork.001.png")
-```
-]
-
----
-exclude: `r with_excluded`
-
-## (Project Structure)
-
-.inverse-left-column[
-The project is a Shiny app structured as a package. A simple development workflow to package a Shiny app is provided by the [`golem` package](https://cran.r-project.org/web/packages/golem/index.html).
-]
-
-.inverse-right-column[
-.pull-middle[
-```{r eval = TRUE, echo = FALSE, out.width = "50%"}
-knitr::include_graphics("./img/golem.png")
-```
-]
-]
-
-&nbsp;
-&nbsp;
-&nbsp;
-
-It is good practice to integrate a Shiny app in a package, as then one can take full advantage of all the integrated features already established for an R package (e.g. automatic testing, `R CMD check`, etc.).
-
-A packaged Shiny app can also take advantage of:
-
-- Continuous Integration (CI) pipelines to automate checks and ensure higher code quality and robustness;
-- Continuous Deployment (CD) pipelines to automate the process of deployment to a productive environment.
-
----
-exclude: `r with_excluded`
-
-## (Review: Package Structure)
-
-*"In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others."*, [Introduction to R packages by Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)
-
-Such a structure gives us some useful functionalities, such as unit testing and documentation.
-Moreover we can rely on  built-in features to automatically check the code (`R CMD check`).
-
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
-knitr::include_graphics("./img/package_structure.png")
-```
-
----
-exclude: `r with_excluded`
-
-## (Production Ready)
-
-Being **Production Ready** means that the product-building process is an automated, streamlined pipeline, optimized for speed of delivery to the end-user.
-
-By automating building and testing processes, the pipeline to production ensures:
-
-.pull-left[
-
-- Security  
-- Quality  
-- Stability  
-
-&nbsp;
-
-**Production is not a fixed object, but a continuous improvement cycle.**
-
-PRACTICAL EXAMPLE: RUN R CMD CHECK TO DISCOVER SOMETHING INNOCUOUS IS BROKEN (e.g. INCOMPLETE DOCUMENTATION) AND THEY NEED TO FIX THIS.
-]
-
-.pull-right[
-```{r eval = TRUE, echo = FALSE, out.width = "35%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
-knitr::include_graphics("./img/devCycle.001.png")
-```
-]
-
----
-exclude: `r with_excluded`
-
-## Best Practices
-
-- Modularize your code. (functions and package structure in R)
-- Have your building blocks general and flexible.
-- Make your code robust with automated testing.
-- Trace your work with a version control system
-
-```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
-knitr::include_graphics("./img/best_practices.001.png")
-```
-
----
-exclude: `r with_excluded`
-
-## Version Control
-
-A project under version control records changes over time so that a specific version of the project can be recalled at a later point in time. 
-
-.pull-left[
-Usually changes are not tracked just locally, but on a server to ensure against local failures and to integrate the track changes of multiple developers.
-
-A version control system is the starting point for collaborative work.
-]
-
-.pull-right[
-```{r eval = TRUE, echo = FALSE, out.width = "40%", out.extra='style="position:absolute;bottom:120px;right:70px;"'}
-knitr::include_graphics("./img/version-control.001.png")
-```
-]
-
-
----
-
-## Git
-
-Git is a popular, free and open source version control system, designed to be very efficient and to support distributed, non-linear workflows. With GitHub hosting, it is the _de facto_ standard for open source (R) projects
-
-- Stage ([`git add`](https://git-scm.com/docs/git-commit)) changes: Prepare the content for the next commit
-- Commit [`git commit`](https://git-scm.com/docs/git-commit): Record staged changes to the current branch
-- Push [`git push`](https://git-scm.com/docs/git-push): Update remote repository using the local branch
-- Pull [`git pull`](https://git-scm.com/docs/git-pull): Incorporate changes from a remote repository into the current local branch
-
-Resources
-- [Git documentation](https://git-scm.com/doc)
-- [Happy Git and GitHub for the useR](https://happygitwithr.com/), Jenny Bryan, Jim Hester
-- [Git and GitHub](http://r-pkgs.had.co.nz/git.html), R packages, Hadley Wickham
-
-
-
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
-# knitr::include_graphics("./img/git.png")
-```
-
 
 ---
 
 ## R's package check suite
 
-- `R CMD check` built into R (and conveniently accessed via `devtools::check()`, `rcmdcheck::rcmdcheck()`)
-- RStudio: `Build Pane` > `Check`
+- `R CMD check` built into R, conveniently accessed via 
+    - ```{r}
+       devtools::check()
+       ```
+    - ```{r}
+      rcmdcheck::rcmdcheck()
+      ```
+    - RStudio: `Build Pane` > `Check`
 
-Everything should be fine. If the check get stuck, it might be due to issues with renv on Windows. Possible to fall-back on renv-free setup and still follow the rest of the workshop: `renv::deactivate()`, then delete `renv.lock` and the `renv` folder.
+Everything should be fine. 
 
+- If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
 
+- In case, fall-back on `renv`-free setup and still follow the rest of the workshop
 
----
-
-## (Automating Controls)
-
-Continuous Integration (CI) is the practice of automatically merging current development work to a shared mainline, also multiple time a day. 
-
-Automating the checks means not having to relay on people applying best practices, e.g. running `R CDM Check`, before committing.
-
-LIVE: MAKE AN EXAMPLE THAT LOOKS INNOCUOUS BUT FAILS TO SHOW THAT ONE DOES NOT WANT TO RELY ON PEOPLE RUNNING CHECKS MANUALLY BEFORE COMMITTING.
-
-```{r eval = TRUE, echo = FALSE, out.width = "60%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
-knitr::include_graphics("./img/R-CMD-checks.png")
-```
+    - `renv::deactivate()`
+    - delete `renv.lock` and the `renv` folder.
 
 ---
 
-### Automated checks on Travis (1)
+## Automated checks on Travis (1)
 
 Setup Travis CI to automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
 
 - Login at https://travis-ci.com/ (using your GitHub account)
 - Activate authorization via GitHub Apps integration.
 
+.center[
+```{r eval = TRUE, echo = FALSE, out.width = "450px", out.extra = 'style="position: relative;"'}
+knitr::include_graphics("./img/TravisActivate.png")
+```
+```{r eval = TRUE, echo = FALSE, out.width = "250px", out.extra = 'style="position: relative;"'}
+knitr::include_graphics("./img/TravisInstall.png")
+```
+```{r eval = TRUE, echo = FALSE, out.width = "250px", out.extra = 'style="position: relative;"'}
+knitr::include_graphics("./img/TravisSetup.png")
+```
+]
+
 ---
 
-### Automated checks on Travis (2)
+## Automated checks on Travis (2)
 
 - Setup Travis for your project 
   ```{r}
   usethis::use_travis() # ext = "com" for usethis < 1.6.0
   ```
 - This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
-- Look at the R console and the Git diffs: what files were changed by `usethis::use_travis()`? (don't commit changes yet)
+- Look at the R console and the Git diffs (**don't commit changes yet**)
+
+  - which files were changed by `usethis::use_travis()`? 
 
 --
 
@@ -419,7 +344,7 @@ Use `renv` to restore dependencies:
 
 ---
 
-### Automated check on Travis (3)
+## Automated checks on Travis (3)
 
 ```yml
 language: R
@@ -437,43 +362,11 @@ install:
 
 **Commit & push** all changes
 
-- Go to the GitHub repo
-  - You can use `usethis::browse_github()`
+- Go to the GitHub repo (`usethis::browse_github()`)
   - Do you find any indication of the CI status for the commit?
+  
 - This will trigger the first run on Travis, which can take >~10 minutes
-- Future runs will be much faster thanks to caching caching. 
-- The run should be successful.
 
-
----
-
-## Travis CI
-
-.inverse-left-column[
-[Travis CI](https://travis-ci.com/) is an open-source hosted continuous integration service that can be used to build and test software projects hosted on GitHub.
-]
-
-.inverse-right-column[
-.pull-middle[
-```{r eval = TRUE, echo = FALSE, out.width = "50%"}
-knitr::include_graphics("./img/TravisCI.png")
-```
-]
-]
-
-`usethis::use_travis(ext = "com")` creates a Travis CI configuration file (`.travis.yml`)
-
-```yaml
-language: r
-cache: packages
-```
-
-GitHub notifies Travis CI of the occurrence of new commits / pull requests, triggering actions on Travis CI as specified in .travis.yml
-
-A badge indicating the CI status can be integrated in the `README.md`. INCLUDE HTML OF THE SHINY APP BADGE
-
-[![Travis build
-status](https://travis-ci.com/miraisolutions/ShinyCICD.svg?branch=master)](https://travis-ci.com/miraisolutions/ShinyCICD)
 
 ---
 
