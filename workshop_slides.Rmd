@@ -298,9 +298,12 @@ Everything should be fine.
 
 ---
 
-## Automated checks on Travis (1)
+## Automated checks on Travis CI
 
-Setup Travis CI to automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
+[Travis CI](https://travis-ci.com/)
+
+- Open-source hosted continuous integration service
+- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
 
 - Login at https://travis-ci.com/ (using your GitHub account)
 - Activate authorization via GitHub Apps integration.
@@ -319,7 +322,7 @@ knitr::include_graphics("./img/TravisSetup.png")
 
 ---
 
-## Automated checks on Travis (2)
+## Automated checks on Travis CI
 
 - Setup Travis for your project 
   ```{r}
@@ -344,7 +347,7 @@ Use `renv` to restore dependencies:
 
 ---
 
-## Automated checks on Travis (3)
+## Automated checks on Travis CI
 
 ```yml
 language: R
@@ -362,101 +365,115 @@ install:
 
 **Commit & push** all changes
 
+- This will trigger the first run on Travis, which can take >~10 minutes
+  - caching will speed up future builds
+
 - Go to the GitHub repo (`usethis::browse_github()`)
   - Do you find any indication of the CI status for the commit?
-  
-- This will trigger the first run on Travis, which can take >~10 minutes
+  - Scroll through the Travis log
 
 
 ---
 
-class: inverse center middle
-# Break
-
----
-
-## Gitflow
+## GitFlow
 
 .pull-left[
-[Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) is a standard setup that allows a collaborative development, while assuring the safety of the released product.
+[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releasese, assuring the safety and quality of the released product.
 
-According to the Gitflow approach, the central repo holds two main branches with an infinite lifetime:
+According to the GitFlow approach, the central repo holds two main branches with an infinite lifetime:
 
 - `master`: reflects a production-ready state.
 - `develop`: reflects a state with the latest delivered developments for the next release.
 
-Each feature branch provides an additional incremental value to the product, potentially ready for deployment. ]
+In addition
 
-.pull-right[
-```{r eval = TRUE, echo = FALSE, out.width = "90%", fig.cap='https://nvie.com/posts/a-successful-git-branching-model/'}
-knitr::include_graphics("./img/gitflow.png")
-```
+- `feature/`, `release/`, `hotfix/` branches
+
+<sup>[https://nvie.com/posts/a-successful-git-branching-model]</sup>
+
 ]
 
----
 
-## Issues, Projects and Pull Requests
-
-New development items are usually recorded on GitHub as [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue).
-
-Issues can be managed via visual boards by creating a [project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) on GitHub.
-
-The deveopment associated with each issue should, in principle, occurr in a separate `feature` [branch](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository), for the separation of concerns between different developments. 
-
-Once the development is concluded it can be integrated back in the main development branch via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
-
-LIVE: FIX ISSUR ON A BRANCH --> MAKE PULL REQUEST TO MERGE THIS INTO THE MAIN BRANCH
-
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
-knitr::include_graphics("./img/project-board.png")
+```{r eval = TRUE, echo = FALSE, out.width = "35%", out.extra='style="position: absolute; right: 100px; top: 60px;"'}
+knitr::include_graphics("./img/gitflow.png")
 ```
 
----
-
-## Agile Development
-
-Gitflow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
-
-```{r eval = TRUE, echo = FALSE, out.width = "65%", out.extra='style="position:absolute;bottom:40px;right:50px;"'}
-knitr::include_graphics("./img/agile_dev.001.png")
-```
 
 ---
 
 ## Pull Requests and Branches Control
 
-It is important that the code is checked before it is merged back into the main development to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
+It is important that the code is checked before it is merged back into the main development / release line, to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
 
-- [request a reviewer on each pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
-- [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging to `master` or `develop`.
+- Setting > Branches
+- `develop` becomes the default branch
+- Branch protection for `master` and `develop`
+  - Commits are pushed only via pull requests
+  -[require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
+- [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
 
-LIVE SHOW HOW TO SET BRENCHES CONTROLS
-LIVE SHOW CHECKS PASSING BEFORE MERGING.
-
-```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:60px;right:50px;"'}
+.center[
+```{r eval = TRUE, echo = FALSE, out.width = "70%"}
 knitr::include_graphics("./img/branches-control.001.png")
 ```
-
+]
 ---
 
-## Deployment shinyapps.io
+## Issues, Projects and Pull Requests
 
-Our productive environment is going to be [shinyapps.io](https://www.shinyapps.io/), a platform to host Shiny apps and share them on the web. The service runs in the cloud on shared servers operated by RStudio.
+Track development items as GitHub [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) and [Projects](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) (visual boards)
 
-[Setup a shinyapp.io account](https://docs.rstudio.com/shinyapps.io/getting-started.html#CreateAccount)
+- **NOTE** for forked repos, Issues / Projects are typically disabled by default => Repository **Settings**
 
-[Deployment of an application from RStudio](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-a-sample-application)
+GitFlow
 
-LIVE: MANUAL DEPLOYMENT → CHECK ALL WORKS
+- `feature/` branches for devloping indivudal issues in isolation
+- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
-```{r eval = TRUE, echo = FALSE, out.width = "80%", out.extra='style="position:absolute;bottom:100px;right:50px;"'}
-knitr::include_graphics("./img/shinyappsio.png")
+.center[
+```{r eval = TRUE, echo = FALSE, out.width = "80%"}
+knitr::include_graphics("./img/project-board.png")
+```
+]
+---
+
+## Agile Development
+
+GitFlow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
+
+.center[
+```{r eval = TRUE, echo = FALSE, out.width = "63%"}
+knitr::include_graphics("./img/agile_dev.001.png")
+```
+]
+---
+
+## Deployment: shinyapps.io
+
+[shinyapps.io](https://www.shinyapps.io/) Shiny apps hosting service offered by RStudio.
+
+- Login at https://www.shinyapps.io using your GitHub account
+- [Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
+
+```{r}
+golem::add_shinyappsio_file()
+usethis::use_git_ignore("rsconnect")
+install.packages(c("rsconnect", "pkgload"))
+usethis::use_package("rsconnect", "Suggests")
+renv::snapshot()
 ```
 
----
+```{r}
+rsconnect::setAccountInfo(...)
+```
 
-class: inverse center middle
-# Break
+```{r}
+rsconnect::deployApp(appName = "ShinyCICD", appFiles = setdiff(list.files(), "renv"))
+```
+
+```{r}
+renv::snapshot()
+```
 
 ---
 
@@ -467,6 +484,12 @@ class: inverse center middle
 
 [Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
 ]
+
+```{r}
+usethis::use_build_ignore("deploy")
+usethis::use_github_action(url = "https://raw.githubusercontent.com/riccardoporreca/ShinyCICD/final/.github/workflows/ci-cd.yml")
+
+```
 
 .inverse-right-column[
 .pull-middle[
@@ -486,181 +509,6 @@ Compared to Travis CI, in GitHub Actions each step needs to be explicitly specif
 
 ---
 
-## Generic CI/CD Pipeline
-
-Generally speaking, a CI pipleline for an R package is comprised of the following steps:
-
-- define system environment
-- install R
-- chaching system environment
-- check out the package
-- install package dependencies
-- chaching dependencies
-- install package
-- run checks
-- caching build
-- deploy
-
----
-
-## CI Workflow in GitHub Actions - check out the package
-
-The workflow runs upon push commands and pull requests on the `master` branch, which is the default. It uses the predefined and built in action `checkout@v2` to check out the R package.
-
-```yaml
-# Check on push and pull requests to master
-on: [push, pull_request]
-
-# Name of the workflow
-name: CI
-
-jobs:
-  CI:
-    runs-on: ubuntu-latest
-    steps:
-
-      - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-r@master
-```
-
----
-
-## CI Workflow in GitHub Actions - manage dependencies
-
-To install an R package we should first take care of its dependencies. This means checking them out and making sure they are cached for future builds.
-
-```yaml
-# Query and cache R package dependencies
-- name: Query dependencies
-  run: |
-  install.packages("remotes")
-  saveRDS(remotes::dev_package_deps(dependencies = TRUE), 
-          "depends.Rds", version = 2)
-  shell: Rscript {0}
-- name: Cache R packages
-  uses: actions/cache@v1
-  with:
-    path: ${{ env.R_LIBS_USER }}
-    key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
-    restore-keys: ${{ runner.os }}-r-
-```
-
----
-
-## CI Workflow in GitHub Actions - install the package
-
-Then the package can be installed
-
-```yaml
-
-- name: Install dependencies
-  run: |
-  remotes::install_deps(dependencies = TRUE)
-  shell: Rscript {0}
-```
-
----
-
-## CI Workflow in GitHub Actions - run automatic checks
-
-To run automatic checks it is necessary to explicitely request to run `rcmdcheck::rcmdcheck`, therefore we should make sure that the package is available.
-
-```yaml
-- name: Install rcmdcheck
-  run: |
-    remotes::install_cran(c("rcmdcheck"))
-  shell: Rscript {0}
-
-- name: Check package
-  run: rcmdcheck::rcmdcheck(args = "--no-manual", 
-                            error_on = "warning", check_dir = "check")
-  shell: Rscript {0}
-```
-
-
-LIVE: LINK TO TECHGUIDES
-
----
-
-## DevOps
-
-.pull-left[
-**Goals**
-- Achieve faster time to production
-- Enable more frequent deployments
-- Lower failure rate of new releases
-- Shorten lead time between fixes
-- Enhance collaboration between groups
-]
-
-.pull-right[
-**Challenges**
-- Mindset and Culture
-- Security
-- Responsibility
-]
-
-
-```{r eval = TRUE, echo = FALSE, out.width = "50%", out.extra='style="position:absolute;bottom:50px;right:50px;"'}
-knitr::include_graphics("./img/devops.001.png")
-```
-
----
-
-## DevOps - Benefits
-
-- Development via small work items increases the speed of development and improves its quality.
-- Slow, repetitive and human made actions are error-prone. Automation in testing and deployment increases the stability of the production process.
-- Version controlled development ensures traceability and repeatability of the development.
-- Collaboration and an agile approach are keys to a functional production pipeline.
-- Building, testing and deploying discrete development components improve confidence in the final product.
-
-<br>
-
-.pull-middle[
-**DevOps is a culture. Tools can enable it.**
-
-<br>
-
-.fontsize08[
-Note:
-Infrastructure can also follow a continuous delivery philosophy (Infrastructure as Code).
-]
-
-]
-
----
-
-## Automatic Deployment
-
-Part of DevOps is to streamline the deployment process. 
-Adding the deployment is another step in a `CI-CD` job. 
-Notice that deployment to [shinyapps.io](https://www.shinyapps.io/) requires the package `rsconnect`, so it is necessary to install it explicitely.
-
-```yaml
-      - name: Install dependencies
-        run: |
-          remotes::install_cran(c("rsconnect"))
-        shell: Rscript {0}
-        
-      - name: Deploy to shinyapps.io
-        if: github.ref == 'refs/heads/master'
-        env:
-          SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
-          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
-          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
-        run: |
-          account_info <- lapply(paste0("SHINYAPPS_", 
-                                c("ACCOUNT", "TOKEN", "SECRET")), 
-                                Sys.getenv)
-          do.call(rsconnect::setAccountInfo, account_info)
-          rsconnect::deployApp(appName = "ShinyCICD")
-        shell: Rscript {0}
-```
-
----
-
 ## Tokens & Secrets
 
 The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
@@ -671,21 +519,11 @@ knitr::include_graphics("./img/shinyapps.io.tokens.png")
 
 ---
 
-## Automatic Deployment with Travis CI
-
-Equivalently, automated deployment can be integrated on Travis CI. We leave this to you as an exercise.
-
-You can have a look at our techguides for support.
-
-<iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
-
----
-
 ## Release
 
 A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a specific chunck of development. Each new release determines a new version (minor or major) of the software.
 
-According to the Gitflow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
+According to the GitFlow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
 
 ```{r eval = TRUE, echo = FALSE, out.width = "20%", out.extra='style="position:absolute;bottom:100px;right:70px;"'}
 knitr::include_graphics("./img/release.001.png")
@@ -725,20 +563,6 @@ Example
 - Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
 
 ---
-
-## Conclusions
-
-Our final product is a packaged shiny app ready for production, with automatic CI / CD pipelines in place.
-
-REPLACE LINK TO FINAL PRODUCT
-
-<iframe src="https://mirai-solutions.ch/techguides/" width="100%" height="50%" frameBorder="0"></iframe>
-
----
-
-## Next Steps
-
-Next Steps, technical info → close workshop
 
 ---
 
