@@ -92,12 +92,13 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - Automated checks on Travis CI
 - **Break**
 - GitFlow, branch control and pull requests
-- Agile approach and release
+- Agile approach
 - Setup shinyapps.io for deployment
 - **Break**
 - GitHub Actions workflows
 - Continuous Deployment
-- More full-cycle playground 
+- Release
+- More playground 
 ]
 
 --
@@ -249,6 +250,24 @@ What changes (check the Git pane)? Should you commit the modifications?
 
 ---
 
+
+## Development initialization
+
+
+- `install.packages("devtools")`
+
+- Adapt the README to your forked repo: `&lt;user&gt;/ShinyCICD-min`
+
+- Diff: RStudio, compareWith, Sublime Merge
+
+  ```{r}
+  renv::install("miraisolutions/comparewith")
+  # remotes::install_github("miraisolutions/comparewith") w/o renv
+  ```
+  Stage > Commit > Push
+
+---
+
 ## Install the package, run the app!
 
 RStudio's Build Pane
@@ -270,8 +289,6 @@ Speed up in a development workflow
 
 - `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
 
-    - `install.packages("devtools")`
-
 - `golem::document_and_reload()` includes a few extras (`help()`)
 
 ---
@@ -287,7 +304,9 @@ Speed up in a development workflow
       ```
     - RStudio: `Build Pane` > `Check`
 
-Everything should be fine. 
+Everything should be fine.
+
+Familiarize wth the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
 
 - If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
 
@@ -405,18 +424,21 @@ knitr::include_graphics("./img/gitflow.png")
 
 It is important that the code is checked before it is merged back into the main development / release line, to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
 
-- Setting > Branches
+.pull-left[
+- Settings > Branches
 - `develop` becomes the default branch
 - Branch protection for `master` and `develop`
-  - Commits are pushed only via pull requests
-  -[require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
-- [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
 
-.center[
-```{r eval = TRUE, echo = FALSE, out.width = "70%"}
+  - Commits are pushed only via pull requests
+  - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
+  - [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+]
+.pull-right[
+```{r eval = TRUE, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("./img/branches-control.001.png")
 ```
 ]
+
 ---
 
 ## Issues, Projects and Pull Requests
@@ -435,6 +457,7 @@ GitFlow
 knitr::include_graphics("./img/project-board.png")
 ```
 ]
+
 ---
 
 ## Agile Development
@@ -446,21 +469,20 @@ GitFlow fits well with all Agile frameworks: at each development cycle a set of 
 knitr::include_graphics("./img/agile_dev.001.png")
 ```
 ]
+
 ---
 
 ## Deployment: shinyapps.io
 
-[shinyapps.io](https://www.shinyapps.io/) Shiny apps hosting service offered by RStudio.
+[shinyapps.io](https://www.shinyapps.io/) hosting service offered by RStudio.
 
-- Login at https://www.shinyapps.io using your GitHub account
-- [Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
+Login at https://www.shinyapps.io using your GitHub account
+
+[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
 
 ```{r}
 golem::add_shinyappsio_file()
-usethis::use_git_ignore("rsconnect")
 install.packages(c("rsconnect", "pkgload"))
-usethis::use_package("rsconnect", "Suggests")
-renv::snapshot()
 ```
 
 ```{r}
@@ -472,50 +494,16 @@ rsconnect::deployApp(appName = "ShinyCICD", appFiles = setdiff(list.files(), "re
 ```
 
 ```{r}
+usethis::use_git_ignore("rsconnect")
+usethis::use_package("rsconnect", "Suggests")
 renv::snapshot()
 ```
 
 ---
 
-## GitHub Actions
+## GitHub Actions and Continuous Deployment
 
-.inverse-left-column[
-[GitHub Actions](https://help.github.com/en/actions) is a service for completely customizable, GitHub integrated workflow, including CI and CD executions.
-
-[Workflows](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow) use `YAML` syntax and should be stored in the `.github/workflows` directory in the root of the repository.
-]
-
-```{r}
-usethis::use_build_ignore("deploy")
-usethis::use_github_action(url = "https://raw.githubusercontent.com/riccardoporreca/ShinyCICD/final/.github/workflows/ci-cd.yml")
-
-```
-
-.inverse-right-column[
-.pull-middle[
-```{r eval = TRUE, echo = FALSE, out.width = "60%"}
-knitr::include_graphics("./img/github-actions.png")
-```
-]
-]
-
-&nbsp;
-&nbsp;
-&nbsp;
-
-Workflows are constituted of jobs and each job is a set of steps to perform individual tasks, e.g. commands or actions.
-
-Compared to Travis CI, in GitHub Actions each step needs to be explicitly specified. Moreover, for the time being, GitHub Actions does not support a hierarchical, aggregated structure of actions.
-
----
-
-## Tokens & Secrets
-
-The variables `SHINYAPPS_ACCOUNT`, `SHINYAPPS_TOKEN` and `SHINYAPPS_SECRET` are tokens defined on [shinyapps.io](https://www.shinyapps.io/) and stored on GitHub Actions as [secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/using-variables-and-secrets-in-a-workflow).
-
-```{r eval = TRUE, echo = FALSE, out.width = "100%"}
-knitr::include_graphics("./img/shinyapps.io.tokens.png")
-```
+See the [dedicated chapter in our Technical Guidelines](https://mirai-solutions.ch/techguides/github-actions.html)
 
 ---
 
@@ -531,38 +519,36 @@ knitr::include_graphics("./img/release.001.png")
 
 ---
 
-## How to Do a Release 1
+## How to Do a Release
 
-- Create a release branch (e.g. `release/v2.0.0`) from `develop`.
+We want to release the new feature(s) as a major/minor/patch release.
 
+- Create release branch `release/vX.Y.Z` from `develop`, where the package version includes a fourth development component `9000`.
+- Update the package version via `usethis::use_version()` locally on branch `release/v1.1.0`.
 - Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
-
-Example
-
-```{r, eval=FALSE}
-1.0.0 release preps
-- Closes #XYZ Updated report.
-```
-
-- Update package version (NEWS.md and DESCRIPTION files in R).
-
-- Create and merge a new pull request release/v2.0.0 →  master,  where the `closes XXX` are in the pull request comment.
+- Commit & push.
+- Create a pull request to `master` on GitHub, get it approved and merged.
+- Create release on GitHub as "v1.1.0", with title "ShinyCICD 1.1.0" and content of the corresponding `NEWS.md` section.
+- Go back to a development version `usethis::use_dev_version()` locally, still on branch `release/v1.1.0`.
+- Commit & push.
+- Create a pull request to `develop` on GitHub, get it approved and merged.
+- Delete the release branch.
 
 ---
 
-## How to Do a Release 2
+## Other Mirai's resources
 
-- Create a new release tag on master (on [GitHub Code > releases > Draft new release](https://github.com/miraisolutions/SmaRP/releases/new)).
-  - Tag version: v1.0.1
-  - Release title: packagename 1.0.1
-  - Body: Paste as comment the list of changes in `NEWS.md`
-  - Click on "Publish release"
+- Docker-based Shiny app cloud deployment + integration into a custom website gallery
+  - [slides](http://www.user2019.fr/static/pres/t258350.pdf) and [recording](https://youtu.be/DizjPeNTeeo) @ ToulouseR!2019
 
-- Create a new pull request and merge release/v2.0.0  →  develop
+- Packaged bookdown website with Travis-based CI/CD
+  - https://github.com/miraisolutions/vbzdelays
+  - Part of a [_MiraiLabs_ workshop](https://github.com/miraisolutions/MiraiLabs/tree/master/from-prototype-to-production#readme)
 
-- Prepare for next version on develop (by changing the version NEWS.md and DESCRIPTION files).
-
----
+- e-Rum2020 [CovidR contest](https://milano-r.github.io/erum2020-covidr-contest/)
+  - Open source repository collecting contributions via PR
+  - Inclusion of contributions in an [rmdgallery](https://riccardoporreca.github.io/rmdgallery/) website
+  - Automation: website update upon PR, handling of voting issues, awards and badges, maintenance, ...
 
 ---
 
