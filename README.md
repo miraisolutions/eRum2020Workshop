@@ -25,7 +25,7 @@ This workshop is the natural continuation of "Is R ready for Production? Let’s
 
 It is important that you **go through the following prerequisites before the workshop**, and feel free to contact us using the workshop's dedicated e-Rum2020 Slack channel if you have questions or issues.
 
-- A GitHub account is necessary for the workshop: also make sure you have its password ad hand
+- A GitHub account is necessary for the workshop: also make sure you have its password at hand
 - Git must be installed on your computer
 - A recent version of RStudio (>= 1.2) is recommended
 - R installation: R >= 3.6.x, ideally R 4.0.x

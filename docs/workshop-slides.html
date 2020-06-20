@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Bring your R Application Safely to Production.</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Riccardo Porreca, Peter Schmid  (Francesca Vitalini)" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Bring your R Application Safely to Production.
+## Collaborate, Deploy, Automate.
+### Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)
+### e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST
+
+---
+
+
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;&lt;span&gt;Copyright (c) 2020&lt;/span&gt;&lt;/div&gt; 
+
+---
+
+![devCycle](./img/MiraiApr19_full.jpg)
+
+- Interdisciplinary team of data scientists, software engineers and IT architects
+- Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
+- 100+ years of cumulative professional experience in financial services / insurance, software engineering, and professional training
+
+### Bringing ideas to life.
+### Smart. Agile. Personal.
+
+&lt;img src="./img/mirai-solutions-logo-flyer.png" width="50%" style="position:absolute;bottom:100px;right:50px;" /&gt;
+
+---
+
+## Mirai Solutions
+
+- Involved in organizing e-Rum2020
+- Eager contributors to open source projects
+
+&lt;img src="./img/sticker-pyramid.png" width="50%" style="position:absolute;bottom:80px;right:100px;" /&gt;
+
+---
+
+## Your Miraiers for the day
+
+.pull-left[
+### Riccardo
+- Senior Solutions Consultant
+- Computer Science / Automatic Control Engineer by education
+- Academia :: Matlab =&gt; Mirai :: R (and more)
+- R enthusiast since then
+- Analytics in enterprise environments
+- Open source projects
+]
+
+.pull-right[
+### Peter
+- Solutions Consultant
+- Environmental scientist by education
+- Using R since many years,
+  first for statistics, now lots more
+- Analytics in enterprise environments
+- Passionate about machine and deep learning
+]
+
+--
+
+.center[
+#### With VanLog's support: 
+### Andrea Melloncelli
+]
+
+
+---
+
+## Workshop overview
+
+.pull-left[
+- Working example: packaged Shiny app on GitHub
+- Automated checks on Travis CI
+- **Break**
+- GitFlow, branch control and pull requests
+- Agile approach
+- Setup shinyapps.io for deployment
+- **Break**
+- GitHub Actions workflows
+- Continuous Deployment
+- Release
+- More playground 
+]
+
+--
+
+.pull-right[
+
+- (Meant to be) **loosely-coupled**
+
+- **Hands-on**
+
+  - First: Observe, learn, understand
+  - Then: Do!
+
+- Concepts and principles not tailored to Shiny apps and specific tools / services
+
+]
+
+
+---
+
+## Workshop prerequisites
+
+- A GitHub account is necessary for the workshop: also make sure you have its password at hand
+
+- Git must be installed on your computer
+
+- A recent version of RStudio (&gt;= 1.2) is recommended
+
+- R installation: R &gt;= 3.6.x, ideally R 4.0.x
+
+- Packages pre-installation: 
+  - https://github.com/miraisolutions/eRum2020Workshop-prereqs#readme
+
+- Optional Git-related tools
+
+  - [compareWith](https://github.com/miraisolutions/compareWith#readme) R package
+  - [Sublime Merge](https://www.sublimemerge.com)
+
+
+---
+
+## (Shiny) App development cycle
+
+Target "Production": deployed and made accessible
+
+.pull-right[
+&lt;img src="./img/devCycle.001.png" width="35%" style="position:absolute;top:60px;right:50px;" /&gt;
+]
+
+
+- Development (app code)
+- ...
+- Deployed app (today: shinyapps.io)
+
+Fill the dots:
+- Safety checks and controls
+- Collaboration and planning
+- Automate!
+
+### Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
+
+---
+
+## Head start: Packaged Shiny app on GitHub
+
+Shiny app developed as **R package**
+
+- Best place for R functions to live in =&gt; modularization
+- Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
+- Package [`golem`](https://thinkr-open.github.io/golem) providing development framework&lt;br/&gt;
+  `golem` : Shiny app = `devtools` (`usethis`) : R package
+- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Run the app: install the package and call a function!
+
+**Production readiness**
+
+- How to ensure it is maintained, regularly checked and ensured?
+- How to control what is deployed to "production" (the live app)?
+- Automated, streamlined pipelines
+   
+   - Security, Quality, Stability  
+   - Optimized for speed of delivery
+
+---
+
+## Version control - Git(Hub)
+
+.pull-left[
+
+- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows. 
+- With GitHub remote hosting, it is the _de facto_ standard for open source (R) projects
+- Track changes
+- History
+- Share and Collaborate
+]
+
+.pull-right[
+- Pull ([`git pull`](https://git-scm.com/docs/git-pull)): Incorporate changes from a remote repository into the current local branch
+- Stage ([`git add`](https://git-scm.com/docs/git-commit)) changes: Prepare the content for the next commit
+- Commit ([`git commit`](https://git-scm.com/docs/git-commit)): Record staged changes to the current branch
+- Push ([`git push`](https://git-scm.com/docs/git-push)): Update remote repository using the local branch
+]
+
+Resources
+
+- [Git documentation](https://git-scm.com/doc)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/), Jenny Bryan, Jim Hester
+- [Git and GitHub](http://r-pkgs.had.co.nz/git.html), R packages, Hadley Wickham
+
+---
+
+## Running example
+
+- (The app developed during the morning workshop)
+- A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
+
+   - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account.
+
+**_Clone_** locally your forked repo (https://github.com/&amp;lt;user&amp;gt;/ShinyCICD-min) as a **new RStudio project**.
+
+```
+File &gt; New Project... &gt; Version Control &gt; Git
+```
+
+---
+
+## `renv` dependencies
+
+The project is based on [`renv`](https://rstudio.github.io/renv)
+
+- Project-specific dependencies are tracked via an `renv.lock` file (+ `.Rprofile` and `renv/`)
+- Ensure the set of dependencies is collaboratively shared an maintained (and can be used to align production deployments)
+- When you open the project (and a new R session starts), `renv` detects the project dependencies are out of sync
+  
+  ```r
+  renv::status()
+  renv::restore()
+  ```
+
+--
+
+**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+```r
+renv::snapshot()
+```
+What changes (check the Git pane)? Should you commit the modifications?
+
+---
+
+
+## Development initialization
+
+
+- `install.packages("devtools")`
+
+- Adapt the README to your forked repo: `&amp;lt;user&amp;gt;/ShinyCICD-min`
+
+- Diff: RStudio, compareWith, Sublime Merge
+
+  
+  ```r
+  renv::install("miraisolutions/comparewith")
+  # remotes::install_github("miraisolutions/comparewith") w/o renv
+  ```
+  Stage &gt; Commit &gt; Push
+
+---
+
+## Install the package, run the app!
+
+RStudio's Build Pane
+
+- Install and Restart (Ctrl+Shift+B)
+
+Then, launching the app is just about calling a function from the package:
+
+
+```r
+shinyCICD::run_app()
+```
+
+Easy, isn't it?
+
+- Dependencies under control (esp. with distributed users)
+- No need to source the app code (once the package is installed, the source package code does not even matter!)
+
+Speed up in a development workflow
+
+- `devtools::load_all()` (Ctrl+Shift+L): mimics the full-install, but is much quicker
+
+- `golem::document_and_reload()` includes a few extras (`help()`)
+
+---
+
+## R's package check suite
+
+- `R CMD check` built into R, conveniently accessed via 
+    - ```{r}
+       devtools::check()
+       ```
+    - ```{r}
+      rcmdcheck::rcmdcheck()
+      ```
+    - RStudio: `Build Pane` &gt; `Check`
+
+Everything should be fine.
+
+Familiarize with the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
+
+- If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
+
+- In case, fall-back on `renv`-free setup and still follow the rest of the workshop
+
+    - `renv::deactivate()`
+    - delete `renv.lock` and the `renv` folder.
+
+---
+
+## Automated checks on Travis CI
+
+[Travis CI](https://travis-ci.com/)
+
+- Open-source hosted continuous integration service
+- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
+
+- Login at https://travis-ci.com/ (using your GitHub account)
+- Activate authorization via GitHub Apps integration.
+
+.center[
+&lt;img src="./img/TravisActivate.png" width="450px" style="position: relative;" /&gt;
+&lt;img src="./img/TravisInstall.png" width="250px" style="position: relative;" /&gt;
+&lt;img src="./img/TravisSetup.png" width="250px" style="position: relative;" /&gt;
+]
+
+---
+
+## Automated checks on Travis CI
+
+- Setup Travis for your project 
+  
+  ```r
+  usethis::use_travis() # ext = "com" for usethis &lt; 1.6.0
+  ```
+- This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
+- Look at the R console and the Git diffs (**don't commit changes yet**)
+
+  - which files were changed by `usethis::use_travis()`? 
+
+--
+
+Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r).
+
+Align R _major_._minor_ version to the project setup (spaces matter!)
+```yaml
+r:
+  - 4.0 # or 3.6
+```
+Use `renv` to restore dependencies:
+- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette.
+
+---
+
+## Automated checks on Travis CI
+
+```yml
+language: R
+r:
+  - 4.0 # or 3.6
+cache:
+  directories:
+  - $HOME/.local/share/renv
+  - $TRAVIS_BUILD_DIR/renv/library
+install:
+  - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
+  - Rscript -e "renv::restore()"
+
+```
+
+**Commit &amp; push** all changes
+
+- This will trigger the first run on Travis, which can take &gt;~10 minutes
+  - caching will speed up future builds
+
+- Go to the GitHub repo (`usethis::browse_github()`)
+  - Do you find any indication of the CI status for the commit?
+  - Scroll through the Travis log
+
+
+---
+
+## GitFlow
+
+.pull-left[
+[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product.
+
+According to the GitFlow approach, the central repo holds two main branches with an infinite lifetime:
+
+- `master`: reflects a production-ready state.
+- `develop`: reflects a state with the latest delivered developments for the next release.
+
+In addition
+
+- `feature/`, `release/`, `hotfix/` branches
+
+&lt;sup&gt;[https://nvie.com/posts/a-successful-git-branching-model]&lt;/sup&gt;
+
+]
+
+
+&lt;img src="./img/gitflow.png" width="35%" style="position: absolute; right: 100px; top: 60px;" /&gt;
+
+
+---
+
+## Pull Requests and Branches Control
+
+It is important that the code is checked before it is merged back into the main development / release line, to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
+
+.pull-left[
+- Settings &gt; Branches
+- `develop` becomes the default branch
+- Branch protection for `master` and `develop`
+
+  - Commits are pushed only via pull requests
+  - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
+  - [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+]
+.pull-right[
+&lt;img src="./img/branches-control.001.png" width="100%" /&gt;
+]
+
+---
+
+## Issues, Projects and Pull Requests
+
+Track development items as GitHub [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) and [Projects](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) (visual boards)
+
+- **NOTE** for forked repos, Issues / Projects are typically disabled by default =&gt; Repository **Settings**
+
+GitFlow
+
+- `feature/` branches for developing individual issues in isolation
+- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+
+.center[
+&lt;img src="./img/project-board.png" width="80%" /&gt;
+]
+
+---
+
+## Agile Development
+
+GitFlow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
+
+.center[
+&lt;img src="./img/agile_dev.001.png" width="63%" /&gt;
+]
+
+---
+
+## Deployment: shinyapps.io
+
+[shinyapps.io](https://www.shinyapps.io/) hosting service offered by RStudio.
+
+Login at https://www.shinyapps.io using your GitHub account
+
+[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
+
+
+```r
+golem::add_shinyappsio_file()
+install.packages(c("rsconnect", "pkgload"))
+```
+
+
+```r
+rsconnect::setAccountInfo(...)
+```
+
+
+```r
+rsconnect::deployApp(appName = "ShinyCICD", appFiles = setdiff(list.files(), "renv"))
+```
+
+
+```r
+usethis::use_git_ignore("rsconnect")
+usethis::use_package("rsconnect", "Suggests")
+renv::snapshot()
+```
+
+---
+
+## GitHub Actions and Continuous Deployment
+
+See the [dedicated chapter in our Technical Guidelines](https://mirai-solutions.ch/techguides/github-actions.html)
+
+---
+
+## Release
+
+A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a consolidated set of development. Each new release determines a new version (minor or major) of the software.
+
+According to the GitFlow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
+
+&lt;img src="./img/release.001.png" width="20%" style="position:absolute;bottom:100px;right:70px;" /&gt;
+
+---
+
+## How to Do a Release
+
+We want to release the new feature(s) as a major/minor/patch release.
+
+- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000`.
+- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
+- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
+- Commit &amp; push.
+- Create a pull request to `master` on GitHub, get it approved and merged.
+- Create release on GitHub as "v1.1.0", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
+- Go back to a development version `usethis::use_dev_version()` locally, still on branch `release/v1.2.1`.
+- Commit &amp; push.
+- Create a pull request to `develop` on GitHub, get it approved and merged.
+- Delete the release branch.
+
+---
+
+## Other Mirai's resources
+
+- Docker-based Shiny app cloud deployment + integration into a custom website gallery
+  - [slides](http://www.user2019.fr/static/pres/t258350.pdf) and [recording](https://youtu.be/DizjPeNTeeo) @ ToulouseR!2019
+
+- Packaged bookdown website with Travis-based CI/CD
+  - https://github.com/miraisolutions/vbzdelays
+  - Part of a [_MiraiLabs_ workshop](https://github.com/miraisolutions/MiraiLabs/tree/master/from-prototype-to-production#readme)
+
+- e-Rum2020 [CovidR contest](https://milano-r.github.io/erum2020-covidr-contest/)
+  - Open source repository collecting contributions via PR
+  - Inclusion of contributions in an [rmdgallery](https://riccardoporreca.github.io/rmdgallery/) website
+  - Automation: website update upon PR, handling of voting issues, awards and badges, maintenance, ...
+
+---
+
+## Get in Touch
+
+
+**Other Services by Mirai solutions:**
+
+- Training customized to your business case - technical and agile topics
+- Data Analytics &amp; Software development: from your needs to a functional implementation
+- Infrastructure design, management and maintenance
+
+**Get in touch:**
+- LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
+- email info@mirai-solutions.com
+- website https://mirai-solutions.ch
+
+&lt;img src="./img/mirai-solutions-logo-flyer.png" width="40%" style="position:absolute;bottom:80px;right:50px;" /&gt;
+
+---
+
+class: inverse center middle
+# Thank you!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%/%total%",
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
