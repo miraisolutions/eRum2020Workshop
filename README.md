@@ -44,3 +44,14 @@ It is important that you **go through the following prerequisites before the wor
 - To make working with Git easier, you can optionally install additional tools we will mention in the workshop
     - [compareWith](https://github.com/miraisolutions/compareWith#readme) R package
     - [Sublime Merge](https://www.sublimemerge.com)
+    
+    
+### Materials
+
+We will lead the workshop mostly hands-on, but we have a supporting presentation available at http://mirai-solutions.ch/eRum2020Workshop/workshop-slides.html
+
+The working example will use as a starting point is available at the following repo
+
+- https://github.com/miraisolutions/ShinyCICD-min
+
+You don't need to do anything with it ahead of the workshop.
