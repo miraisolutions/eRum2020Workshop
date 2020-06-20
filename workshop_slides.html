@@ -165,7 +165,7 @@ Shiny app developed as **R package**
 - Best place for R functions to live in =&gt; modularization
 - Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
 - Package [`golem`](https://thinkr-open.github.io/golem) providing development framework&lt;br/&gt;
-  `golem` : Shiny app = `devtools` : R package
+  `golem` : Shiny app = `devtools` (`usethis`) : R package
 - Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
 - Run the app: install the package and call a function!
 
@@ -212,7 +212,7 @@ Resources
 - A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
 
    - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
-   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD/fork) it to your GitHub user account.
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account.
 
 **_Clone_** locally your forked repo (https://github.com/&amp;lt;user&amp;gt;/ShinyCICD-min) as a **new RStudio project**.
 
@@ -303,7 +303,7 @@ Speed up in a development workflow
 
 Everything should be fine.
 
-Familiarize wth the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
+Familiarize with the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
 
 - If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
 
@@ -389,7 +389,7 @@ install:
 ## GitFlow
 
 .pull-left[
-[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releasese, assuring the safety and quality of the released product.
+[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product.
 
 According to the GitFlow approach, the central repo holds two main branches with an infinite lifetime:
 
@@ -437,7 +437,7 @@ Track development items as GitHub [Issues](https://help.github.com/en/github/man
 
 GitFlow
 
-- `feature/` branches for devloping indivudal issues in isolation
+- `feature/` branches for developing individual issues in isolation
 - Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
 .center[
@@ -497,7 +497,7 @@ See the [dedicated chapter in our Technical Guidelines](https://mirai-solutions.
 
 ## Release
 
-A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a specific chunck of development. Each new release determines a new version (minor or major) of the software.
+A [Release](https://help.github.com/en/github/administering-a-repository/releasing-projects-on-github) is the deployment to production of a consolidated set of development. Each new release determines a new version (minor or major) of the software.
 
 According to the GitFlow approach, no work should be pushed directly to `master`, which is updated as part of a release with a pull request from a stable `develop` branch or a `release` branch.
 
@@ -509,13 +509,13 @@ According to the GitFlow approach, no work should be pushed directly to `master`
 
 We want to release the new feature(s) as a major/minor/patch release.
 
-- Create release branch `release/vX.Y.Z` from `develop`, where the package version includes a fourth development component `9000`.
-- Update the package version via `usethis::use_version()` locally on branch `release/v1.1.0`.
+- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000`.
+- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
 - Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
 - Commit &amp; push.
 - Create a pull request to `master` on GitHub, get it approved and merged.
-- Create release on GitHub as "v1.1.0", with title "ShinyCICD 1.1.0" and content of the corresponding `NEWS.md` section.
-- Go back to a development version `usethis::use_dev_version()` locally, still on branch `release/v1.1.0`.
+- Create release on GitHub as "v1.1.0", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
+- Go back to a development version `usethis::use_dev_version()` locally, still on branch `release/v1.2.1`.
 - Commit &amp; push.
 - Create a pull request to `develop` on GitHub, get it approved and merged.
 - Delete the release branch.
@@ -545,7 +545,7 @@ We want to release the new feature(s) as a major/minor/patch release.
 
 - Training customized to your business case - technical and agile topics
 - Data Analytics &amp; Software development: from your needs to a functional implementation
-- Infrastructure design, managment and maintenace
+- Infrastructure design, management and maintenance
 
 **Get in touch:**
 - LinkedIn https://www.linkedin.com/company/mirai-solutions-gmbh/
