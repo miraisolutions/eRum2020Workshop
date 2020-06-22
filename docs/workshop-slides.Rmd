@@ -523,13 +523,13 @@ knitr::include_graphics("./img/release.001.png")
 
 We want to release the new feature(s) as a major/minor/patch release.
 
-- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000`.
+- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`).
 - Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
 - Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
 - Commit & push.
 - Create a pull request to `master` on GitHub, get it approved and merged.
-- Create release on GitHub as "v1.1.0", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
-- Go back to a development version `usethis::use_dev_version()` locally, still on branch `release/v1.2.1`.
+- Create release on GitHub as "v1.2.1", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
+- Go back to a development version `1.2.1.9000` `usethis::use_dev_version()`, still on branch `release/v1.2.1`.
 - Commit & push.
 - Create a pull request to `develop` on GitHub, get it approved and merged.
 - Delete the release branch.
