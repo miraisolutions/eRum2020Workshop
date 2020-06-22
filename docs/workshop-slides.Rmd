@@ -521,7 +521,7 @@ knitr::include_graphics("./img/release.001.png")
 
 ## How to Do a Release
 
-We want to release the new feature(s) as a major/minor/patch release.
+We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version).
 
 - Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`).
 - Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
