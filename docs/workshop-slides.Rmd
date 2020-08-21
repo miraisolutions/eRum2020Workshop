@@ -169,8 +169,9 @@ Fill the dots:
 - Collaboration and planning
 - Automate!
 
-### Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
-
+.center[
+### Head start: Morning workshop<br/>[_Is R ready for Production?<br/>Let's develop a Professional Shiny Application!_](https://github.com/Milano-R/erum2020program#is-r-ready-for-production-lets-develop-a-professional-shiny-application)
+]
 ---
 
 ## Head start: Packaged Shiny app on GitHub
