@@ -273,8 +273,8 @@ What changes (check the Git pane)? Should you commit the modifications?
 - Diff: RStudio, compareWith, Sublime Merge
 
   ```{r}
-  renv::install("miraisolutions/comparewith")
-  # remotes::install_github("miraisolutions/comparewith") w/o renv
+  renv::install("miraisolutions/compareWith")
+  # remotes::install_github("miraisolutions/compareWith") w/o renv
   ```
   Stage > Commit > Push
 
