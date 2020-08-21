@@ -256,7 +256,7 @@ What changes (check the Git pane)? Should you commit the modifications?
 
 - `install.packages("devtools")`
 
-- Adapt the README to your forked repo: `&lt;user&gt;/ShinyCICD-min`
+- Adapt the README to your forked repo: `<user>/ShinyCICD-min`
 
 - Diff: RStudio, compareWith, Sublime Merge
 
