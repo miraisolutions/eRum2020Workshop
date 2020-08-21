@@ -324,7 +324,12 @@ Familiarize with the number of checks (see http://r-pkgs.had.co.nz/check.html fo
 
 ## Automated checks on Travis CI
 
-[Travis CI](https://travis-ci.com/)
+[
+```{r eval = TRUE, echo = FALSE, out.width = "50px", out.extra = 'style="vertical-align: text-bottom;"'}
+knitr::include_graphics("./img/TravisCI.png")
+```
+Travis CI
+](https://travis-ci.com/)
 
 - Open-source hosted continuous integration service
 - Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
