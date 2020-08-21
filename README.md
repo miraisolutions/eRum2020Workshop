@@ -21,6 +21,10 @@ This workshop is the natural continuation of "Is R ready for Production? Let’s
 
 **When**: Saturday June 20th, 14.00-17.00 CEST
 
+**News article**: A summary of the workshop will be available as [news post](https://mirai-solutions.ch/news/) (**TODO**: Use the actual url after publication), including a [short trailer](https://mirai-solutions.ch/assets/videos/mirai-erum2020-workshop-trailer.mp4) providing an overview of the workshop.
+
+**Materials**: See [below](#materials)
+
 ### Prerequisites
 
 It is important that you **go through the following prerequisites before the workshop**, and feel free to contact us using the workshop's dedicated e-Rum2020 Slack channel if you have questions or issues.
@@ -39,8 +43,12 @@ It is important that you **go through the following prerequisites before the wor
 
 We will lead the workshop mostly hands-on, but we have a supporting presentation available at http://mirai-solutions.ch/eRum2020Workshop/workshop-slides.html
 
-The working example will use as a starting point is available at the following repo
+The working example we will use as a starting point is available at the following repo
 
 - https://github.com/miraisolutions/ShinyCICD-min
 
 You don't need to do anything with it ahead of the workshop.
+
+#### Workshop recordings
+
+Full workshop recordings will be available on the [e-Rum2020 YouTube channel](https://www.youtube.com/channel/UCDOoQShiQHE7_C-wuLqFJ7w) (**TODO**: Use the actual url after publication).
