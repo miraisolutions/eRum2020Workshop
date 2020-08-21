@@ -198,7 +198,7 @@ Shiny app developed as **R package** under **version control**
 
 .pull-left[
 
-- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows. 
+- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows
 - With GitHub remote hosting, it is the _de facto_ standard for open source (R) projects
 - Track changes
 - History
@@ -226,9 +226,9 @@ Resources
 - A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
 
    - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
-   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account.
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account
 
-**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-min) as a **new RStudio project**.
+**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-min) as a **new RStudio project**
 
 ```
 File > New Project... > Version Control > Git
@@ -250,7 +250,7 @@ The project is based on [`renv`](https://rstudio.github.io/renv)
 
 --
 
-**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+**Note**: If you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
 ```r
 renv::snapshot()
 ```
@@ -312,16 +312,16 @@ Speed up in a development workflow
       ```
     - RStudio: `Build Pane` > `Check`
 
-Everything should be fine.
+Everything should be fine
 
 Familiarize with the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
 
-- If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
+- If the check get stuck, it might be due to issues with `renv` (mainly on Windows)
 
 - In case, fall-back on `renv`-free setup and still follow the rest of the workshop
 
     - `renv::deactivate()`
-    - delete `renv.lock` and the `renv` folder.
+    - delete `renv.lock` and the `renv` folder
 
 ---
 
@@ -335,10 +335,9 @@ Travis CI
 ](https://travis-ci.com/)
 
 - Open-source hosted continuous integration service
-- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
-
+- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo
 - Login at https://travis-ci.com/ (using your GitHub account)
-- Activate authorization via GitHub Apps integration.
+- Activate authorization via GitHub Apps integration
 
 .center[
 ```{r eval = TRUE, echo = FALSE, out.width = "450px", out.extra = 'style="position: relative;"'}
@@ -367,7 +366,7 @@ knitr::include_graphics("./img/TravisSetup.png")
 
 --
 
-Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r).
+Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r)
 
 Align R _major_._minor_ version to the project setup (spaces matter!)
 ```yaml
@@ -375,7 +374,7 @@ r:
   - 4.0 # or 3.6
 ```
 Use `renv` to restore dependencies:
-- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette.
+- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette
 
 ---
 
@@ -398,7 +397,7 @@ install:
 **Commit & push** all changes
 
 - This will trigger the first run on Travis, which can take >~10 minutes
-  - caching will speed up future builds
+  - Caching will speed up future builds
 
 - Go to the GitHub repo (`usethis::browse_github()`)
   - Do you find any indication of the CI status for the commit?
@@ -410,12 +409,12 @@ install:
 ## GitFlow
 
 .pull-left[
-[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product.
+[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product
 
 According to the GitFlow approach, the central repo holds two main branches with an infinite lifetime:
 
-- `master`: reflects a production-ready state.
-- `develop`: reflects a state with the latest delivered developments for the next release.
+- `master`: reflects a production-ready state
+- `develop`: reflects a state with the latest delivered developments for the next release
 
 In addition
 
@@ -463,7 +462,7 @@ Track development items as GitHub [Issues](https://help.github.com/en/github/man
 GitFlow
 
 - `feature/` branches for developing individual issues in isolation
-- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
 
 .center[
 ```{r eval = TRUE, echo = FALSE, out.width = "80%"}
@@ -487,7 +486,7 @@ knitr::include_graphics("./img/agile_dev.001.png")
 
 ## Deployment: shinyapps.io
 
-[shinyapps.io](https://www.shinyapps.io) hosting service offered by RStudio.
+[shinyapps.io](https://www.shinyapps.io) hosting service offered by RStudio
 
 Login at https://www.shinyapps.io/admin using your GitHub account
 
@@ -535,18 +534,18 @@ knitr::include_graphics("./img/release.001.png")
 
 ## How to do a release
 
-We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version).
+We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version)
 
-- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`).
-- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
-- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
-- Commit & push.
-- Create a pull request to `master` on GitHub, get it approved and merged.
-- Create release on GitHub as "v1.2.1", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
-- Go back to a development version `1.2.1.9000` `usethis::use_dev_version()`, still on branch `release/v1.2.1`.
-- Commit & push.
-- Create a pull request to `develop` on GitHub, get it approved and merged.
-- Delete the release branch.
+- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`)
+- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`
+- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release))
+- Commit & push
+- Create a pull request to `master` on GitHub, get it approved and merged
+- Create release on GitHub as "v1.2.1", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section
+- Go back to a development version `1.2.1.9000` `usethis::use_dev_version()`, still on branch `release/v1.2.1`
+- Commit & push
+- Create a pull request to `develop` on GitHub, get it approved and merged
+- Delete the release branch
 
 ---
 
