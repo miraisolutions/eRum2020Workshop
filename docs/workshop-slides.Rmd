@@ -478,10 +478,14 @@ knitr::include_graphics("./img/project-board.png")
 
 ## Agile development
 
-GitFlow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
+GitFlow fits well with Agile frameworks
+
+- During a development cycle a set of Issues is worked on according to prioritization
+- At the end of each development cycle it is possible to perform a release and have a development increment onto production
+- Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs
 
 .center[
-```{r eval = TRUE, echo = FALSE, out.width = "63%"}
+```{r eval = TRUE, echo = FALSE, out.width = "80%"}
 knitr::include_graphics("./img/agile_dev.001.png")
 ```
 ]
