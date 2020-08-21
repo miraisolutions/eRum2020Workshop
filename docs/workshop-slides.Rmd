@@ -429,9 +429,9 @@ It is important that the code is checked before it is merged back into the main 
 - `develop` becomes the default branch
 - Branch protection for `master` and `develop`
 
-  - Commits are pushed only via pull requests
-  - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
-  - [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+  - Commits are pushed only via [pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+  - [Require status checks](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI, GitHub Actions) to pass before merging a pull request
+  - [Require pull request reviews](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review) from collaborators before merging
 ]
 .pull-right[
 ```{r eval = TRUE, echo = FALSE, out.width = "100%"}
