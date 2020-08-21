@@ -171,23 +171,26 @@ Fill the dots:
 
 ## Head start: Packaged Shiny app on GitHub
 
-Shiny app developed as **R package**
+Shiny app developed as **R package** under **version control**
+
 
 - Best place for R functions to live in => modularization
 - Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
-- Package [`golem`](https://thinkr-open.github.io/golem) providing development framework<br/>
+- Package [**`golem`**](https://thinkr-open.github.io/golem) providing development framework<br/>
   `golem` : Shiny app = `devtools` (`usethis`) : R package
-- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Package dependencies explicitly tracked using [**`renv`**](https://rstudio.github.io/renv)
 - Run the app: install the package and call a function!
+- **GitHub** repo to share the source code and track changes 
 
 **Production readiness**
 
 - How to ensure it is maintained, regularly checked and ensured?
 - How to control what is deployed to "production" (the live app)?
-- Automated, streamlined pipelines
-   
-   - Security, Quality, Stability  
-   - Optimized for speed of delivery
+
+** => Automated, streamlined pipelines**
+
+- Security, Quality, Stability
+- Optimized for speed of delivery
 
 ---
 
