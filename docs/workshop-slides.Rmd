@@ -28,7 +28,7 @@ with_excluded <- FALSE
 
 layout: true
 
-<div class="my-footer"><span>Copyright (c) 2020</span></div> 
+<div class="my-footer"><span>Copyright (c) 2020</span></div>
 
 ---
 
@@ -83,7 +83,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 --
 
 .center[
-#### With VanLog's support: 
+#### With VanLog's support:
 ### Andrea Melloncelli
 ]
 
@@ -300,7 +300,7 @@ Speed up in a development workflow
 
 ## R's package check suite
 
-- `R CMD check` built into R, conveniently accessed via 
+- `R CMD check` built into R, conveniently accessed via
     - ```{r}
        devtools::check()
        ```
@@ -353,14 +353,14 @@ knitr::include_graphics("./img/TravisSetup.png")
 
 ## Automated checks on Travis CI
 
-- Setup Travis for your project 
+- Setup Travis for your project
   ```{r}
   usethis::use_travis() # ext = "com" for usethis < 1.6.0
   ```
 - This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
 - Look at the R console and the Git diffs (**don't commit changes yet**)
 
-  - which files were changed by `usethis::use_travis()`? 
+  - which files were changed by `usethis::use_travis()`?
 
 --
 
