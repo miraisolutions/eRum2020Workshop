@@ -479,11 +479,11 @@ knitr::include_graphics("./img/agile_dev.001.png")
 
 ## Deployment: shinyapps.io
 
-[shinyapps.io](https://www.shinyapps.io/) hosting service offered by RStudio.
+[shinyapps.io](https://www.shinyapps.io) hosting service offered by RStudio.
 
-Login at https://www.shinyapps.io using your GitHub account
+Login at https://www.shinyapps.io/admin using your GitHub account
 
-[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
+[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#configure-rsconnect) and deploy your app from your local R installation
 
 ```{r}
 golem::add_shinyappsio_file()
