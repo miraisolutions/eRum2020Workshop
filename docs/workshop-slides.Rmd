@@ -420,7 +420,7 @@ knitr::include_graphics("./img/gitflow.png")
 
 ---
 
-## Pull Requests and Branches Control
+## Pull requests and branch control
 
 It is important that the code is checked before it is merged back into the main development / release line, to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
 
@@ -441,7 +441,7 @@ knitr::include_graphics("./img/branches-control.001.png")
 
 ---
 
-## Issues, Projects and Pull Requests
+## Issues, projects, pull requests
 
 Track development items as GitHub [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) and [Projects](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) (visual boards)
 
@@ -460,7 +460,7 @@ knitr::include_graphics("./img/project-board.png")
 
 ---
 
-## Agile Development
+## Agile development
 
 GitFlow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
 
@@ -519,7 +519,7 @@ knitr::include_graphics("./img/release.001.png")
 
 ---
 
-## How to Do a Release
+## How to do a release
 
 We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version).
 
@@ -552,7 +552,7 @@ We want to release the new feature(s) as a [major/minor/patch release](http://r-
 
 ---
 
-## Get in Touch
+## Get in touch
 
 
 **Other Services by Mirai solutions:**
