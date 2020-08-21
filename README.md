@@ -15,7 +15,7 @@ In this hands-on 3-hours session we will:
 
 A simple R package with a Shiny app will be used as a running example to lay out a full workflow for stable, secure, reproducible deployments and releases.
 
-This workshop is the natural continuation of "Is R ready for Production? Let’s develop a Professional Shiny Application!", however, attendance to the previous workshop is not a mandatory prerequisite.
+This workshop is the natural continuation of ["Is R ready for Production? Let’s develop a Professional Shiny Application!"](https://github.com/Milano-R/erum2020program#is-r-ready-for-production-lets-develop-a-professional-shiny-application), however, attendance to the previous workshop is not a mandatory prerequisite.
 
 **Keywords**: CI/CD, Git, GitHub, Travis CI, Actions
 
