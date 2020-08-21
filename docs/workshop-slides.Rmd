@@ -1,8 +1,13 @@
 ---
 title: "Bring your R Application Safely to Production."
 subtitle: "Collaborate, Deploy, Automate."
-author: "Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)"
-date: "e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST"
+author: |
+  Riccardo Porreca, Peter Schmid<br/>
+  (Francesca Vitalini)
+date: |
+  e-Rum2020 Workshop<br/>
+  2020-06-20 14:00-17:00 CEST
+  <img src="img/mirai_logo_inverted_manual.png" style="width: 450px; position: fixed; bottom: 0; right:0">
 output:
   xaringan::moon_reader:
     lib_dir: libs
