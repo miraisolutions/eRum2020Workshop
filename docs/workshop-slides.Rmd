@@ -103,7 +103,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - GitHub Actions workflows
 - Continuous Deployment
 - Release
-- More playground 
+- More playground
 ]
 
 --
@@ -134,7 +134,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 
 - R installation: R >= 3.6.x, ideally R 4.0.x
 
-- Packages pre-installation: 
+- Packages pre-installation:
   - https://github.com/miraisolutions/eRum2020Workshop-prereqs#readme
 
 - Optional Git-related tools
