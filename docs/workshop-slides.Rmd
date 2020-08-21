@@ -32,7 +32,7 @@ layout: true
 
 ---
 
-![devCycle](./img/MiraiApr19_full.jpg)
+![Mirai](./img/MiraiApr19_full.jpg)
 
 - Interdisciplinary team of data scientists, software engineers and IT architects
 - Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
