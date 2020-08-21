@@ -1,6 +1,6 @@
 # e-Rum2020 Workshop
 
-This repository collects the information and material related to the e-Rum2020 workshop from Mirai Solutions.
+This repository collects the information and material related to the e-Rum2020 workshop from [Mirai Solutions](https://mirai-solutions.ch).
 
 ## Bring your R Application Safely to Production. Collaborate, Deploy, Automate.
 
