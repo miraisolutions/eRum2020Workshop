@@ -92,6 +92,10 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 
 ## Workshop overview
 
+.center[
+**Workshop repository:** https://github.com/miraisolutions/eRum2020Workshop#readme
+]
+
 .pull-left[
 - Working example: packaged Shiny app on GitHub
 - Automated checks on Travis CI
