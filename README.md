@@ -1,6 +1,6 @@
 # e-Rum2020 Workshop
 
-This repository collects the information and material related to the e-Rum2020 workshop from Mirai Solutions.
+This repository collects the information and material related to the e-Rum2020 workshop from [Mirai Solutions](https://mirai-solutions.ch).
 
 ## Bring your R Application Safely to Production. Collaborate, Deploy, Automate.
 
@@ -15,11 +15,15 @@ In this hands-on 3-hours session we will:
 
 A simple R package with a Shiny app will be used as a running example to lay out a full workflow for stable, secure, reproducible deployments and releases.
 
-This workshop is the natural continuation of "Is R ready for Production? Let’s develop a Professional Shiny Application!", however, attendance to the previous workshop is not a mandatory prerequisite.
+This workshop is the natural continuation of ["Is R ready for Production? Let’s develop a Professional Shiny Application!"](https://github.com/Milano-R/erum2020program#is-r-ready-for-production-lets-develop-a-professional-shiny-application), however, attendance to the previous workshop is not a mandatory prerequisite.
 
 **Keywords**: CI/CD, Git, GitHub, Travis CI, Actions
 
 **When**: Saturday June 20th, 14.00-17.00 CEST
+
+**News article**: A summary of the workshop is available as [news post](https://mirai-solutions.ch/news/2020/08/25/erum2020-workshop), including a [short trailer](https://mirai-solutions.ch/assets/videos/mirai-erum2020-workshop-trailer.mp4) providing an overview of the workshop.
+
+**Materials**: See [below](#materials).
 
 ### Prerequisites
 
@@ -29,18 +33,7 @@ It is important that you **go through the following prerequisites before the wor
 - Git must be installed on your computer
 - A recent version of RStudio (>= 1.2) is recommended
 - R installation: R >= 3.6.x, ideally R 4.0.x
-- Packages pre-installation:
-    - Create a new RStudio project from the repo https://github.com/miraisolutions/eRum2020Workshop-prereqs
-      ```
-      File > New Project... > Version Control > Git
-      ```
-    - Once in the new project, run at the R console
-      ``` r
-      install.packages(c("remotes", "renv"))
-      remotes::install_deps()
-      renv::activate()
-      renv::restore() # you can ignore warnings about a different R version
-      ```
+- Packages pre-installation: see https://github.com/miraisolutions/eRum2020Workshop-prereqs#readme
 - To make working with Git easier, you can optionally install additional tools we will mention in the workshop
     - [compareWith](https://github.com/miraisolutions/compareWith#readme) R package
     - [Sublime Merge](https://www.sublimemerge.com)
@@ -50,8 +43,12 @@ It is important that you **go through the following prerequisites before the wor
 
 We will lead the workshop mostly hands-on, but we have a supporting presentation available at http://mirai-solutions.ch/eRum2020Workshop/workshop-slides.html
 
-The working example will use as a starting point is available at the following repo
+The working example we will use as a starting point is available at the following repo
 
 - https://github.com/miraisolutions/ShinyCICD-min
 
 You don't need to do anything with it ahead of the workshop.
+
+#### Workshop recordings
+
+Full workshop recordings are available on the [e-Rum2020 YouTube channel](https://youtu.be/dPc10Ka-L94).

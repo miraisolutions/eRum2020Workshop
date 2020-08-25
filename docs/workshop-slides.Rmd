@@ -1,8 +1,13 @@
 ---
 title: "Bring your R Application Safely to Production."
 subtitle: "Collaborate, Deploy, Automate."
-author: "Riccardo Porreca, Peter Schmid <br/>(Francesca Vitalini)"
-date: "e-Rum2020 Workshop<br/>2020-06-20 14:00-17:00 CEST"
+author: |
+  Riccardo Porreca, Peter Schmid<br/>
+  (Francesca Vitalini)
+date: |
+  e-Rum2020 Workshop<br/>
+  2020-06-20 14:00-17:00 CEST
+  <img src="img/mirai_logo_inverted_manual.png" style="width: 450px; position: fixed; bottom: 0; right:0">
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -23,11 +28,11 @@ with_excluded <- FALSE
 
 layout: true
 
-<div class="my-footer"><span>Copyright (c) 2020</span></div> 
+<div class="my-footer"><span>Copyright (c) 2020</span></div>
 
 ---
 
-![devCycle](./img/MiraiApr19_full.jpg)
+![Mirai](./img/MiraiApr19_full.jpg)
 
 - Interdisciplinary team of data scientists, software engineers and IT architects
 - Specialist knowledge ranging from finance, risk management and actuarial knowledge to math / stats techniques
@@ -78,7 +83,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 --
 
 .center[
-#### With VanLog's support: 
+#### With VanLog's support:
 ### Andrea Melloncelli
 ]
 
@@ -86,6 +91,10 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 ---
 
 ## Workshop overview
+
+.center[
+**Workshop repository:** https://github.com/miraisolutions/eRum2020Workshop#readme
+]
 
 .pull-left[
 - Working example: packaged Shiny app on GitHub
@@ -98,7 +107,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 - GitHub Actions workflows
 - Continuous Deployment
 - Release
-- More playground 
+- More playground
 ]
 
 --
@@ -129,7 +138,7 @@ knitr::include_graphics("./img/sticker-pyramid.png")
 
 - R installation: R >= 3.6.x, ideally R 4.0.x
 
-- Packages pre-installation: 
+- Packages pre-installation:
   - https://github.com/miraisolutions/eRum2020Workshop-prereqs#readme
 
 - Optional Git-related tools
@@ -160,29 +169,33 @@ Fill the dots:
 - Collaboration and planning
 - Automate!
 
-### Head start: Morning workshop "_Is R ready for Production? Let’s develop a Professional Shiny Application!_"
-
+.center[
+### Head start: Morning workshop<br/>[_Is R ready for Production?<br/>Let's develop a Professional Shiny Application!_](https://github.com/Milano-R/erum2020program#is-r-ready-for-production-lets-develop-a-professional-shiny-application)
+]
 ---
 
 ## Head start: Packaged Shiny app on GitHub
 
-Shiny app developed as **R package**
+Shiny app developed as **R package** under **version control**
+
 
 - Best place for R functions to live in => modularization
 - Documentation, namespaces / dependencies, tests, sanity checks, controls, ...
-- Package [`golem`](https://thinkr-open.github.io/golem) providing development framework<br/>
+- Package [**`golem`**](https://thinkr-open.github.io/golem) providing development framework<br/>
   `golem` : Shiny app = `devtools` (`usethis`) : R package
-- Package dependencies explicitly tracked using [`renv`](https://rstudio.github.io/renv)
+- Package dependencies explicitly tracked using [**`renv`**](https://rstudio.github.io/renv)
 - Run the app: install the package and call a function!
+- **GitHub** repo to share the source code and track changes 
 
 **Production readiness**
 
 - How to ensure it is maintained, regularly checked and ensured?
 - How to control what is deployed to "production" (the live app)?
-- Automated, streamlined pipelines
-   
-   - Security, Quality, Stability  
-   - Optimized for speed of delivery
+
+** => Automated, streamlined pipelines**
+
+- Security, Quality, Stability
+- Optimized for speed of delivery
 
 ---
 
@@ -190,7 +203,7 @@ Shiny app developed as **R package**
 
 .pull-left[
 
-- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows. 
+- Git is a popular, free and open source version control system designed to be very efficient and to support distributed, non-linear workflows
 - With GitHub remote hosting, it is the _de facto_ standard for open source (R) projects
 - Track changes
 - History
@@ -218,9 +231,9 @@ Resources
 - A somewhat **minimal example** of a Shiny app showcasing the same production-readiness approach
 
    - GitHub repo https://github.com/miraisolutions/ShinyCICD-min
-   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account.
+   - Create your own copy of the repo by [forking](https://github.com/miraisolutions/ShinyCICD-min/fork) it to your GitHub user account
 
-**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-min) as a **new RStudio project**.
+**_Clone_** locally your forked repo (https://github.com/&lt;user&gt;/ShinyCICD-min) as a **new RStudio project**
 
 ```
 File > New Project... > Version Control > Git
@@ -242,7 +255,7 @@ The project is based on [`renv`](https://rstudio.github.io/renv)
 
 --
 
-**Note**: if you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
+**Note**: If you are on R 3.6.x, you will see a warning `Project requested R version '4.0.z' but '3.6.x' is currently being used`. No big deal, simply align the R version in the lockfile via
 ```r
 renv::snapshot()
 ```
@@ -256,13 +269,13 @@ What changes (check the Git pane)? Should you commit the modifications?
 
 - `install.packages("devtools")`
 
-- Adapt the README to your forked repo: `&lt;user&gt;/ShinyCICD-min`
+- Adapt the README to your forked repo: `<user>/ShinyCICD-min`
 
 - Diff: RStudio, compareWith, Sublime Merge
 
   ```{r}
-  renv::install("miraisolutions/comparewith")
-  # remotes::install_github("miraisolutions/comparewith") w/o renv
+  renv::install("miraisolutions/compareWith")
+  # remotes::install_github("miraisolutions/compareWith") w/o renv
   ```
   Stage > Commit > Push
 
@@ -295,7 +308,7 @@ Speed up in a development workflow
 
 ## R's package check suite
 
-- `R CMD check` built into R, conveniently accessed via 
+- `R CMD check` built into R, conveniently accessed via
     - ```{r}
        devtools::check()
        ```
@@ -304,28 +317,32 @@ Speed up in a development workflow
       ```
     - RStudio: `Build Pane` > `Check`
 
-Everything should be fine.
+Everything should be fine
 
 Familiarize with the number of checks (see http://r-pkgs.had.co.nz/check.html for reference)
 
-- If the check get stuck, it might be due to issues with `renv` (mainly on Windows).
+- If the check get stuck, it might be due to issues with `renv` (mainly on Windows)
 
 - In case, fall-back on `renv`-free setup and still follow the rest of the workshop
 
     - `renv::deactivate()`
-    - delete `renv.lock` and the `renv` folder.
+    - delete `renv.lock` and the `renv` folder
 
 ---
 
 ## Automated checks on Travis CI
 
-[Travis CI](https://travis-ci.com/)
+[
+```{r eval = TRUE, echo = FALSE, out.width = "50px", out.extra = 'style="vertical-align: text-bottom;"'}
+knitr::include_graphics("./img/TravisCI.png")
+```
+Travis CI
+](https://travis-ci.com/)
 
 - Open-source hosted continuous integration service
-- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo.
-
+- Automate package-level checks for continuous integration, triggered upon any push event (and pull requests) on the GitHub repo
 - Login at https://travis-ci.com/ (using your GitHub account)
-- Activate authorization via GitHub Apps integration.
+- Activate authorization via GitHub Apps integration
 
 .center[
 ```{r eval = TRUE, echo = FALSE, out.width = "450px", out.extra = 'style="position: relative;"'}
@@ -343,18 +360,18 @@ knitr::include_graphics("./img/TravisSetup.png")
 
 ## Automated checks on Travis CI
 
-- Setup Travis for your project 
+- Setup Travis for your project
   ```{r}
   usethis::use_travis() # ext = "com" for usethis < 1.6.0
   ```
 - This will bring you to https://travis-ci.com/account/repositories, from where you can "Manage repositories on GitHub" to make sure Travis CI has access to your repo
 - Look at the R console and the Git diffs (**don't commit changes yet**)
 
-  - which files were changed by `usethis::use_travis()`? 
+  - which files were changed by `usethis::use_travis()`?
 
 --
 
-Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r).
+Travis has a default pipeline for R (https://docs.travis-ci.com/user/languages/r)
 
 Align R _major_._minor_ version to the project setup (spaces matter!)
 ```yaml
@@ -362,7 +379,7 @@ r:
   - 4.0 # or 3.6
 ```
 Use `renv` to restore dependencies:
-- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette.
+- `cache` and `install` field as in the [Using renv with Continuous Integration](https://rstudio.github.io/renv/articles/ci.html#travis-ci) vignette
 
 ---
 
@@ -385,7 +402,7 @@ install:
 **Commit & push** all changes
 
 - This will trigger the first run on Travis, which can take >~10 minutes
-  - caching will speed up future builds
+  - Caching will speed up future builds
 
 - Go to the GitHub repo (`usethis::browse_github()`)
   - Do you find any indication of the CI status for the commit?
@@ -397,12 +414,12 @@ install:
 ## GitFlow
 
 .pull-left[
-[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product.
+[GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) is a popular and successful branching model that enable collaborative, controlled development and releases, assuring the safety and quality of the released product
 
 According to the GitFlow approach, the central repo holds two main branches with an infinite lifetime:
 
-- `master`: reflects a production-ready state.
-- `develop`: reflects a state with the latest delivered developments for the next release.
+- `master`: reflects a production-ready state
+- `develop`: reflects a state with the latest delivered developments for the next release
 
 In addition
 
@@ -420,7 +437,7 @@ knitr::include_graphics("./img/gitflow.png")
 
 ---
 
-## Pull Requests and Branches Control
+## Pull requests and branch control
 
 It is important that the code is checked before it is merged back into the main development / release line, to ensure robustness and stability of the code. This can be ensured by [setting restrictions on branches](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions):
 
@@ -429,9 +446,9 @@ It is important that the code is checked before it is merged back into the main 
 - `develop` becomes the default branch
 - Branch protection for `master` and `develop`
 
-  - Commits are pushed only via pull requests
-  - [require an automatic status check](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI) before merging .
-  - [Require status checks to pass before merging ](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review)
+  - Commits are pushed only via [pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+  - [Require status checks](https://help.github.com/en/github/administering-a-repository/about-required-status-checks) (e.g. Travis CI, GitHub Actions) to pass before merging a pull request
+  - [Require pull request reviews](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review) from collaborators before merging
 ]
 .pull-right[
 ```{r eval = TRUE, echo = FALSE, out.width = "100%"}
@@ -441,7 +458,7 @@ knitr::include_graphics("./img/branches-control.001.png")
 
 ---
 
-## Issues, Projects and Pull Requests
+## Issues, projects, pull requests
 
 Track development items as GitHub [Issues](https://help.github.com/en/github/managing-your-work-on-github/creating-an-issue) and [Projects](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards) (visual boards)
 
@@ -450,7 +467,7 @@ Track development items as GitHub [Issues](https://help.github.com/en/github/man
 GitFlow
 
 - `feature/` branches for developing individual issues in isolation
-- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+- Development reviewed and safely integrated into `develop` via [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
 
 .center[
 ```{r eval = TRUE, echo = FALSE, out.width = "80%"}
@@ -460,12 +477,16 @@ knitr::include_graphics("./img/project-board.png")
 
 ---
 
-## Agile Development
+## Agile development
 
-GitFlow fits well with all Agile frameworks: at each development cycle a set of Issues is worked on according to prioritization. At the end of each development cycle it is possible to perform a release and have a development increment onto production. Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs.
+GitFlow fits well with Agile frameworks
+
+- During a development cycle a set of Issues is worked on according to prioritization
+- At the end of each development cycle it is possible to perform a release and have a development increment onto production
+- Each feature can be inspected and feedback can be given before its release, keeping the final product always up to date with the end user needs
 
 .center[
-```{r eval = TRUE, echo = FALSE, out.width = "63%"}
+```{r eval = TRUE, echo = FALSE, out.width = "80%"}
 knitr::include_graphics("./img/agile_dev.001.png")
 ```
 ]
@@ -474,11 +495,11 @@ knitr::include_graphics("./img/agile_dev.001.png")
 
 ## Deployment: shinyapps.io
 
-[shinyapps.io](https://www.shinyapps.io/) hosting service offered by RStudio.
+[shinyapps.io](https://www.shinyapps.io) hosting service offered by RStudio
 
-Login at https://www.shinyapps.io using your GitHub account
+Login at https://www.shinyapps.io/admin using your GitHub account
 
-[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications) and deploy your app from your local R installation
+[Configure rsconnect](https://docs.rstudio.com/shinyapps.io/getting-started.html#configure-rsconnect) and deploy your app from your local R installation
 
 ```{r}
 golem::add_shinyappsio_file()
@@ -490,6 +511,7 @@ rsconnect::setAccountInfo(...)
 ```
 
 ```{r}
+# we explicitly exclude the renv directory (as well as hidden files)
 rsconnect::deployApp(appName = "ShinyCICD", appFiles = setdiff(list.files(), "renv"))
 ```
 
@@ -519,20 +541,20 @@ knitr::include_graphics("./img/release.001.png")
 
 ---
 
-## How to Do a Release
+## How to do a release
 
-We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version).
+We want to release the new feature(s) as a [major/minor/patch release](http://r-pkgs.had.co.nz/release.html#release-version)
 
-- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`).
-- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`.
-- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release)).
-- Commit & push.
-- Create a pull request to `master` on GitHub, get it approved and merged.
-- Create release on GitHub as "v1.2.1", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section.
-- Go back to a development version `1.2.1.9000` `usethis::use_dev_version()`, still on branch `release/v1.2.1`.
-- Commit & push.
-- Create a pull request to `develop` on GitHub, get it approved and merged.
-- Delete the release branch.
+- Create release branch `release/vX.Y.Z` (e.g. `v1.2.1` for a _minor_ release) from `develop`, where the package version includes a fourth development component `9000` (e.g. `1.1.1.9000`)
+- Update the package version via `usethis::use_version()` locally on branch `release/v1.2.1`
+- Consolidate the changelog (`NEWS.md` in R, see e.g. [recommendations](http://r-pkgs.had.co.nz/release.html#important-files) and [style guide](https://style.tidyverse.org/news.html#news-release))
+- Commit & push
+- Create a pull request to `master` on GitHub, get it approved and merged
+- Create release on GitHub as "v1.2.1", with title "ShinyCICD 1.2.1" and content of the corresponding `NEWS.md` section
+- Go back to a development version `1.2.1.9000` `usethis::use_dev_version()`, still on branch `release/v1.2.1`
+- Commit & push
+- Create a pull request to `develop` on GitHub, get it approved and merged
+- Delete the release branch
 
 ---
 
@@ -552,7 +574,7 @@ We want to release the new feature(s) as a [major/minor/patch release](http://r-
 
 ---
 
-## Get in Touch
+## Get in touch
 
 
 **Other Services by Mirai solutions:**

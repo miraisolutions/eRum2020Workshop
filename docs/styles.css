@@ -1,10 +1,27 @@
 /*#008cc3 mirai blue*/
 /* bg img https://github.com/miraisolutions/miraisolutions.github.io/blob/master/assets/images/illu-header-data.png */
 
-/*Mirai Font*/
+/* Font */
 body, h1, h2, h3 {
-  font-family: "Frutiger LT W01_45 Ligh1475730",Helvetica,Arial,sans-serif !important;
+  /*
+  Note: the Mirai website (Frutiger) is not availaible
+  We specify Arial first, which makes the displayed font on Firefox closer to
+  what Chrome displays
+  (Chrome was the brower used in preparation for and thuring the workshop)
+  */
+  font-family: Arial,Helvetica,sans-serif !important;
 }
+
+body {
+  /*
+  Firefox seems to have a wider default for this font, so we explicitly set it
+  to 1.16, which is what Chrome seems to use as default
+  (Chrome was the brower used in preparation for and during the workshop)
+  https://stackoverflow.com/questions/31386307/css-line-height-not-the-same-in-firefox-and-chrome
+  */
+  line-height: 1.16;
+}
+
 h1, h2, h3 {
   color: #008cc3 !important;
 }
