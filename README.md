@@ -23,7 +23,7 @@ This workshop is the natural continuation of ["Is R ready for Production? Let’
 
 **News article**: A summary of the workshop is available as [news post](https://mirai-solutions.ch/news/2020/08/25/erum2020-workshop), including a [short trailer](https://mirai-solutions.ch/assets/videos/mirai-erum2020-workshop-trailer.mp4) providing an overview of the workshop.
 
-**Materials**: See [below](#materials).
+**Materials**: See [below](#materials), including video recordings.
 
 ### Prerequisites
 
