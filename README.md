@@ -21,9 +21,9 @@ This workshop is the natural continuation of ["Is R ready for Production? Let’
 
 **When**: Saturday June 20th, 14.00-17.00 CEST
 
-**News article**: A summary of the workshop will be available as [news post](https://mirai-solutions.ch/news/) (**TODO**: Use the actual url after publication), including a [short trailer](https://mirai-solutions.ch/assets/videos/mirai-erum2020-workshop-trailer.mp4) providing an overview of the workshop.
+**News article**: A summary of the workshop is available as [news post](https://mirai-solutions.ch/news/2020/08/25/erum2020-workshop), including a [short trailer](https://mirai-solutions.ch/assets/videos/mirai-erum2020-workshop-trailer.mp4) providing an overview of the workshop.
 
-**Materials**: See [below](#materials)
+**Materials**: See [below](#materials).
 
 ### Prerequisites
 
@@ -51,4 +51,4 @@ You don't need to do anything with it ahead of the workshop.
 
 #### Workshop recordings
 
-Full workshop recordings will be available on the [e-Rum2020 YouTube channel](https://www.youtube.com/channel/UCDOoQShiQHE7_C-wuLqFJ7w) (**TODO**: Use the actual url after publication).
+Full workshop recordings are available on the [e-Rum2020 YouTube channel](https://youtu.be/dPc10Ka-L94).
